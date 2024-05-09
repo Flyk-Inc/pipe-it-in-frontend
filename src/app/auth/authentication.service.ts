@@ -1,146 +1,123 @@
 import {inject, Injectable} from '@angular/core';
-import {AngularFireAuth} from "@angular/fire/compat/auth";
-import {
-  Auth,
-  AuthProvider,
-  createUserWithEmailAndPassword,
-  getAdditionalUserInfo,
-  GithubAuthProvider,
-  GoogleAuthProvider,
-  signInWithPopup,
-} from "@angular/fire/auth";
-import firebase from "firebase/compat";
-import {BehaviorSubject, catchError, from, Observable, switchMap, tap} from "rxjs";
-import {HttpClient} from "@angular/common/http";
+import {BehaviorSubject, map, Observable, of, switchMap, tap, withLatestFrom} from "rxjs";
+import {HttpBackend, HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-
-interface CreateUserDTO {
-  email: string;
-  firstName: string;
-  lastName: string;
-}
-
-interface UserDTO {
-  id: number;
-  email: string;
-  firstName: string;
-  lastName: string;
-}
+import {UserDTO} from "./DTO/user.dto";
+import {CreateUserDTO} from "./DTO/createUser.dto";
+import {LocalStorageService} from "../local-storage.service";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
   backendUrl = environment.backendUrl;
-  currentUserSource = new BehaviorSubject<firebase.User | null>(null);
+  currentUserSource = new BehaviorSubject<UserDTO | null>(null);
   authLoadingSource = new BehaviorSubject<boolean>(true);
   tokenSource = new BehaviorSubject<string | null>(null);
-  private readonly googleAuthProvider: GoogleAuthProvider;
-  private readonly githubAuthProvider: GithubAuthProvider;
-  private auth: Auth = inject(Auth);
 
   constructor(
-    private angularFireAuth: AngularFireAuth,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router,
+    private lstorageService: LocalStorageService
   ) {
-    this.googleAuthProvider = new GoogleAuthProvider();
-    this.githubAuthProvider = new GithubAuthProvider();
-    this.angularFireAuth.authState.subscribe((authState) => {
-      if (this.authLoadingSource.value) {
-        this.authLoadingSource.next(false);
-      }
-      this.currentUserSource.next(authState);
-      if (authState) {
-        authState.getIdToken().then((token) => {
-          this.tokenSource.next(token);
-        });
-      } else {
-        this.tokenSource.next(null);
-      }
-    });
+    this.loadAuthenticatedUser()
   }
 
-  getAuthenticated()
-  {
-    return this.angularFireAuth.user;
-  }
-
-  tryAuthenticate()
-  {
-    return this.http.get(`${this.backendUrl}/users/protected`);
-  }
-
-
-  signUpWithProviderPopup(
-    firstname: string,
-    lastname: string,
-    providerToUse: 'Goolge' | 'Github'
-  ) {
-    let provider: AuthProvider;
-    switch (providerToUse) {
-      case 'Goolge':
-        provider = this.googleAuthProvider;
-        break;
-      case 'Github':
-        provider = this.githubAuthProvider;
-        break;
-      default:
-        throw new Error('Provider not supported');
-    }
-
-    return from(signInWithPopup(this.auth, provider)).pipe(
-      switchMap(userCredentials => {
-        const userCreated = userCredentials.user;
-        console.log('userCreated', userCreated);
-        // IdP data available using getAdditionalUserInfo(result)
-        console.log('userCreated', getAdditionalUserInfo(userCredentials));
-        if (userCreated.email === null) {
-          throw new Error('User email is null');
-        }
-        return this.saveUserDetails({
-          email: userCreated.email,
-          firstName: firstname,
-          lastName: lastname,
-        });
-      }),
-      catchError(error => {
-        console.error('shiiiid', error);
-        // Re-throw or handle the error as needed
-        throw error;
+  isAuthenticated(): Observable<boolean> {
+    return this.authLoadingSource.pipe(
+      withLatestFrom(this.currentUserSource),
+      map(([loading, currentUser]) => {
+        // If loading is false and there is a current user, the user is authenticated
+        return !loading && currentUser !== null;
       })
     );
   }
 
   signInWithGooglePopup() {
-    return from(signInWithPopup(this.auth, this.googleAuthProvider))
+    // TODO implement signInWithGooglePopup
+    console.log("signInWithGooglePopup")
+    return of()
   }
 
-  signUpWithEmail(email: string, password: string, createUserDTO: CreateUserDTO) {
-    return from(createUserWithEmailAndPassword(this.auth, email, password)).pipe(
-      tap(userCredential => {
-        const user = userCredential.user;
-        alert(`User ${user.email} signed up successfully`);
+  signUpWithEmail(password: string, createUserDTO: CreateUserDTO) {
+    const formData = {
+      password,
+      ...createUserDTO
+    }
+
+    return this.http.post(`${this.backendUrl}/auth/register`, formData)
+  }
+
+  logInWithEmailAndPassword(email: string, password: string) {
+    const formData = {
+      email,
+      password
+    }
+    return this.http.post<{ access_token: string }>(`${this.backendUrl}/auth/login`, formData).pipe(
+      tap((response) => {
+        console.log(response)
+        this.setToken(response.access_token);
       }),
       switchMap(() => {
-        return this.saveUserDetails(createUserDTO);
+        return this.http.get<UserDTO>(`${this.backendUrl}/users/profile`);
       }),
-      catchError(error => {
-        console.error('shiiiid', error.code, error.message);
-        throw error;
+      tap((user) => {
+        this.setAuthenticatedUser(user);
       })
     );
   }
 
-  logInWithEmailAndPassword(email: string, password: string) {
-    return from(this.angularFireAuth.signInWithEmailAndPassword(email, password));
-
+  logout(): void {
+    this.removeToken()
+    this.removeAuthenticatedUser()
+    this.router.navigate(['/']).then()
   }
 
-  logout() {
-    this.angularFireAuth.signOut().then();
+  loadAuthenticatedUser() {
+    this.authLoadingSource.next(true)
+    const savedToken = this.getToken()
+    if (savedToken == null) {
+      this.authLoadingSource.next(false)
+      return
+    }
+    new HttpClient(inject(HttpBackend))
+      .get<UserDTO>(`${this.backendUrl}/users/profile`, {headers: {'Authorization': `Bearer ${savedToken}`}})
+      .subscribe({
+        next: (user) => {
+          this.setAuthenticatedUser(user)
+          this.authLoadingSource.next(false)
+        },
+        error: (error) => {
+          console.log(error)
+          this.authLoadingSource.next(false)
+          this.removeToken()
+          this.removeAuthenticatedUser()
+        }
+      })
   }
 
-  private saveUserDetails(user: CreateUserDTO) {
-    return this.http.post<UserDTO>(`${this.backendUrl}/users`, user);
+  private setToken(token: string) {
+    this.tokenSource.next(token)
+    this.lstorageService.setString(token, 'access_token')
+  }
+
+  private removeToken() {
+    console.log('removeToken')
+    this.tokenSource.next(null)
+    this.lstorageService.removeString('access_token')
+  }
+
+  private getToken() {
+    return this.lstorageService.getString('access_token')
+  }
+
+  private setAuthenticatedUser(user: UserDTO) {
+    this.currentUserSource.next(user)
+    console.log('user', user)
+  }
+
+  private removeAuthenticatedUser() {
+    this.currentUserSource.next(null)
   }
 }

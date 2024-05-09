@@ -3,10 +3,10 @@ import {inject} from "@angular/core";
 import {AuthenticationService} from "./authentication.service";
 import {map} from "rxjs";
 
-export const authGuard: CanActivateFn = () => {
+export const AuthGuard: CanActivateFn = () => {
   const authenticationService = inject(AuthenticationService);
   const router = inject(Router);
-  return authenticationService.getAuthenticated().pipe(
+  return authenticationService.isAuthenticated().pipe(
     map((user) => {
       if (user) {
         return true;

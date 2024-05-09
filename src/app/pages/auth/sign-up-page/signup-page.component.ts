@@ -2,15 +2,22 @@ import {Component} from '@angular/core';
 import {AuthenticationService} from "../../../auth/authentication.service";
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Router} from "@angular/router";
+import {HttpErrorResponse} from "@angular/common/http";
+import {ButtonComponent} from "../../../component/layout/button/button.component";
+import {MessagesModule} from "primeng/messages";
+import {Message} from "primeng/api";
+import {NotificationService} from "../../../notification.service";
 
 @Component({
   selector: 'app-sign-up-page',
   standalone: true,
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ButtonComponent,
+    MessagesModule
   ],
   templateUrl: './signup-page.component.html',
-  styleUrl: './signup-page.component.css'
+  styleUrl: './signup-page.component.css',
 })
 export class SignupPageComponent  {
   signUpForm = new FormBuilder().nonNullable.group({
@@ -20,48 +27,13 @@ export class SignupPageComponent  {
     firstName: ['', [Validators.required]],
     lastName: ['', [Validators.required]],
   });
-  providerSignUpForm = new FormBuilder().nonNullable.group({
-    firstName: ['', [Validators.required]],
-    lastName: ['', [Validators.required]],
-  });
-  protected errorMessage: string = '';
-  protected providerErrorMessage: string = '';
+  protected errorMessage: Message[]= [];
 
-  constructor(private authenticationService: AuthenticationService, private router: Router) {
-  }
-
-  signUpWithGoogle() {
-    this.authenticationService.signUpWithProviderPopup(
-      this.providerSignUpForm.controls.firstName.value,
-      this.providerSignUpForm.controls.lastName.value,
-      "Goolge"
-    ).subscribe({
-      next: (user) => {
-        console.log('google user', user)
-        this.redirectOnSucessfulSignUp()
-      },
-      error: (error) => {
-        this.checkProviderSignUpError()
-        console.error('error', error)
-      }
-    })
-  }
-
-  signUpWithGithub() {
-    this.authenticationService.signUpWithProviderPopup(
-      this.providerSignUpForm.controls.firstName.value,
-      this.providerSignUpForm.controls.lastName.value,
-      "Github"
-    ).subscribe({
-      next: (user) => {
-        console.log('github user', user)
-        this.redirectOnSucessfulSignUp()
-      },
-      error: (error) => {
-        this.checkProviderSignUpError()
-        console.error('error', error)
-      }
-    })
+  constructor(
+    private authenticationService: AuthenticationService,
+    private router: Router,
+    private notificationService: NotificationService
+  ) {
   }
 
   confirmSignUpWithEmailForm() {
@@ -82,27 +54,29 @@ export class SignupPageComponent  {
       firstName: this.signUpForm.controls.firstName.value,
       lastName: this.signUpForm.controls.lastName.value,
     }
-    this.authenticationService.signUpWithEmail(email, password, userToCreate).subscribe({
-      next: (user) => {
-        console.log('user', user)
+    this.authenticationService.signUpWithEmail(password, userToCreate).subscribe({
+      next: () => {
         this.redirectOnSucessfulSignUp()
       },
-      error: (error) => {
-        this.checkSignUpError()
+      error: (error: HttpErrorResponse) => {
+        this.checkSignUpError(error.error.message)
         console.error('error', error)
       }
     })
   }
 
   redirectOnSucessfulSignUp() {
-    this.router.navigate(['/']).then()
+    this.router.navigate(['/auth/login']).then()
   }
 
-  checkSignUpError() {
-    this.errorMessage = 'Adresse email déjà utilisée'
+  checkSignUpError(errorMessage: string) {
+    this.errorMessage = this.notificationService.getErrorMessage(errorMessage)
   }
 
-  checkProviderSignUpError() {
-    this.providerErrorMessage = 'Adresse email déjà utilisée'
-  }
+  /*
+    signUpWithGoogle() {
+      // TODO implement signUpWithGoogle
+      console.log('signUpWithGoogle')
+    }
+  */
 }

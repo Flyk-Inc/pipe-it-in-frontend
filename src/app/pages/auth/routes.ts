@@ -1,5 +1,6 @@
 import {Routes} from "@angular/router";
 import {loggedInAuthGuard} from "../../auth/logged-in-auth.guard";
+import {AuthGuard} from "../../auth/auth.guard";
 
 export const routes: Routes = [
   {
@@ -13,8 +14,9 @@ export const routes: Routes = [
     canActivate: [loggedInAuthGuard],
   },
   {
-    path: 'test-auth',
-    loadComponent: () => import('./test-authenticated/test-authenticated.component').then(m => m.TestAuthenticatedComponent),
+    path: 'restricted',
+    loadComponent: () => import('../../restrictedpage/restrictedpage.component').then(m => m.RestrictedpageComponent),
+    canActivate: [AuthGuard]
   },
   {
     path: '',

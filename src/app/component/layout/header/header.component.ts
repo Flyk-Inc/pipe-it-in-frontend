@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AsyncPipe} from "@angular/common";
 import {RouterLink} from "@angular/router";
 import {AuthenticationService} from "../../../auth/authentication.service";
-import firebase from "firebase/compat";
+import {UserDTO} from "../../../auth/DTO/user.dto";
 
 @Component({
   selector: 'app-header',
@@ -16,7 +16,7 @@ import firebase from "firebase/compat";
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   loggedInUserSubscription$ = this.authenticationService.currentUserSource;
-  loggedInUser: firebase.User | null = null;
+  loggedInUser: UserDTO | null = null;
   tokenSubscription$ = this.authenticationService.tokenSource;
   token: string | null = null;
 
