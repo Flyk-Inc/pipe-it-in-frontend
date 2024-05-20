@@ -6,6 +6,13 @@
 /out-tsc
 /bazel-out
 
+/.angular
+/.github
+/.vscode
+
+package-lock.json
+package.json
+
 # Node
 /node_modules
 npm-debug.log
@@ -40,11 +47,3 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
-
-# Firebase
-.firebase
-*-debug.log
-.runtimeconfig.json
-
-.nx/cache
-.nx/workspace-data

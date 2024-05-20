@@ -1,22 +1,21 @@
 <header class="bg-blue-300 py-4 flex gap-2 items-center justify-center">
-  coucou ceci est un header
-  <a routerLink="/auth">
-    @if (!loggedInUser) {
-      <button
-        class="bg-transparent p-2 rounded border border-black mr-4 hover:bg-gray-100 hover:text-gray-700">
-        Sign in
-      </button>
-    }
-  </a>
-  @if (loggedInUser) {
-    <span>{{ loggedInUser.email }}</span>
-  }
-  @if (loggedInUser) {
-    <button
-      (click)="logout()"
-      class="bg-transparent p-2 rounded border border-black mr-4 hover:bg-gray-100 hover:text-gray-700">
-      Log out
-    </button>
-  }
-
+	coucou ceci est un header
+	<a routerLink="/auth">
+		@if (!loggedInUser) {
+			<button
+				class="bg-transparent p-2 rounded border border-black mr-4 hover:bg-gray-100 hover:text-gray-700">
+				Sign in
+			</button>
+		}
+	</a>
+	@if (loggedInUser) {
+		<span>{{ loggedInUser.email }}</span>
+	}
+	@if (loggedInUser) {
+		<button
+			(click)="logout()"
+			class="bg-transparent p-2 rounded border border-black mr-4 hover:bg-gray-100 hover:text-gray-700">
+			Log out
+		</button>
+	}
 </header>
