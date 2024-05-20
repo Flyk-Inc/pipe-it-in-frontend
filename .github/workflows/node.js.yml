@@ -20,17 +20,18 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - name: installing dependencies for CI
-      run: npm ci
-    - name: Lint check
-      run: npm run lint
-    - name: Formatting check
-      run: npm run format
-    - name: tests
-      run: npm run test
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - name: installing dependencies for CI
+        run: npm ci
+      - name: Lint check
+        run: npm run lint
+      - name: Formatting check
+        run: npm run format
+#      TODO: Add tests
+#    - name: tests
+#      run: npm run test

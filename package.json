@@ -10,7 +10,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "lint:fix": "ng lint --fix",
-    "format": "npx prettier .",
+    "format": "npx prettier --check .",
     "format:fix": "npx prettier --write ."
   },
   "private": true,
