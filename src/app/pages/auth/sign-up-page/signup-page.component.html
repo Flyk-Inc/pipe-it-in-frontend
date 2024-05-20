@@ -1,84 +1,109 @@
 <section class="bg-gray-50 dark:bg-gray-900">
-  <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
-    <div
-      class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-      <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-        <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-          Inscrivez-vous
-        </h1>
-        <form [formGroup]="signUpForm" action="#" class="flex flex-wrap gap-y-6">
-          @if (errorMessage) {
-            <p-messages
-              [(value)]="errorMessage"
-              [enableService]="false"/>
-
-          }
-          <div class="w-full">
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="email">Adresse
-              e-mail*</label>
-            <input
-              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              formControlName="email" id="email"
-              name="email"
-              placeholder="name@company.com" required
-              type="email"
-            >
-          </div>
-          <div class="w-full">
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="password">Mot de
-              Passe*</label>
-            <input
-              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              formControlName="password" id="password" name="password"
-              placeholder="••••••••"
-              required
-              type="password"
-            >
-          </div>
-          <div class="w-full">
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="confirmPassword">Confirmer
-              Mot de
-              Passe*</label>
-            <input
-              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              formControlName="confirmPassword" id="confirmPassword" name="password"
-              placeholder="••••••••"
-              required
-              type="password"
-            >
-          </div>
-          <div class="w-full">
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="firstName">Prénom*</label>
-            <input
-              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              formControlName="firstName"
-              id="firstName"
-              placeholder="John" required
-              type="text"
-            >
-          </div>
-          <div class="w-full">
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="lastName">Nom*</label>
-            <input
-              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              formControlName="lastName"
-              id="lastName"
-              placeholder="Snow" required
-              type="text"
-            >
-          </div>
-          <app-button
-            (click)="confirmSignUpWithEmailForm()"
-            [disabled]="!signUpForm.valid"
-            text="S'inscrire"
-            type="submit">
-          </app-button>
-          <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-            Vous avez déjà un compte? <a class="text-blue-600 hover:underline dark:text-blue-400"
-                                         href="/auth/login">Connectez-vous</a>
-          </p>
-        </form>
-        <!-- <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+	<div
+		class="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
+		<div
+			class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+			<div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+				<h1
+					class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+					Inscrivez-vous
+				</h1>
+				<form
+					[formGroup]="signUpForm"
+					action="#"
+					class="flex flex-wrap gap-y-6">
+					@if (errorMessage) {
+						<p-messages [(value)]="errorMessage" [enableService]="false" />
+					}
+					<div class="w-full">
+						<label
+							class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+							for="email"
+							>Adresse e-mail*</label
+						>
+						<input
+							class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+							formControlName="email"
+							id="email"
+							name="email"
+							placeholder="name@company.com"
+							required
+							type="email" />
+					</div>
+					<div class="w-full">
+						<label
+							class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+							for="password"
+							>Mot de Passe*</label
+						>
+						<input
+							class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+							formControlName="password"
+							id="password"
+							name="password"
+							placeholder="••••••••"
+							required
+							type="password" />
+					</div>
+					<div class="w-full">
+						<label
+							class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+							for="confirmPassword"
+							>Confirmer Mot de Passe*</label
+						>
+						<input
+							class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+							formControlName="confirmPassword"
+							id="confirmPassword"
+							name="password"
+							placeholder="••••••••"
+							required
+							type="password" />
+					</div>
+					<div class="w-full">
+						<label
+							class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+							for="firstName"
+							>Prénom*</label
+						>
+						<input
+							class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+							formControlName="firstName"
+							id="firstName"
+							placeholder="John"
+							required
+							type="text" />
+					</div>
+					<div class="w-full">
+						<label
+							class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+							for="lastName"
+							>Nom*</label
+						>
+						<input
+							class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+							formControlName="lastName"
+							id="lastName"
+							placeholder="Snow"
+							required
+							type="text" />
+					</div>
+					<app-button
+						(click)="confirmSignUpWithEmailForm()"
+						[disabled]="!signUpForm.valid"
+						text="S'inscrire"
+						type="submit">
+					</app-button>
+					<p class="text-sm font-light text-gray-500 dark:text-gray-400">
+						Vous avez déjà un compte?
+						<a
+							class="text-blue-600 hover:underline dark:text-blue-400"
+							href="/auth/login"
+							>Connectez-vous</a
+						>
+					</p>
+				</form>
+				<!-- <p class="text-sm font-light text-gray-500 dark:text-gray-400">
            Ou utilisez un autre service pour vous inscrire
          </p>
          <form [formGroup]="providerSignUpForm" class="space-y-4 md:space-y-6">
@@ -138,7 +163,7 @@
              </button>
            }
          </form>-->
-      </div>
-    </div>
-  </div>
+			</div>
+		</div>
+	</div>
 </section>
