@@ -5,6 +5,6 @@ import { Component } from '@angular/core';
 	standalone: true,
 	imports: [],
 	templateUrl: './restrictedpage.component.html',
-	styleUrl: './restrictedpage.component.css',
+	styleUrl: './restrictedpage.component.scss',
 })
 export class RestrictedpageComponent {}
