@@ -37,22 +37,22 @@
 	}
 
 	@if (loggedInUser) {
-    <div class="inline-flex gap-x-2">
-      <button (click)="logout()" class="header-nav-item group peer-focus:hidden sm:peer-focus:block">
-        <div class="flex items-center">
-          <span i18n="@@log.out" class="hidden sm:block">Log out</span>
-          <app-icon
-            [filled]="true"
-            icon="logout"
-            class="ps-2"></app-icon>
-        </div>
-        <app-underline></app-underline>
-      </button>
-      <img
-        alt="Rounded avatar"
-        class="w-12 h-12 rounded-full shrink hidden sm:block peer-focus:hidden sm:peer-focus:block"
-        height="12"
-        ngSrc="https://pbs.twimg.com/profile_images/1568802877933588482/Pnwh7rKm_400x400.jpg"
-        width="12" /></div>
-  }
+		<div class="inline-flex gap-x-2">
+			<button
+				(click)="logout()"
+				class="header-nav-item group peer-focus:hidden sm:peer-focus:block">
+				<div class="flex items-center">
+					<span i18n="@@log.out" class="hidden sm:block">Log out</span>
+					<app-icon [filled]="true" icon="logout" class="ps-2"></app-icon>
+				</div>
+				<app-underline></app-underline>
+			</button>
+			<img
+				alt="Rounded avatar"
+				class="w-12 h-12 rounded-full shrink hidden sm:block peer-focus:hidden sm:peer-focus:block"
+				height="12"
+				ngSrc="https://pbs.twimg.com/profile_images/1568802877933588482/Pnwh7rKm_400x400.jpg"
+				width="12" />
+		</div>
+	}
 </header>

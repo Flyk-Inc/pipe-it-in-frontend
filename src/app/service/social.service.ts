@@ -14,7 +14,7 @@ export class SocialService {
 
 	getTimeLinePosts(cursor: string = '') {
 		return this.httpClient.get<CursoredRessource<TimelinePost>>(
-      `${this.backendUrl}/posts/timeline${cursor ? `?cursor=${cursor}` : ''}`
-    );
+			`${this.backendUrl}/posts/timeline${cursor ? `?cursor=${cursor}` : ''}`
+		);
 	}
 }

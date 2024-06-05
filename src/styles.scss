@@ -10,9 +10,9 @@
 	--secondary: #516079;
 	--light-bg: #fffcfa;
 	--dark-bg: #2e3244;
-  --light-card-bg: #ffffff;
-  --dark-card-bg: #3a3f54;
-  --grey-bg: #f2f2f2;
+	--light-card-bg: #ffffff;
+	--dark-card-bg: #3a3f54;
+	--grey-bg: #f2f2f2;
 	--grey-bg-dark: #2e2e2e;
 	--grey-1: #d9d9d9;
 	--grey-2: #a6a6a6;
@@ -30,9 +30,9 @@ body {
 }
 
 .post-mini-name {
-  @apply font-medium text-[1em]
+	@apply font-medium text-[1em];
 }
 
-.post-mini-pseudo{
-  @apply text-[1em]
+.post-mini-pseudo {
+	@apply text-[1em];
 }

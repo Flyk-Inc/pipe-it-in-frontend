@@ -24,7 +24,7 @@ export class TimelineComponent implements OnInit {
 	initPostsData() {
 		this.socialService.getTimeLinePosts().subscribe(paginatedPosts => {
 			this.posts = paginatedPosts.data;
-      console.log(this.posts);
+			console.log(this.posts);
 			this.postsCursor = paginatedPosts.cursor;
 		});
 	}
