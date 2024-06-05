@@ -99,6 +99,7 @@ export class AuthenticationService {
 			.subscribe({
 				next: user => {
 					this.setAuthenticatedUser(user);
+					this.setToken(savedToken);
 					this.authLoadingSource.next(false);
 				},
 				error: error => {

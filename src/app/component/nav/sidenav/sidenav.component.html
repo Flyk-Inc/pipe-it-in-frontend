@@ -1,0 +1,28 @@
+<!--<nav class="h-full p-2.5 space-y-4 min-w-[300px] border-e border-e-secondary">-->
+<nav class="h-full space-y-4 p-4">
+	<div class="w-full flex flex-col gap-y-4 items-center">
+		<a
+			#rla="routerLinkActive"
+			*ngFor="let item of navItems"
+			[ngClass]="{ 'text-primary': rla.isActive, 'text-grey-1': !rla.isActive }"
+			class="group w-fit block min-w-36"
+			routerLink="{{ item.route }}"
+			routerLinkActive="active">
+			<div class="flex items-center gap-x-2.5">
+				<app-icon [filled]="rla.isActive" icon="{{ item.icon }}"></app-icon>
+				<span
+					[ngClass]="{
+						'text-primary': rla.isActive,
+						'text-grey-2': !rla.isActive
+					}"
+					class="header-nav-item"
+					>{{ item.label | titlecase }}</span
+				>
+			</div>
+			<app-underline
+				[style]="
+					rla.isActive ? 'border-primary' : 'border-grey-2'
+				"></app-underline>
+		</a>
+	</div>
+</nav>

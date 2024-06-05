@@ -1,6 +1,8 @@
 @if ((authService.authLoadingSource | async) === false) {
-	<app-header class="mb-10"></app-header>
-	<router-outlet></router-outlet>
-	<!--	<app-footer></app-footer>-->
+	<div class="md:container md:mx-auto">
+		<app-header class="mb-10"></app-header>
+		<router-outlet></router-outlet>
+		<!--	<app-footer></app-footer>-->
+	</div>
 	<p-toast></p-toast>
 }
