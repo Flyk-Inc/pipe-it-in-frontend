@@ -1,6 +1,6 @@
 <header
-	class="h-20 border-b border-b-secondary p-5 flex justify-between items-center">
-	<a class="h-full w-fit" routerLink="/">
+	class="h-20 border-b border-b-secondary p-5 gap-x-2 sm=gap-x-0 flex justify-between items-center">
+	<a class="h-full w-fit hidden sm:block" routerLink="/">
 		<img
 			[ngSrc]="
 				isDarkMode
@@ -16,7 +16,7 @@
 
 	@if (loggedInUser) {
 		<input
-			class="ps-2 h-10 w-[500px] rounded-b-xl border bg-grey-bg border-grey-2 dark:bg-grey-bg-dark dark:border-grey-3"
+			class="ps-2 h-10 w-[500px] rounded-xl outline-none border focus:border-primary bg-grey-bg border-grey-2 dark:bg-grey-bg-dark dark:border-grey-3 peer placeholder:text-sm"
 			type="text"
 			placeholder="Search Post or Pipeline"
 			i18n-placeholder="@@search_post_or_pipelien" />
@@ -37,15 +37,22 @@
 	}
 
 	@if (loggedInUser) {
-		<button (click)="logout()" class="header-nav-item group">
-			<div class="flex items-center">
-				<ng-container i18n="@@log.out">Log out</ng-container>
-				<app-icon
-					[filled]="true"
-					icon="arrow_right_alt"
-					class="ps-2"></app-icon>
-			</div>
-			<app-underline></app-underline>
-		</button>
-	}
+    <div class="inline-flex gap-x-2">
+      <button (click)="logout()" class="header-nav-item group peer-focus:hidden sm:peer-focus:block">
+        <div class="flex items-center">
+          <span i18n="@@log.out" class="hidden sm:block">Log out</span>
+          <app-icon
+            [filled]="true"
+            icon="logout"
+            class="ps-2"></app-icon>
+        </div>
+        <app-underline></app-underline>
+      </button>
+      <img
+        alt="Rounded avatar"
+        class="w-12 h-12 rounded-full shrink hidden sm:block peer-focus:hidden sm:peer-focus:block"
+        height="12"
+        ngSrc="https://pbs.twimg.com/profile_images/1568802877933588482/Pnwh7rKm_400x400.jpg"
+        width="12" /></div>
+  }
 </header>

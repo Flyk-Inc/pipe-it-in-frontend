@@ -13,8 +13,11 @@ RUN npm install
 # Copy the rest of the application source code to the working directory
 COPY . .
 
-# Build the Angular application
-RUN npm run build --prod
+# Build argument to specify the Angular target configuration
+ARG CONFIGURATION=production
+
+# Build the Angular application with the specified configuration
+RUN npm run build -- --configuration=$CONFIGURATION
 
 # Stage 2: Serve the application with Nginx
 FROM nginx:1.21.1-alpine
