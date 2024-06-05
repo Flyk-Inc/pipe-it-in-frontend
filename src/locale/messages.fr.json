@@ -1,0 +1,14 @@
+{
+	"locale": "fr",
+	"translations": {
+		"search_post_or_pipelien": "Rechercher un post ou une pipeline",
+		"log.in": "Se connecter",
+		"log.out": "Se déconnecter",
+		"home": "accueil",
+		"groups": "groupes",
+		"pipelines": "pipelines",
+		"followers": "followers",
+		"messages": "messages",
+		"favorites": "favoris"
+	}
+}

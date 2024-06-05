@@ -1,23 +1,38 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgOptimizedImage } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AuthenticationService } from '../../../auth/authentication.service';
 import { UserDTO } from '../../../auth/DTO/user.dto';
+import { IconComponent } from '../../typography/icon/icon.component';
+import { ThemeService } from '../../../theme.service';
+import { Subscription } from 'rxjs';
+import { UnderlineComponent } from '../underline/underline.component';
 
 @Component({
 	selector: 'app-header',
 	standalone: true,
-	imports: [AsyncPipe, RouterLink],
+	imports: [
+		AsyncPipe,
+		RouterLink,
+		NgOptimizedImage,
+		IconComponent,
+		UnderlineComponent,
+	],
 	templateUrl: './header.component.html',
-	styleUrl: './header.component.css',
+	styleUrl: './header.component.scss',
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 	loggedInUserSubscription$ = this.authenticationService.currentUserSource;
 	loggedInUser: UserDTO | null = null;
 	tokenSubscription$ = this.authenticationService.tokenSource;
 	token: string | null = null;
+	isDarkMode: boolean = false;
+	private themeSubscription!: Subscription;
 
-	constructor(protected authenticationService: AuthenticationService) {}
+	constructor(
+		protected authenticationService: AuthenticationService,
+		private themeService: ThemeService
+	) {}
 
 	ngOnInit() {
 		this.loggedInUserSubscription$.subscribe(user => {
@@ -26,6 +41,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
 		this.tokenSubscription$.subscribe(token => {
 			this.token = token;
 		});
+		this.themeSubscription = this.themeService
+			.isDarkMode()
+			.subscribe(darkMode => {
+				this.isDarkMode = darkMode;
+			});
 	}
 
 	logout() {
@@ -35,5 +55,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 	ngOnDestroy() {
 		this.loggedInUserSubscription$.unsubscribe();
 		this.tokenSubscription$.unsubscribe();
+		if (this.themeSubscription) {
+			this.themeSubscription.unsubscribe();
+		}
 	}
 }

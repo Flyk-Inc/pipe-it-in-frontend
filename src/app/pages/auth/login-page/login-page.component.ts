@@ -16,7 +16,7 @@ import { ButtonComponent } from '../../../component/layout/button/button.compone
 	standalone: true,
 	imports: [FormsModule, ReactiveFormsModule, ButtonComponent],
 	templateUrl: './login-page.component.html',
-	styleUrl: './login-page.component.css',
+	styleUrl: './login-page.component.scss',
 })
 export class LoginPageComponent {
 	signInForm = new FormBuilder().nonNullable.group({

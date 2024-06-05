@@ -19,7 +19,7 @@ import { MessagesModule } from 'primeng/messages';
 		MessagesModule,
 	],
 	templateUrl: './app.component.html',
-	styleUrl: './app.component.css',
+	styleUrl: './app.component.scss',
 })
 export class AppComponent {
 	constructor(protected authService: AuthenticationService) {}

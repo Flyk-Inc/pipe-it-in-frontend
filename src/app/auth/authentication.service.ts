@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import {
 	BehaviorSubject,
+	filter,
 	map,
 	Observable,
 	of,
@@ -35,9 +36,9 @@ export class AuthenticationService {
 	isAuthenticated(): Observable<boolean> {
 		return this.authLoadingSource.pipe(
 			withLatestFrom(this.currentUserSource),
-			map(([loading, currentUser]) => {
-				// If loading is false and there is a current user, the user is authenticated
-				return !loading && currentUser !== null;
+			filter(([loading]) => !loading), // Only allow emissions when loading is false
+			map(([, currentUser]) => {
+				return currentUser !== null;
 			})
 		);
 	}
@@ -81,7 +82,7 @@ export class AuthenticationService {
 	logout(): void {
 		this.removeToken();
 		this.removeAuthenticatedUser();
-		this.router.navigate(['/']).then();
+		this.router.navigate(['/auth']);
 	}
 
 	loadAuthenticatedUser() {

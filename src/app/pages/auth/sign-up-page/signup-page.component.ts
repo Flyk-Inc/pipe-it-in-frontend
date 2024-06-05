@@ -13,7 +13,7 @@ import { NotificationService } from '../../../notification.service';
 	standalone: true,
 	imports: [ReactiveFormsModule, ButtonComponent, MessagesModule],
 	templateUrl: './signup-page.component.html',
-	styleUrl: './signup-page.component.css',
+	styleUrl: './signup-page.component.scss',
 })
 export class SignupPageComponent {
 	signUpForm = new FormBuilder().nonNullable.group({
