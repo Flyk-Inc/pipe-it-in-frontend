@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { AuthenticationService } from '../../../auth/authentication.service';
 import { UserDTO } from '../../../auth/DTO/user.dto';
 import { IconComponent } from '../../typography/icon/icon.component';
-import { ThemeService } from '../../../theme.service';
+import { ThemeService } from '../../../service/theme.service';
 import { Subscription } from 'rxjs';
 import { UnderlineComponent } from '../underline/underline.component';
 

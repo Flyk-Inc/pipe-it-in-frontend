@@ -13,7 +13,7 @@ import { HttpBackend, HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { UserDTO } from './DTO/user.dto';
 import { CreateUserDTO } from './DTO/createUser.dto';
-import { LocalStorageService } from '../local-storage.service';
+import { LocalStorageService } from '../service/local-storage.service';
 import { Router } from '@angular/router';
 
 @Injectable({

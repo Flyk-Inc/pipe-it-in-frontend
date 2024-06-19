@@ -6,7 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ButtonComponent } from '../../../component/layout/button/button.component';
 import { MessagesModule } from 'primeng/messages';
 import { Message } from 'primeng/api';
-import { NotificationService } from '../../../notification.service';
+import { NotificationService } from '../../../service/notification.service';
 
 @Component({
 	selector: 'app-sign-up-page',
