@@ -17,4 +17,3 @@ export interface CreatePostDto {
 	text: string;
 	groupId?: number;
 }
-

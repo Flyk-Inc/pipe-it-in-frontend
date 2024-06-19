@@ -11,11 +11,11 @@ import { provideEffects } from '@ngrx/effects';
 
 export const appConfig: ApplicationConfig = {
 	providers: [
-    provideRouter(routes),
-    provideHttpClient(withInterceptors([backendAuthInterceptor])),
-    MessageService,
-    importProvidersFrom(BrowserAnimationsModule),
-    provideStore(),
-    provideEffects()
-],
+		provideRouter(routes),
+		provideHttpClient(withInterceptors([backendAuthInterceptor])),
+		MessageService,
+		importProvidersFrom(BrowserAnimationsModule),
+		provideStore(),
+		provideEffects(),
+	],
 };

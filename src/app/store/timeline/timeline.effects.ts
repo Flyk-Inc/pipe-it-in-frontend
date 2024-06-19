@@ -27,7 +27,7 @@ export class TimelineEffects {
 			mergeMap(({ createPostDTO }) =>
 				this.socialService.createPost(createPostDTO).pipe(
 					map(post => {
-            this.socialService.newPostAdded.next(post);
+						this.socialService.newPostAdded.next(post);
 						return TimelineActions.createPostSuccess({ post });
 					}),
 					catchError(error =>

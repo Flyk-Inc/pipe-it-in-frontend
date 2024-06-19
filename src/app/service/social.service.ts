@@ -11,24 +11,30 @@ import { catchError } from 'rxjs/operators';
 })
 export class SocialService {
 	backendUrl = environment.backendUrl;
-  newPostAdded = new Subject<TimelinePost>();
+	newPostAdded = new Subject<TimelinePost>();
 
 	constructor(private httpClient: HttpClient) {}
 
-  getTimeLinePostsTest(cursor: string = ''): Observable<TimelinePost[]> {
-    return this.httpClient
-      .get<CursoredRessource<TimelinePost>>(`${this.backendUrl}/posts/timeline${cursor ? `?cursor=${cursor}` : ''}`)
-      .pipe(
-        map(response => response.data), // Ensure this maps to an array of TimelinePost
-        catchError(error => {
-          console.error('Error fetching timeline posts', error);
-          return throwError(() => new Error(error.message || 'An error occurred'));
-        })
-      );
-  }
+	getTimeLinePostsTest(cursor: string = ''): Observable<TimelinePost[]> {
+		return this.httpClient
+			.get<
+				CursoredRessource<TimelinePost>
+			>(`${this.backendUrl}/posts/timeline${cursor ? `?cursor=${cursor}` : ''}`)
+			.pipe(
+				map(response => response.data), // Ensure this maps to an array of TimelinePost
+				catchError(error => {
+					console.error('Error fetching timeline posts', error);
+					return throwError(
+						() => new Error(error.message || 'An error occurred')
+					);
+				})
+			);
+	}
 
 	createPost(postData: CreatePostDto) {
-		return this.httpClient
-			.post<TimelinePost>(`${this.backendUrl}/posts`, postData)
+		return this.httpClient.post<TimelinePost>(
+			`${this.backendUrl}/posts`,
+			postData
+		);
 	}
 }

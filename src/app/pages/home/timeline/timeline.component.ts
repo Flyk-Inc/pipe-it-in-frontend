@@ -53,7 +53,7 @@ export class TimelineComponent implements OnInit {
 		this.posts$ = this.store.select(selectAllPosts);
 		this.store.dispatch(loadPosts());
 		this.socialService.newPostAdded.subscribe(() => {
-      console.log('new post added')
+			console.log('new post added');
 			this.postForm.controls['text'].setValue('');
 			this.postForm.reset();
 		});
