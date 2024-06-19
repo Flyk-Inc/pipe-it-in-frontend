@@ -12,3 +12,9 @@ export interface TimelinePost {
 	comments: number;
 	likes: number;
 }
+
+export interface CreatePostDto {
+	text: string;
+	groupId?: number;
+}
+

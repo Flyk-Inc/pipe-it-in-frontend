@@ -1,7 +1,24 @@
 <div class="h-full flex flex-col gap-y-2 mx-2 pt-2">
-	@if (posts && posts.length) {
-		<ng-container *ngFor="let post of posts">
-			<app-timeline-post [post]="post"></app-timeline-post>
-		</ng-container>
-	}
+  <form (ngSubmit)="createPost()" [formGroup]="postForm">
+		<textarea
+      class="w-full resize-none rounded-lg outline-none border border-grey-1 dark:border-grey-3 bg-grey-bg dark:bg-grey-bg-dark p-4 placeholder:text-grey-2"
+      formControlName="text"
+      rows="3"
+      placeholder="Écrire un post"
+    ></textarea>
+    <app-button
+      [disabled]="postForm.invalid"
+      [ngClass]="{'self-end':true, 'hidden':postForm.controls['text'].value.length===0}"
+      text="Publier"
+      type="submit"></app-button>
+  </form>
+  @if (posts$| async; as posts) {
+    @if (posts.length) {
+      <ng-container>
+        <ng-container *ngFor="let post of posts">
+          <app-timeline-post [post]="post"></app-timeline-post>
+        </ng-container>
+      </ng-container>
+    }
+  }
 </div>

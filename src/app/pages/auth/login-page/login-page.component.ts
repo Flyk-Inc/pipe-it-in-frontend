@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { AuthenticationService } from '../../../auth/authentication.service';
 import { Router } from '@angular/router';
-import { NotificationService } from '../../../notification.service';
+import { NotificationService } from '../../../service/notification.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ButtonComponent } from '../../../component/layout/button/button.component';
 

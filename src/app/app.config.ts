@@ -6,12 +6,16 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { backendAuthInterceptor } from './auth/backend-auth.interceptor';
 import { MessageService } from 'primeng/api';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { provideStore } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
 
 export const appConfig: ApplicationConfig = {
 	providers: [
-		provideRouter(routes),
-		provideHttpClient(withInterceptors([backendAuthInterceptor])),
-		MessageService,
-		importProvidersFrom(BrowserAnimationsModule),
-	],
+    provideRouter(routes),
+    provideHttpClient(withInterceptors([backendAuthInterceptor])),
+    MessageService,
+    importProvidersFrom(BrowserAnimationsModule),
+    provideStore(),
+    provideEffects()
+],
 };
