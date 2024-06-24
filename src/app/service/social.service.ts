@@ -5,6 +5,7 @@ import { CreatePostDto, TimelinePost } from '../models/post.model';
 import { CursoredRessource } from '../models/utils';
 import { map, Observable, Subject, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { Group } from '../models/group.model';
 
 @Injectable({
 	providedIn: 'root',
@@ -36,5 +37,18 @@ export class SocialService {
 			`${this.backendUrl}/posts`,
 			postData
 		);
+	}
+
+	getPopularGroups(): Observable<Group[]> {
+		return this.httpClient
+			.get<Group[]>(`${this.backendUrl}/groups/popular`)
+			.pipe(
+				catchError(error => {
+					console.error('Error fetching popular groups', error);
+					return throwError(
+						() => new Error(error.message || 'An error occurred')
+					);
+				})
+			);
 	}
 }
