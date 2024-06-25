@@ -47,12 +47,14 @@
 				</div>
 				<app-underline></app-underline>
 			</button>
-			<img
-				alt="Rounded avatar"
-				class="w-12 h-12 rounded-full shrink hidden sm:block peer-focus:hidden sm:peer-focus:block"
-				height="12"
-				ngSrc="https://pbs.twimg.com/profile_images/1568802877933588482/Pnwh7rKm_400x400.jpg"
-				width="12" />
+			<button (click)="navigateToProfile()" class="rounded-full inline-block">
+				<img
+					alt="Rounded avatar"
+					class="w-12 h-12 rounded-full shrink hidden sm:block peer-focus:hidden sm:peer-focus:block"
+					height="12"
+					ngSrc="https://pbs.twimg.com/profile_images/1568802877933588482/Pnwh7rKm_400x400.jpg"
+					width="12" />
+			</button>
 		</div>
 	}
 </header>

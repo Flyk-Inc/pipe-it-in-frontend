@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AsyncPipe, NgOptimizedImage } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthenticationService } from '../../../auth/authentication.service';
 import { UserDTO } from '../../../auth/DTO/user.dto';
 import { IconComponent } from '../../typography/icon/icon.component';
@@ -31,7 +31,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
 	constructor(
 		protected authenticationService: AuthenticationService,
-		private themeService: ThemeService
+		private themeService: ThemeService,
+		private router: Router
 	) {}
 
 	ngOnInit() {
@@ -50,6 +51,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
 	logout() {
 		this.authenticationService.logout();
+	}
+
+	navigateToProfile() {
+		this.router.navigate(['/profile']);
 	}
 
 	ngOnDestroy() {
