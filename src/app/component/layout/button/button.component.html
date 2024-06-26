@@ -1,6 +1,10 @@
 <button
 	[disabled]="disabled"
 	[type]="type"
-	class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50">
+	[ngClass]="{
+		'bg-blue-500 text-white font-bold py-2 px-4 rounded': true,
+		'hover:bg-blue-700': !disabled,
+		'opacity-50': disabled
+	}">
 	{{ text }}
 </button>
