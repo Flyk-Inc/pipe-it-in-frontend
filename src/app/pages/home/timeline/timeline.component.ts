@@ -34,15 +34,18 @@ import {
 })
 export class TimelineComponent implements OnInit {
 	posts$!: Observable<TimelinePost[]>;
+	textControl = new FormControl('', {
+		nonNullable: true,
+		validators: [Validators.required],
+	});
 	postForm: FormGroup;
-	postsCursor: string = '';
 
 	constructor(
 		private socialService: SocialService,
 		private store: Store
 	) {
 		this.postForm = new FormGroup({
-			text: new FormControl('', [Validators.required]),
+			text: this.textControl,
 		});
 	}
 
