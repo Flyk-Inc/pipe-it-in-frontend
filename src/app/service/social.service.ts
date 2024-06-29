@@ -63,9 +63,11 @@ export class SocialService {
 		);
 	}
 
-	getUserPosts(): Observable<TimelinePost[]> {
+	getUserPosts(userId: number): Observable<TimelinePost[]> {
 		return this.httpClient
-			.get<CursoredRessource<TimelinePost>>(`${this.backendUrl}/posts`)
+			.get<
+				CursoredRessource<TimelinePost>
+			>(`${this.backendUrl}/posts/user/${userId}`)
 			.pipe(
 				map(response => response.data), // Ensure this maps to an array of TimelinePost
 				catchError(error => {

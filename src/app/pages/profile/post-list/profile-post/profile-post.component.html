@@ -1,0 +1,33 @@
+<div
+	class="rounded-lg border border-grey-1 dark:border-none p-4 bg-light-card-bg dark:bg-dark-card-bg">
+	<div class="flex flex-nowrap gap-x-2">
+		<img
+			alt="Rounded avatar"
+			class="w-12 h-12 rounded-full shrink"
+			height="12"
+			[src]="
+				'https://pbs.twimg.com/profile_images/1568802877933588482/Pnwh7rKm_400x400.jpg'
+			"
+			width="12" />
+		<div class="grow space-y-2">
+			<p class="post-mini-name text-secondary">
+				{{ post.user.firstName + ' ' + post.user.lastName }}
+			</p>
+			<!-- TODO put username -->
+			<p class="post-mini-pseudo text-grey-3 dark:text-grey-2">
+				&#64;{{ post.user.lastName || post.user.lastName }}
+			</p>
+			<p>{{ post.text }}</p>
+			<div class="flex justify-end gap-x-3">
+				<span class="flex items-center gap-x-1">
+					<app-icon icon="thumb_up"></app-icon>
+					<span>{{ post.likes }}</span>
+				</span>
+				<span class="flex items-center gap-x-1">
+					<app-icon icon="comment"></app-icon>
+					<span>{{ post.comments }}</span>
+				</span>
+			</div>
+		</div>
+	</div>
+</div>

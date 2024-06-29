@@ -32,8 +32,8 @@ export class ProfileEffects {
 	loadProfilePosts$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(ProfileActions.loadProfilePosts),
-			mergeMap(() =>
-				this.socialService.getUserPosts().pipe(
+			mergeMap(action =>
+				this.socialService.getUserPosts(action.userId).pipe(
 					map(posts => ProfileActions.loadProfilePostsSuccess({ posts })),
 					catchError(error =>
 						of(ProfileActions.loadProfilePostsFailure({ error }))

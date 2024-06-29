@@ -34,10 +34,16 @@ export class ProfileComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.store.dispatch(loadProfile());
-		this.store.dispatch(loadProfilePosts());
-		this.store.dispatch(loadProfileGroups());
 
 		this.loggedInUser$ = this.store.select(selectProfileUser);
+		this.loggedInUser$.subscribe(user => {
+			if (user) {
+				console.log(user.id);
+				this.store.dispatch(loadProfilePosts({ userId: user.id }));
+				this.store.dispatch(loadProfileGroups());
+			}
+		});
+
 		this.userPosts$ = this.store.select(selectProfilePosts);
 		this.userGroups$ = this.store.select(selectProfileGroups);
 	}

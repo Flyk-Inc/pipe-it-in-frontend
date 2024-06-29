@@ -15,7 +15,10 @@ export const loadProfileFailure = createAction(
 	props<{ error: string }>()
 );
 
-export const loadProfilePosts = createAction('[Profile] Load Profile Posts');
+export const loadProfilePosts = createAction(
+	'[Profile] Load Profile Posts',
+	props<{ userId: number }>()
+);
 
 export const loadProfilePostsSuccess = createAction(
 	'[Profile] Load Profile Posts Success',

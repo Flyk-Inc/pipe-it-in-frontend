@@ -1,8 +1,3 @@
-export interface Post {
-	id: number;
-	content: string;
-}
-
 export interface TimelinePost {
 	id: number;
 	text: string;
