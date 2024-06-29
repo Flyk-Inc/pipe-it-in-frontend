@@ -1,41 +1,44 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserDTO } from '../../auth/DTO/user.dto';
-import { AuthenticationService } from '../../auth/authentication.service';
 import { ProfileGroupsComponent } from './profile-groups/profile-groups.component';
 import { Group } from '../../models/group.model';
-import { SocialService } from '../../service/social.service';
+import { TimelinePost } from '../../models/post.model';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import {
+	selectProfileGroups,
+	selectProfilePosts,
+	selectProfileUser,
+} from '../../store/profile/profile.selectors';
+import {
+	loadProfile,
+	loadProfileGroups,
+	loadProfilePosts,
+} from '../../store/profile/profile.actions';
+import { AsyncPipe } from '@angular/common';
+import { PostListComponent } from './post-list/post-list.component';
 
 @Component({
 	selector: 'app-profile',
 	standalone: true,
-	imports: [ProfileGroupsComponent],
+	imports: [ProfileGroupsComponent, AsyncPipe, PostListComponent],
 	templateUrl: './profile.component.html',
 	styleUrl: './profile.component.scss',
 })
-export class ProfileComponent implements OnInit, OnDestroy {
-	loggedInUserSubscription$ = this.authenticationService.currentUserSource;
-	loggedInUser: UserDTO | null = null;
-	userGroups: Group[] = [];
+export class ProfileComponent implements OnInit {
+	loggedInUser$!: Observable<UserDTO | null>;
+	userPosts$!: Observable<TimelinePost[]>;
+	userGroups$!: Observable<Group[]>;
 
-	constructor(
-		protected authenticationService: AuthenticationService,
-		protected socialService: SocialService
-	) {}
+	constructor(private store: Store) {}
 
 	ngOnInit(): void {
-		this.loggedInUserSubscription$.subscribe(user => {
-			this.loggedInUser = user;
-		});
-		this.loadUserGroups();
-	}
+		this.store.dispatch(loadProfile());
+		this.store.dispatch(loadProfilePosts());
+		this.store.dispatch(loadProfileGroups());
 
-	ngOnDestroy() {
-		this.loggedInUserSubscription$.unsubscribe();
-	}
-
-	loadUserGroups(): void {
-		this.socialService.getUserGroups().subscribe(groups => {
-			this.userGroups = groups;
-		});
+		this.loggedInUser$ = this.store.select(selectProfileUser);
+		this.userPosts$ = this.store.select(selectProfilePosts);
+		this.userGroups$ = this.store.select(selectProfileGroups);
 	}
 }

@@ -62,4 +62,18 @@ export class SocialService {
 			})
 		);
 	}
+
+	getUserPosts(): Observable<TimelinePost[]> {
+		return this.httpClient
+			.get<CursoredRessource<TimelinePost>>(`${this.backendUrl}/posts`)
+			.pipe(
+				map(response => response.data), // Ensure this maps to an array of TimelinePost
+				catchError(error => {
+					console.error('Error fetching timeline posts', error);
+					return throwError(
+						() => new Error(error.message || 'An error occurred')
+					);
+				})
+			);
+	}
 }
