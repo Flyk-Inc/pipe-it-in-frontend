@@ -9,6 +9,27 @@
 		"pipelines": "pipelines",
 		"followers": "followers",
 		"messages": "messages",
-		"favorites": "favoris"
+		"favorites": "favoris",
+		"written-by": "écrit par",
+		"current-draft": "Brouillon actuel",
+		"versions": "versions",
+		"posted.on": "posté le",
+		"input": "entrée",
+		"output": "sortie",
+		"code.title": "titre du code",
+		"code.description": "description du code",
+		"code.language": "langage du code",
+		"chose-a-language": "choisissez un langage",
+		"input.description": "description de l'entrée",
+		"input.fileType": "type de fichier d'entrée",
+		"chose-a-fileType": "choisissez un type de fichier",
+		"output.description": "description de la sortie",
+		"output.fileType": "type de fichier de sortie",
+		"save.draft": "sauvegarder le brouillon",
+		"by": "de",
+		"language": "langage",
+		"latest-version": "dernière version",
+		"draft": "brouillon",
+		"your-codes": "vos codes"
 	}
 }

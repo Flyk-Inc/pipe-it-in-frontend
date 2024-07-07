@@ -9,6 +9,27 @@
 		"pipelines": "Pipelines",
 		"followers": "Followers",
 		"messages": "Messages",
-		"favorites": "Favoris"
+		"favorites": "Favoris",
+		"written-by": "de",
+		"current-draft": "Brouillon actuel",
+		"versions": "Versions",
+		"posted.on": "posted on",
+		"input": "input",
+		"output": "output",
+		"code.title": "Code's title",
+		"code.description": "Code's description",
+		"code.language": "Code's language",
+		"chose-a-language": " Choose a language ",
+		"input.description": "Input description",
+		"input.fileType": "intput file type",
+		"chose-a-fileType": " Choose a FileType ",
+		"output.description": "Output description",
+		"output.fileType": "output file type",
+		"save.draft": "save draft",
+		"by": "de",
+		"language": "language",
+		"latest-version": "Latest Version",
+		"draft": "draft",
+		"your-codes": "Vos codes"
 	}
 }

@@ -1,0 +1,173 @@
+<form
+	class="max-h-full overflow-y-scroll rounded-lg border border-grey-1 dark:border-grey-3 bg-light-card-bg dark:bg-dark-card-bg mt-2 mx-2 p-4 flex flex-col gap-y-2"
+	[formGroup]="createCodeForm">
+	<div class="w-full">
+		<label
+			class="first-letter:capitalize block mb-1 text-sm font-medium text-gray-900 dark:text-white"
+			for="title"
+			i18n="@@code.title"
+			>Code's title</label
+		>
+		<input
+			formControlName="title"
+			class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+			id="title"
+			name="title"
+			placeholder="Obfuscateur de texte"
+			required
+			type="email" />
+	</div>
+	<div class="w-full">
+		<label
+			class="first-letter:capitalize block mb-1 text-sm font-medium text-gray-900 dark:text-white"
+			for="description"
+			i18n="@@code.description"
+			>Code's description</label
+		>
+		<textarea
+			formControlName="description"
+			class="bg-gray-50 resize-none border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+			id="description"
+			name="description"
+			required
+			rows="4"
+			type="email"></textarea>
+	</div>
+	<div class="w-full">
+		<label
+			class="first-letter:capitalize block mb-1 text-sm font-medium text-gray-900 dark:text-white"
+			for="language"
+			i18n="@@code.language"
+			>Code's language</label
+		>
+		<select
+			formControlName="language"
+			class="bg-gray-50 resize-none border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+			id="language"
+			name="language"
+			required>
+			<option
+				class="first-letter:capitalize"
+				i18n="@@chose-a-language"
+				selected>
+				Choose a language
+			</option>
+			<option value="python">Python</option>
+			<option value="javascript">JavaScript</option>
+		</select>
+	</div>
+	<div class="w-full">
+		<label class="inline-flex items-center cursor-pointer">
+			<input
+				[formControl]="hasInput"
+				class="sr-only peer"
+				type="checkbox"
+				value="" />
+			<div
+				class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-secondary peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+			<span
+				class="first-letter:capitalize ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
+				><span i18n="@@input">Input</span> ?</span
+			>
+		</label>
+		@if (hasInput.value) {
+			<div class="w-full flex flex-nowrap gap-x-2">
+				<div class="w-full md:w-1/2">
+					<label
+						class="first-letter:capitalize block mb-1 text-sm font-medium text-gray-900 dark:text-white"
+						for="inputDescription"
+						i18n="@@input.description"
+						>Input description</label
+					>
+					<input
+						formControlName="inputDescription"
+						class="w-full bg-gray-50 resize-none border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+						id="inputDescription"
+						name="inputDescription"
+						required />
+				</div>
+				<div class="w-full md:w-1/2">
+					<label
+						class="first-letter:capitalize block mb-1 text-sm font-medium text-gray-900 dark:text-white"
+						for="inputFileType"
+						i18n="@@input.fileType"
+						>intput file type</label
+					>
+					<select
+						formControlName="inputFileType"
+						class="bg-gray-50 resize-none border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+						id="inputFileType"
+						name="inputFileType"
+						required>
+						<option i18n="@@chose-a-fileType" selected>
+							Choose a FileType
+						</option>
+						<option value="txt">txt</option>
+						<option value="png">png</option>
+					</select>
+				</div>
+			</div>
+		}
+	</div>
+	<div class="w-full">
+		<label class="inline-flex items-center cursor-pointer">
+			<input
+				[formControl]="hasOutput"
+				class="sr-only peer"
+				type="checkbox"
+				value="" />
+			<div
+				class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-secondary peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+			<span
+				class="first-letter:capitalize ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
+				><span i18n="@@output">Output</span> ?</span
+			>
+		</label>
+		@if (hasOutput.value) {
+			<div class="w-full flex flex-nowrap gap-x-2">
+				<div class="w-full md:w-1/2">
+					<label
+						class="first-letter:capitalize block mb-1 text-sm font-medium text-gray-900 dark:text-white"
+						for="outputDescription"
+						i18n="@@output.description"
+						>Output description</label
+					>
+					<input
+						formControlName="outputDescription"
+						class="w-full bg-gray-50 resize-none border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+						id="outputDescription"
+						name="outputDescription"
+						required />
+				</div>
+				<div class="w-full md:w-1/2">
+					<label
+						class="first-letter:capitalize block mb-1 text-sm font-medium text-gray-900 dark:text-white"
+						for="inputFileType"
+						i18n="@@output.fileType"
+						>output file type</label
+					>
+					<select
+						formControlName="outputFileType"
+						class="bg-gray-50 resize-none border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+						id="outputFileType"
+						name="outputFileType"
+						required>
+						<option i18n="@@chose-a-fileType" selected>
+							Choose a FileType
+						</option>
+						<option value="txt">txt</option>
+						<option value="png">png</option>
+					</select>
+				</div>
+			</div>
+		}
+	</div>
+	<ngx-monaco-editor
+		formControlName="code"
+		[options]="editorOptions"
+		class="rounded-lg overflow-hidden"></ngx-monaco-editor>
+	<app-button
+		(click)="submitCreateCodeForm()"
+		[disabled]="!createCodeForm.valid"
+		[text]="saveStringTranslated"></app-button>
+</form>

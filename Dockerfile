@@ -10,7 +10,7 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
-# Copy the rest of the application source code to the working directory
+# Copy the rest of the application source code-home to the working directory
 COPY . .
 
 # Build argument to specify the Angular target configuration

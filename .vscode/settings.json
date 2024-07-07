@@ -1,0 +1,15 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "pipeitin local",
+            "group": "pipeitin",
+            "database": "pipeitin",
+            "username": "pipeitin"
+        }
+    ],
+    "files.associations": { "*.scss": "postcss" }
+}
