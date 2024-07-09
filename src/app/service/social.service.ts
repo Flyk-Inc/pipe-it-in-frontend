@@ -3,7 +3,7 @@ import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { CreatePostDto, TimelinePost } from '../models/post.model';
 import { CursoredRessource } from '../models/utils';
-import { map, Observable, Subject, throwError } from 'rxjs';
+import { map, Observable, Subject, switchMap, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Group } from '../models/group.model';
 
@@ -72,6 +72,32 @@ export class SocialService {
 				map(response => response.data), // Ensure this maps to an array of TimelinePost
 				catchError(error => {
 					console.error('Error fetching timeline posts', error);
+					return throwError(
+						() => new Error(error.message || 'An error occurred')
+					);
+				})
+			);
+	}
+
+	getUserProfilePicture(): Observable<string> {
+		return this.httpClient
+			.get(`${this.backendUrl}/users/profile-picture`, { responseType: 'blob' })
+			.pipe(
+				switchMap(blob => {
+					const reader = new FileReader();
+					return new Observable<string>(observer => {
+						reader.onloadend = () => {
+							observer.next(reader.result as string);
+							observer.complete();
+						};
+						reader.onerror = error => {
+							observer.error(error);
+						};
+						reader.readAsDataURL(blob);
+					});
+				}),
+				catchError(error => {
+					console.error('Error fetching profile picture', error);
 					return throwError(
 						() => new Error(error.message || 'An error occurred')
 					);

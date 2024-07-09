@@ -41,3 +41,8 @@ export const loadProfileGroupsFailure = createAction(
 	'[Profile] Load Profile Groups Failure',
 	props<{ error: string }>()
 );
+
+export const setProfilePictureUrl = createAction(
+	'[Profile] Set Profile Picture URL',
+	props<{ profilePictureUrl: string }>()
+);

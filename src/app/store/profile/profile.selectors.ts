@@ -19,6 +19,11 @@ export const selectProfileGroups = createSelector(
 	(state: ProfileState) => state.groups
 );
 
+export const selectProfilePictureUrl = createSelector(
+	selectProfileState,
+	(state: ProfileState) => state.profilePictureUrl
+);
+
 export const selectProfileError = createSelector(
 	selectProfileState,
 	(state: ProfileState) => state.error

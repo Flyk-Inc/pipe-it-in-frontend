@@ -5,4 +5,5 @@ export interface UserDTO {
 	lastName: string;
 	username: string;
 	description?: string;
+	profilePicture?: string;
 }

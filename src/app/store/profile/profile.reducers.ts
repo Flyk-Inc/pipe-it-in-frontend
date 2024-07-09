@@ -42,6 +42,10 @@ export const profileReducers = createReducer(
 			error: null,
 		})
 	),
+	on(ProfileActions.setProfilePictureUrl, (state, { profilePictureUrl }) => ({
+		...state,
+		profilePictureUrl,
+	})),
 	on(
 		ProfileActions.loadProfileGroupsFailure,
 		(state, { error }): ProfileState => ({

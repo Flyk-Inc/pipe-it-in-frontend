@@ -36,8 +36,3 @@ body {
 .post-mini-pseudo {
 	@apply text-[1em];
 }
-
-.btn-primary {
-	@apply text-white rounded-lg;
-	background-color: var(--primary);
-}

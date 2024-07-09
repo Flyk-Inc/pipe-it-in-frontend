@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { of } from 'rxjs';
+import { of, switchMap } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import * as ProfileActions from './profile.actions';
 import { SocialService } from '../../service/social.service';
@@ -53,6 +53,29 @@ export class ProfileEffects {
 						of(ProfileActions.loadProfileGroupsFailure({ error }))
 					)
 				)
+			)
+		);
+	});
+
+	loadProfilePictureUrl$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(ProfileActions.loadProfileSuccess),
+			switchMap(({ user }) =>
+				user.profilePicture
+					? this.socialService.getUserProfilePicture().pipe(
+							map(profilePictureUrl =>
+								ProfileActions.setProfilePictureUrl({ profilePictureUrl })
+							),
+							catchError(error =>
+								of(ProfileActions.loadProfileFailure({ error }))
+							)
+						)
+					: of(
+							ProfileActions.setProfilePictureUrl({
+								profilePictureUrl:
+									'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png',
+							})
+						)
 			)
 		);
 	});

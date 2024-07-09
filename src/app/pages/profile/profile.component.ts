@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import {
 	selectProfileGroups,
+	selectProfilePictureUrl,
 	selectProfilePosts,
 	selectProfileUser,
 } from '../../store/profile/profile.selectors';
@@ -29,6 +30,7 @@ export class ProfileComponent implements OnInit {
 	loggedInUser$!: Observable<UserDTO | null>;
 	userPosts$!: Observable<TimelinePost[]>;
 	userGroups$!: Observable<Group[]>;
+	profilePictureUrl$!: Observable<string>;
 
 	constructor(private store: Store) {}
 
@@ -36,9 +38,11 @@ export class ProfileComponent implements OnInit {
 		this.store.dispatch(loadProfile());
 
 		this.loggedInUser$ = this.store.select(selectProfileUser);
+
 		this.loggedInUser$.subscribe(user => {
 			if (user) {
-				console.log(user.id);
+				console.log(user.profilePicture);
+				this.profilePictureUrl$ = this.store.select(selectProfilePictureUrl);
 				this.store.dispatch(loadProfilePosts({ userId: user.id }));
 				this.store.dispatch(loadProfileGroups());
 			}
