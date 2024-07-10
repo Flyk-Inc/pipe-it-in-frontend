@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {
+	AfterViewChecked,
+	ChangeDetectorRef,
+	Component,
+	OnInit,
+} from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CodeService } from '../../../service/code.service';
 import { CodeDetail } from '../../pipelines/pipelines.component';
@@ -7,6 +12,16 @@ import { HighlightAuto } from 'ngx-highlightjs';
 import { HighlightLineNumbers } from 'ngx-highlightjs/line-numbers';
 import 'highlight.js/styles/androidstudio.min.css';
 import { PanelModule } from 'primeng/panel';
+import {
+	FormBuilder,
+	FormControl,
+	ReactiveFormsModule,
+	Validators,
+} from '@angular/forms';
+import { CodeLanguages } from '../../../models/code.model';
+import { ButtonComponent } from '../../../component/layout/button/button.component';
+import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
+import { CreateCodeFormComponent } from './create-code-form/create-code-form.component';
 
 @Component({
 	selector: 'app-code-home-page',
@@ -18,31 +33,120 @@ import { PanelModule } from 'primeng/panel';
 		HighlightLineNumbers,
 		PanelModule,
 		DatePipe,
+		ButtonComponent,
+		ReactiveFormsModule,
+		MonacoEditorModule,
+		CreateCodeFormComponent,
 	],
 	templateUrl: './code-page.component.html',
 	styleUrl: './code-page.component.scss',
 })
-export class CodePageComponent implements OnInit {
+export class CodePageComponent implements OnInit, AfterViewChecked {
 	code?: CodeDetail;
 	loading = true;
 	error = false;
 
+	hasInput = new FormControl(false);
+	hasOutput = new FormControl(false);
+	updateCodeForm = this.formBuilder.nonNullable.group({
+		title: ['', Validators.required],
+		description: ['', Validators.required],
+		code: ['', Validators.required],
+		language: [CodeLanguages.javascript, Validators.required],
+		inputFileType: [''],
+		outputFileType: [''],
+		inputDescription: [''],
+		outputDescription: [''],
+	});
+
+	editorOptions = {
+		theme: 'vs-dark',
+		language: this.updateCodeForm.controls.language.value,
+	};
+
+	mode: 'editing' | 'viewing' = 'viewing';
+	saveStringTranslated = 'save';
+	postStringTranslated = 'post';
+	cancelStringTranslated = 'cancel';
+	editStringTranslated = 'edit';
+
 	constructor(
 		private route: ActivatedRoute,
-		private codeService: CodeService
+		private codeService: CodeService,
+		private formBuilder: FormBuilder,
+		private changeDetectorRef: ChangeDetectorRef
 	) {}
 
 	ngOnInit() {
+		this.saveStringTranslated = $localize`:@@save.draft:save draft`;
+		this.postStringTranslated = $localize`:@@post:post`;
+		this.cancelStringTranslated = $localize`:@@cancel:cancel`;
+		this.editStringTranslated = $localize`:@@edit:edit`;
+		this.loadCode();
+	}
+
+	loadCode() {
 		const codeId = Number(this.route.snapshot.params['id']);
-		this.codeService.getCodeDetailById(codeId).subscribe(
-			codes => {
-				this.code = codes;
+		this.codeService.getCodeDetailById(codeId).subscribe({
+			next: receivedCode => {
+				this.setCode(receivedCode);
 				this.loading = false;
 			},
-			() => {
+			error: () => {
 				this.error = true;
 				this.loading = false;
-			}
-		);
+			},
+		});
+		this.updateCodeForm.controls.language.valueChanges.subscribe(language => {
+			this.editorOptions = { ...this.editorOptions, language };
+		});
+	}
+
+	ngAfterViewChecked(): void {
+		this.changeDetectorRef.detectChanges();
+	}
+
+	private switchMode(to: 'editing' | 'viewing') {
+		this.mode = to;
+	}
+
+	handleSuccess() {
+		this.switchMode('viewing');
+		this.loadCode();
+	}
+
+	handleCancel() {
+		console.log('cancel');
+		this.switchMode('viewing');
+	}
+
+	handleEdit() {
+		this.switchMode('editing');
+	}
+
+	private setCode(code: CodeDetail) {
+		this.code = code;
+		this.updateCodeForm.controls.title.setValue(code.title);
+		this.updateCodeForm.controls.description.setValue(code.description);
+		this.updateCodeForm.controls.code.setValue(code.draft);
+		this.updateCodeForm.controls.language.setValue(code.language);
+		if (code.input.length > 0) {
+			this.updateCodeForm.controls.inputFileType.setValue(
+				code.input[0].fileType
+			);
+			this.updateCodeForm.controls.inputDescription.setValue(
+				code.input[0].description
+			);
+			this.hasInput.setValue(true);
+		}
+		if (code.output.length > 0) {
+			this.updateCodeForm.controls.outputFileType.setValue(
+				code.output[0].fileType
+			);
+			this.updateCodeForm.controls.outputDescription.setValue(
+				code.output[0].description
+			);
+			this.hasOutput.setValue(true);
+		}
 	}
 }

@@ -47,7 +47,6 @@ export class NewCodeComponent implements OnInit {
 		theme: 'vs-dark',
 		language: this.createCodeForm.controls.language.value,
 	};
-	code: string = 'function x() {\nconsole.log("Hello world!");\n}';
 
 	saveStringTranslated = 'Save';
 

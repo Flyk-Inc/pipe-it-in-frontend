@@ -3,7 +3,11 @@ import { map, Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { CreateCodeDTO, TimelineCode } from '../models/code.model';
+import {
+	CreateCodeDTO,
+	CreateVersionDTO,
+	TimelineCode,
+} from '../models/code.model';
 import { CodeDetail } from '../pages/pipelines/pipelines.component';
 
 @Injectable({
@@ -44,6 +48,20 @@ export class CodeService {
 		return this.httpClient.post<TimelineCode>(
 			`${this.backendUrl}/codes`,
 			createCodeDTO
+		);
+	}
+
+	updateCode(codeId: number, updateCodeDTO: CreateCodeDTO) {
+		return this.httpClient.patch<TimelineCode>(
+			`${this.backendUrl}/codes/${codeId}`,
+			updateCodeDTO
+		);
+	}
+
+	createVersion(createVersionDto: CreateVersionDTO, codeId: number) {
+		return this.httpClient.post<TimelineCode>(
+			`${this.backendUrl}/codes/${codeId}/version`,
+			createVersionDto
 		);
 	}
 }

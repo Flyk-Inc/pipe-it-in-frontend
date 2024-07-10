@@ -5,9 +5,16 @@ export interface TimelineCode {
 	title: string;
 	description: string;
 	author: UserDTO;
-	language: string;
+	language: CodeLanguages;
 	draft: string;
+	versionDraft: {
+		title: string;
+		version: string;
+		description: string;
+	};
 	versions: Version[];
+	input: FileDescription[];
+	output: FileDescription[];
 	status: string;
 	createAt: string;
 	updateAt: string;
@@ -40,6 +47,16 @@ export interface CreateCodeDTO {
 	output: OutputDescriptionDTO[];
 }
 
+export interface CreateVersionDTO {
+	title: string;
+	version: string;
+	description: string;
+	codeContent: string;
+	status: CodeStatus;
+	input: InputDescriptionDTO[];
+	output: OutputDescriptionDTO[];
+}
+
 export interface InputDescriptionDTO {
 	fileType: string;
 	description: string;
@@ -53,4 +70,9 @@ export interface OutputDescriptionDTO {
 export enum CodeLanguages {
 	python = 'python',
 	javascript = 'javascript',
+}
+
+export enum CodeStatus {
+	active = 'active',
+	hidden = 'hidden',
 }

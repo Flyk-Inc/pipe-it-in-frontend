@@ -1,65 +1,95 @@
 @if (code) {
-	<div
-		class="max-h-full overflow-y-scroll rounded-lg border border-grey-1 dark:border-grey-3 bg-light-card-bg dark:bg-dark-card-bg mt-2 mx-2 p-4 flex flex-col gap-y-2">
-		<h2 class="header-2 text-primary">{{ code.title }}</h2>
-		<p>
-			<a
-				routerLink="/user/{{ code.author.id }}"
-				class="flex flex-nowrap gap-x-2 items-center w-fit">
-				<span
-					><span class="inline-block first-letter:uppercase" i18n="@@written-by"
-						>de</span
-					>: &#64;{{ code.author.lastName }}</span
-				>
-				<img
-					alt="Rounded avatar"
-					class="w-5 h-5 rounded-full shrink"
-					height="12"
-					ngSrc="https://pbs.twimg.com/profile_images/1568802877933588482/Pnwh7rKm_400x400.jpg"
-					width="12" />
-			</a>
-		</p>
-		<p>{{ code.description }}</p>
-		@if (code.draft) {
+	@if (mode === 'viewing') {
+		<div
+			class="max-h-full overflow-y-scroll rounded-lg border border-grey-1 dark:border-grey-3 bg-light-card-bg dark:bg-dark-card-bg mt-2 mx-2 p-4 flex flex-col gap-y-2">
+			<h2 class="header-2 text-primary">{{ code.title }}</h2>
+			<p>
+				<a
+					routerLink="/user/{{ code.author.id }}"
+					class="flex flex-nowrap gap-x-2 items-center w-fit">
+					<span
+						><span
+							class="inline-block first-letter:uppercase"
+							i18n="@@written-by"
+							>de</span
+						>: &#64;{{ code.author.lastName }}</span
+					>
+					<img
+						alt="Rounded avatar"
+						class="w-5 h-5 rounded-full shrink"
+						height="12"
+						ngSrc="https://pbs.twimg.com/profile_images/1568802877933588482/Pnwh7rKm_400x400.jpg"
+						width="12" />
+				</a>
+			</p>
+			<p>{{ code.description }}</p>
 			<div>
 				<span class="header-3 text-secondary"
-					><h3 class="inline-block" i18n="@@current-draft">Brouillon actuel</h3>
+					><h3 class="inline-block first-letter:capitalize" i18n="@@last-draft">
+						Brouillon actuel
+					</h3>
 					:</span
 				>
 
 				<pre><code class="text-xs" [highlightAuto]="code.draft" lineNumbers></code></pre>
 			</div>
-		}
-		<h3>
-			<span class="header-3 text-secondary capitalize" i18n="@@versions"
-				>Versions</span
-			>:
-		</h3>
-		@for (version of code.versions; track version) {
-			<div class="rounded-lg border border-grey-1 dark:border-grey-3 p-2">
-				<h4 class="header-4">
-					<span class="text-primary">{{ version.version }} </span
-					><span>{{ version.title }}</span>
-				</h4>
-				<p class="mb-2 text-grey-2 text-xs italic">
-					<span i18n="@@posted.on">posted on</span>
-					{{ version.createdAt | date: 'medium' }}
+			@if (code.versions.length <= 0) {
+				<p class="text-grey-2 italic capitalize" i18n="@@no-versions-yet">
+					no versions yet
 				</p>
-				<p class="mb-2">{{ version.description }}</p>
-				@if (version.input.length) {
-					<p class="text-sm capitalize">
-						<span i18n="@@input">input</span>:
-						{{ version.input[0].description }}
+			}
+			<app-button
+				type="submit"
+				(click)="handleEdit()"
+				[text]="editStringTranslated"></app-button>
+			@if (code.versions.length > 0) {
+				<h3>
+					<span class="header-3 text-secondary capitalize" i18n="@@versions"
+						>versions</span
+					>:
+				</h3>
+			}
+			@for (version of code.versions; track version) {
+				<div class="rounded-lg border border-grey-1 dark:border-grey-3 p-2">
+					<h4 class="header-4">
+						<span class="text-primary">{{ version.version }} </span
+						><span>{{ version.title }}</span>
+					</h4>
+					<p class="mb-2 text-grey-2 text-xs italic">
+						<span i18n="@@posted.on">posted on</span>
+						{{ version.createdAt | date: 'medium' }}
 					</p>
-				}
-				@if (version.output.length) {
-					<p class="text-sm capitalize">
-						<span i18n="@@output">output</span>:
-						{{ version.output[0].description }}
-					</p>
-				}
-				<pre><code class="text-xs max-h-60 overflow-y-scroll" [highlightAuto]="version.codeContent" lineNumbers></code></pre>
-			</div>
+					<p class="mb-2">{{ version.description }}</p>
+					@if (version.input.length) {
+						<p class="text-sm capitalize">
+							<span i18n="@@input">input</span>:
+							{{ version.input[0].description }}
+						</p>
+					}
+					@if (version.output.length) {
+						<p class="text-sm capitalize">
+							<span i18n="@@output">output</span>:
+							{{ version.output[0].description }}
+						</p>
+					}
+					<pre><code class="text-xs max-h-60 overflow-y-scroll" [highlightAuto]="version.codeContent"
+                     lineNumbers></code></pre>
+				</div>
+			}
+		</div>
+	} @else {
+		@if (code.versions.length) {
+			<app-create-code-form
+				[code]="code"
+				(successSubmit)="handleSuccess()"
+				(cancel)="handleCancel()"
+				mode="createVersion"></app-create-code-form>
+		} @else {
+			<app-create-code-form
+				[code]="code"
+				mode="updateCode"
+				(cancel)="handleCancel()"
+				(successSubmit)="handleSuccess()"></app-create-code-form>
 		}
-	</div>
+	}
 }
