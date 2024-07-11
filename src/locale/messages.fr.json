@@ -41,6 +41,7 @@
 		"language": "langage",
 		"latest-version": "dernière version",
 		"draft": "brouillon",
-		"your-codes": "vos codes"
+		"your-codes": "vos codes",
+		"code.create": "Créer un code"
 	}
 }

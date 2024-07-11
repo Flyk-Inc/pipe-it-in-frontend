@@ -39,6 +39,7 @@
 		"language": "language",
 		"latest-version": "Latest Version",
 		"draft": "draft",
-		"your-codes": "Vos codes"
+		"your-codes": "Vos codes",
+		"code.create": "create a code"
 	}
 }
