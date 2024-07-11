@@ -29,6 +29,18 @@ body {
 	@apply font-semibold text-lg sm:text-xl;
 }
 
+.header-2 {
+	@apply text-3xl font-medium;
+}
+
+.header-3 {
+	@apply text-2xl font-medium;
+}
+
+.header-4 {
+	@apply text-xl font-medium;
+}
+
 .post-mini-name {
 	@apply font-medium text-[1em];
 }
