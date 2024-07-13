@@ -3,7 +3,7 @@ import { UserDTO } from '../../auth/DTO/user.dto';
 import { ProfileGroupsComponent } from './profile-groups/profile-groups.component';
 import { Group } from '../../models/group.model';
 import { TimelinePost } from '../../models/post.model';
-import { map, Observable } from 'rxjs';
+import { combineLatest, map, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import {
 	selectProfileGroups,
@@ -68,5 +68,14 @@ export class ProfileComponent implements OnInit {
 				this.store.dispatch(loadProfileGroups());
 			}
 		});
+
+    this.userPosts$ = combineLatest([
+      this.store.select(selectProfilePosts),
+      this.pinnedPost$,
+    ]).pipe(
+      map(([posts, pinnedPost]) =>
+        posts.filter(post => post.id !== pinnedPost?.id)
+      )
+    );
 	}
 }
