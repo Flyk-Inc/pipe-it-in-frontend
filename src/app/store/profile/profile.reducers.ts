@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import * as ProfileActions from './profile.actions';
 import { initialState, ProfileState } from './profile.state';
+import { environment } from '../../../environments/environment';
 
 export const profileReducers = createReducer(
 	initialState,
@@ -9,6 +10,9 @@ export const profileReducers = createReducer(
 		(state, { user }): ProfileState => ({
 			...state,
 			user,
+			profilePictureUrl: user.profilePicture
+				? `${environment.backendUrl}/files/${user.profilePicture.id}`
+				: initialState.profilePictureUrl,
 			error: null,
 		})
 	),
@@ -46,14 +50,21 @@ export const profileReducers = createReducer(
 		...state,
 		profilePictureUrl,
 	})),
-	on(ProfileActions.pinPost, (state, { postId }) => ({
+	on(ProfileActions.pinPostSuccess, (state, { postId }) => ({
 		...state,
-		pinnedPost: postId,
-		posts: state.posts.filter(post => post.id !== postId),
+		user: state.user ? { ...state.user, pinnedPost: postId } : null,
 	})),
-	on(ProfileActions.unpinPost, state => ({
+	on(ProfileActions.unpinPostSuccess, state => ({
 		...state,
-		pinnedPost: null,
+		user: state.user ? { ...state.user, pinnedPost: null } : null,
+	})),
+	on(ProfileActions.deletePostSuccess, (state, { postId }) => ({
+		...state,
+		posts: state.posts.filter(post => post.id !== postId),
+		user:
+			state.user?.pinnedPost === postId
+				? { ...state.user, pinnedPost: null }
+				: state.user,
 	})),
 	on(
 		ProfileActions.loadProfileGroupsFailure,

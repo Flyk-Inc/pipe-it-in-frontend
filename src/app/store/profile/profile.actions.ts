@@ -51,7 +51,22 @@ export const pinPost = createAction(
 	'[Profile] Pin Post',
 	props<{ postId: number }>()
 );
-export const unpinPost = createAction(
-	'[Profile] Unpin Post',
+
+export const unpinPost = createAction('[Profile] Unpin Post');
+
+export const deletePost = createAction(
+	'[Profile] Delete Post',
+	props<{ postId: number }>()
+);
+
+export const pinPostSuccess = createAction(
+	'[Profile] Pin Post Success',
+	props<{ postId: number }>()
+);
+
+export const unpinPostSuccess = createAction('[Profile] Unpin Post Success');
+
+export const deletePostSuccess = createAction(
+	'[Profile] Delete Post Success',
 	props<{ postId: number }>()
 );

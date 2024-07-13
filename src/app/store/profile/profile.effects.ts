@@ -57,6 +57,44 @@ export class ProfileEffects {
 		);
 	});
 
+	pinPost$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(ProfileActions.pinPost),
+			mergeMap(action =>
+				this.socialService.pinPost(action.postId).pipe(
+					map(() => ProfileActions.pinPostSuccess({ postId: action.postId })),
+					catchError(error => of(ProfileActions.loadProfileFailure({ error })))
+				)
+			)
+		);
+	});
+
+	unpinPost$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(ProfileActions.unpinPost),
+			mergeMap(() =>
+				this.socialService.unpinPost().pipe(
+					map(() => ProfileActions.unpinPostSuccess()),
+					catchError(error => of(ProfileActions.loadProfileFailure({ error })))
+				)
+			)
+		);
+	});
+
+	deletePost$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(ProfileActions.deletePost),
+			mergeMap(action =>
+				this.socialService.deletePost(action.postId).pipe(
+					map(() =>
+						ProfileActions.deletePostSuccess({ postId: action.postId })
+					),
+					catchError(error => of(ProfileActions.loadProfileFailure({ error })))
+				)
+			)
+		);
+	});
+
 	constructor(
 		private actions$: Actions,
 		private socialService: SocialService,

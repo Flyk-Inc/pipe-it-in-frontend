@@ -78,4 +78,43 @@ export class SocialService {
 				})
 			);
 	}
+
+	pinPost(postId: number): Observable<void> {
+		return this.httpClient
+			.patch<void>(`${this.backendUrl}/users/pin-post`, { postId })
+			.pipe(
+				catchError(error => {
+					console.error('Error pinning post', error);
+					return throwError(
+						() => new Error(error.message || 'An error occurred')
+					);
+				})
+			);
+	}
+
+	unpinPost(): Observable<void> {
+		return this.httpClient
+			.patch<void>(`${this.backendUrl}/users/unpin-post`, {})
+			.pipe(
+				catchError(error => {
+					console.error('Error unpinning post', error);
+					return throwError(
+						() => new Error(error.message || 'An error occurred')
+					);
+				})
+			);
+	}
+
+	deletePost(postId: number): Observable<void> {
+		return this.httpClient
+			.delete<void>(`${this.backendUrl}/posts/${postId}`)
+			.pipe(
+				catchError(error => {
+					console.error('Error deleting post', error);
+					return throwError(
+						() => new Error(error.message || 'An error occurred')
+					);
+				})
+			);
+	}
 }

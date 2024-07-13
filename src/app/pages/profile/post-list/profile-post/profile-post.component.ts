@@ -6,6 +6,7 @@ import { AsyncPipe, NgIf } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { selectProfilePictureUrl } from '../../../../store/profile/profile.selectors';
+import { deletePost, pinPost } from '../../../../store/profile/profile.actions';
 
 @Component({
 	selector: 'app-profile-post',
@@ -28,11 +29,11 @@ export class ProfilePostComponent {
 	}
 
 	pinPost(postId: number) {
-		//this.store.dispatch(pinPost({ postId }));
+		this.store.dispatch(pinPost({ postId }));
 	}
 
 	deletePost(postId: number) {
-		//this.store.dispatch(deletePost({ postId }));
+		this.store.dispatch(deletePost({ postId }));
 	}
 
 	@HostListener('document:click', ['$event'])

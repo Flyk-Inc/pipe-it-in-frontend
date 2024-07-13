@@ -6,6 +6,10 @@ import { AsyncPipe, NgIf } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { selectProfilePictureUrl } from '../../../../store/profile/profile.selectors';
+import {
+	deletePost,
+	unpinPost,
+} from '../../../../store/profile/profile.actions';
 
 @Component({
 	selector: 'app-pinned-post',
@@ -27,12 +31,12 @@ export class PinnedPostComponent {
 		this.showMenu = !this.showMenu;
 	}
 
-	unpinPost(postId: number) {
-		//this.store.dispatch(unpinPost({ postId }));
+	unpinPost() {
+		this.store.dispatch(unpinPost());
 	}
 
 	deletePost(postId: number) {
-		//this.store.dispatch(deletePost({ postId }));
+		this.store.dispatch(deletePost({ postId }));
 	}
 
 	@HostListener('document:click', ['$event'])

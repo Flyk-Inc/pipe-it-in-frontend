@@ -69,13 +69,13 @@ export class ProfileComponent implements OnInit {
 			}
 		});
 
-    this.userPosts$ = combineLatest([
-      this.store.select(selectProfilePosts),
-      this.pinnedPost$,
-    ]).pipe(
-      map(([posts, pinnedPost]) =>
-        posts.filter(post => post.id !== pinnedPost?.id)
-      )
-    );
+		this.userPosts$ = combineLatest([
+			this.store.select(selectProfilePosts),
+			this.pinnedPost$,
+		]).pipe(
+			map(([posts, pinnedPost]) =>
+				posts.filter(post => post.id !== pinnedPost?.id)
+			)
+		);
 	}
 }

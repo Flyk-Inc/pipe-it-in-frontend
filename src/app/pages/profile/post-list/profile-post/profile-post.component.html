@@ -1,5 +1,5 @@
 <div
-	class="rounded-lg border border-grey-1 dark:border-none p-4 bg-light-card-bg dark:bg-dark-card-bg relative">
+	class="relative rounded-lg border border-grey-1 dark:border-none p-4 bg-light-card-bg dark:bg-dark-card-bg">
 	<a [routerLink]="'/posts/' + post.id">
 		<div class="flex flex-nowrap gap-x-2">
 			<img
@@ -29,48 +29,31 @@
 			</div>
 		</div>
 	</a>
-	<!-- Three Dots Menu -->
-	<div class="absolute top-2 right-2">
+	<div
+		class="absolute top-0 right-0 mt-2 mr-2"
+		(click)="$event.stopPropagation()">
 		<div class="relative inline-block text-left">
 			<button
 				type="button"
-				class="inline-flex justify-center w-full rounded-md shadow-sm px-2 py-1 bg-light-card-bg dark:bg-dark-card-bg text-sm font-medium"
-				(click)="toggleMenu()"
-				aria-expanded="true"
-				aria-haspopup="true"
-				style="color: var(--light-bg)">
-				<svg
-					class="w-5 h-5"
-					fill="currentColor"
-					viewBox="0 0 20 20"
-					xmlns="http://www.w3.org/2000/svg">
-					<path
-						fill-rule="evenodd"
-						d="M10 3a1.5 1.5 0 100 3 1.5 1.5 0 000-3zM10 8a1.5 1.5 0 100 3 1.5 1.5 0 000-3zM10 13a1.5 1.5 0 100 3 1.5 1.5 0 000-3z"
-						clip-rule="evenodd" />
-				</svg>
+				class="p-1 rounded-full bg-light-card-bg dark:bg-dark-card-bg"
+				(click)="toggleMenu()">
+				<app-icon icon="more_vert" class="text-light-bg"></app-icon>
 			</button>
 			<div
-				class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-				role="menu"
-				aria-orientation="vertical"
-				*ngIf="showMenu">
-				<div class="py-1" role="none">
-					<a
-						href="#"
-						class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900"
-						role="menuitem"
-						(click)="pinPost(post.id)"
-						>Epingler le post</a
-					>
-					<a
-						href="#"
-						class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900"
-						role="menuitem"
-						(click)="deletePost(post.id)"
-						>Supprimer le post</a
-					>
-				</div>
+				*ngIf="showMenu"
+				class="absolute right-0 mt-1 w-48 bg-white dark:bg-dark-card-bg border border-grey-1 dark:border-grey-3 rounded-lg shadow-lg z-10">
+				<button
+					type="button"
+					class="block w-full text-left px-4 py-2 text-sm text-grey-3 dark:text-grey-2 hover:bg-grey-2 dark:hover:bg-grey-1 hover:text-white dark:hover:text-dark-bg"
+					(click)="pinPost(post.id)">
+					Epingler le post
+				</button>
+				<button
+					type="button"
+					class="block w-full text-left px-4 py-2 text-sm text-grey-3 dark:text-grey-2 hover:bg-grey-2 dark:hover:bg-grey-1 hover:text-white dark:hover:text-dark-bg"
+					(click)="deletePost(post.id)">
+					Supprimer le post
+				</button>
 			</div>
 		</div>
 	</div>

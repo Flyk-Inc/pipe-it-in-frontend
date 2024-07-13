@@ -5,25 +5,29 @@
 			<app-icon icon="push_pin"></app-icon>
 			<span class="ml-2">Epinglé</span>
 		</div>
-		<div class="relative" (click)="toggleMenu()">
-			<app-icon
-				icon="more_vert"
-				class="cursor-pointer text-light-bg"></app-icon>
-			<div
-				*ngIf="showMenu"
-				class="absolute right-0 mt-2 w-48 bg-light-card-bg dark:bg-dark-card-bg border border-grey-1 dark:border-grey-3 rounded-lg shadow-lg z-50">
-				<ul class="py-1">
-					<li
-						(click)="unpinPost(post.id)"
-						class="block px-4 py-2 text-secondary cursor-pointer hover:bg-primary hover:text-white">
+		<div
+			class="absolute top-0 right-0 mt-2 mr-2"
+			(click)="$event.stopPropagation()">
+			<div class="relative" (click)="toggleMenu()">
+				<app-icon
+					icon="more_vert"
+					class="cursor-pointer text-light-bg"></app-icon>
+				<div
+					*ngIf="showMenu"
+					class="absolute right-0 mt-1 w-48 bg-white dark:bg-dark-card-bg border border-grey-1 dark:border-grey-3 rounded-lg shadow-lg z-10">
+					<button
+						type="button"
+						class="block w-full text-left px-4 py-2 text-sm text-grey-3 dark:text-grey-2 hover:bg-grey-2 dark:hover:bg-grey-1 hover:text-white dark:hover:text-dark-bg"
+						(click)="unpinPost()">
 						Désépingler le post
-					</li>
-					<li
-						(click)="deletePost(post.id)"
-						class="block px-4 py-2 text-secondary cursor-pointer hover:bg-primary hover:text-white">
+					</button>
+					<button
+						type="button"
+						class="block w-full text-left px-4 py-2 text-sm text-grey-3 dark:text-grey-2 hover:bg-grey-2 dark:hover:bg-grey-1 hover:text-white dark:hover:text-dark-bg"
+						(click)="deletePost(post.id)">
 						Supprimer le post
-					</li>
-				</ul>
+					</button>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -13,5 +13,5 @@ export interface UserDTO {
 	posts: TimelinePost[];
 	following: UserDTO[];
 	followers: UserDTO[];
-	pinnedPost: number;
+	pinnedPost: number | null;
 }
