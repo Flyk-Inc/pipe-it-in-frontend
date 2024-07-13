@@ -43,21 +43,29 @@ export const profileReducers = createReducer(
 		(state, { groups }): ProfileState => ({
 			...state,
 			groups,
-			error: null,
 		})
 	),
-	on(ProfileActions.setProfilePictureUrl, (state, { profilePictureUrl }) => ({
-		...state,
-		profilePictureUrl,
-	})),
-	on(ProfileActions.pinPostSuccess, (state, { postId }) => ({
-		...state,
-		user: state.user ? { ...state.user, pinnedPost: postId } : null,
-	})),
-	on(ProfileActions.unpinPostSuccess, state => ({
-		...state,
-		user: state.user ? { ...state.user, pinnedPost: null } : null,
-	})),
+	on(
+		ProfileActions.setProfilePictureUrl,
+		(state, { profilePictureUrl }): ProfileState => ({
+			...state,
+			profilePictureUrl,
+		})
+	),
+	on(
+		ProfileActions.pinPostSuccess,
+		(state, { postId }): ProfileState => ({
+			...state,
+			user: state.user ? { ...state.user, pinnedPost: postId } : null,
+		})
+	),
+	on(
+		ProfileActions.unpinPostSuccess,
+		(state): ProfileState => ({
+			...state,
+			user: state.user ? { ...state.user, pinnedPost: null } : null,
+		})
+	),
 	on(ProfileActions.deletePostSuccess, (state, { postId }) => ({
 		...state,
 		posts: state.posts.filter(post => post.id !== postId),

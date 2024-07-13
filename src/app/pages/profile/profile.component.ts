@@ -60,10 +60,9 @@ export class ProfileComponent implements OnInit {
 					this.store.dispatch(setProfilePictureUrl({ profilePictureUrl }));
 				}
 				this.store.dispatch(loadProfilePosts({ userId: user.id }));
-				this.store.dispatch(loadProfileGroups());
 			}
 		});
-
+		this.store.dispatch(loadProfileGroups());
 		this.userPosts$ = this.store.select(selectProfilePosts);
 		this.userGroups$ = this.store.select(selectProfileGroups);
 	}
