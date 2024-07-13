@@ -52,13 +52,7 @@
 					alt="Rounded avatar"
 					class="w-12 h-12 sm:w-12 sm:h-12 md:w-12 md:h-12 rounded-full object-cover shrink hidden sm:block peer-focus:hidden sm:peer-focus:block"
 					height="48"
-					[src]="
-						loggedInUser.profilePicture
-							? environment.backendUrl +
-								'/files/' +
-								loggedInUser.profilePicture.id
-							: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png'
-					"
+					[src]="profilePictureUrl$ | async"
 					width="48" />
 			</button>
 		</div>

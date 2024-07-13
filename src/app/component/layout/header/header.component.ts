@@ -7,7 +7,8 @@ import { IconComponent } from '../../typography/icon/icon.component';
 import { ThemeService } from '../../../service/theme.service';
 import { Subscription } from 'rxjs';
 import { UnderlineComponent } from '../underline/underline.component';
-import { environment } from '../../../../environments/environment';
+import { Store } from '@ngrx/store';
+import { selectProfilePictureUrl } from '../../../store/profile/profile.selectors';
 
 @Component({
 	selector: 'app-header',
@@ -29,12 +30,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
 	token: string | null = null;
 	isDarkMode: boolean = false;
 	private themeSubscription!: Subscription;
-	protected readonly environment = environment;
+	profilePictureUrl$ = this.store.select(selectProfilePictureUrl);
 
 	constructor(
 		protected authenticationService: AuthenticationService,
 		private themeService: ThemeService,
-		private router: Router
+		private router: Router,
+		private store: Store
 	) {}
 
 	ngOnInit() {
