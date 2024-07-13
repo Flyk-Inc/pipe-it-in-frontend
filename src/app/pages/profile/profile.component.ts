@@ -3,19 +3,20 @@ import { UserDTO } from '../../auth/DTO/user.dto';
 import { ProfileGroupsComponent } from './profile-groups/profile-groups.component';
 import { Group } from '../../models/group.model';
 import { TimelinePost } from '../../models/post.model';
-import { map, Observable, of } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import {
-  selectProfileGroups,
-  selectProfilePictureUrl,
-  selectProfilePosts,
-  selectProfileUser,
+	selectProfileGroups,
+	selectProfilePictureUrl,
+	selectProfilePosts,
+	selectProfileUser,
+	selectPinnedPost,
 } from '../../store/profile/profile.selectors';
 import {
-  loadProfile,
-  loadProfileGroups,
-  loadProfilePosts,
-  setProfilePictureUrl,
+	loadProfile,
+	loadProfileGroups,
+	loadProfilePosts,
+	setProfilePictureUrl,
 } from '../../store/profile/profile.actions';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { PostListComponent } from './post-list/post-list.component';
@@ -40,7 +41,7 @@ export class ProfileComponent implements OnInit {
 	loggedInUser$!: Observable<UserDTO | null>;
 	userPosts$!: Observable<TimelinePost[]>;
 	userGroups$!: Observable<Group[]>;
-	profilePictureUrl$!: Observable<unknown>;
+	profilePictureUrl$!: Observable<string>;
 	pinnedPost$!: Observable<TimelinePost | null>;
 
 	constructor(private store: Store) {}
@@ -52,7 +53,7 @@ export class ProfileComponent implements OnInit {
 		this.userPosts$ = this.store.select(selectProfilePosts);
 		this.userGroups$ = this.store.select(selectProfileGroups);
 		this.profilePictureUrl$ = this.store.select(selectProfilePictureUrl);
-		this.pinnedPost$ = of(null);
+		this.pinnedPost$ = this.store.select(selectPinnedPost);
 
 		this.loggedInUser$.subscribe(user => {
 			if (user) {
@@ -60,12 +61,11 @@ export class ProfileComponent implements OnInit {
 					const profilePictureUrl = `${environment.backendUrl}/files/${user.profilePicture.id}`;
 					this.store.dispatch(setProfilePictureUrl({ profilePictureUrl }));
 				}
-				this.store.dispatch(loadProfilePosts({ userId: user.id }));
-				this.store.dispatch(loadProfileGroups());
-
 				this.pinnedPost$ = this.userPosts$.pipe(
 					map(posts => posts.find(post => post.id === user.pinnedPost) || null)
 				);
+				this.store.dispatch(loadProfilePosts({ userId: user.id }));
+				this.store.dispatch(loadProfileGroups());
 			}
 		});
 	}

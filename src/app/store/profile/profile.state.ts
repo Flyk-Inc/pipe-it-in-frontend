@@ -7,6 +7,7 @@ export interface ProfileState {
 	posts: TimelinePost[];
 	groups: Group[];
 	profilePictureUrl: string;
+	pinnedPost: number | null;
 	error: string | null;
 }
 
@@ -16,5 +17,6 @@ export const initialState: ProfileState = {
 	groups: [],
 	profilePictureUrl:
 		'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png',
+	pinnedPost: null,
 	error: null,
 };

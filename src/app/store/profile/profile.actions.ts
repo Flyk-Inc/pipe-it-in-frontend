@@ -46,3 +46,12 @@ export const setProfilePictureUrl = createAction(
 	'[Profile] Set Profile Picture URL',
 	props<{ profilePictureUrl: string }>()
 );
+
+export const pinPost = createAction(
+	'[Profile] Pin Post',
+	props<{ postId: number }>()
+);
+export const unpinPost = createAction(
+	'[Profile] Unpin Post',
+	props<{ postId: number }>()
+);

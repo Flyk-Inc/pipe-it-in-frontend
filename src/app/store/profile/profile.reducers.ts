@@ -46,6 +46,15 @@ export const profileReducers = createReducer(
 		...state,
 		profilePictureUrl,
 	})),
+	on(ProfileActions.pinPost, (state, { postId }) => ({
+		...state,
+		pinnedPost: postId,
+		posts: state.posts.filter(post => post.id !== postId),
+	})),
+	on(ProfileActions.unpinPost, state => ({
+		...state,
+		pinnedPost: null,
+	})),
 	on(
 		ProfileActions.loadProfileGroupsFailure,
 		(state, { error }): ProfileState => ({
