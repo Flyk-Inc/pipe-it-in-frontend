@@ -8,13 +8,13 @@ import { Observable } from 'rxjs';
 import { selectProfilePictureUrl } from '../../../../store/profile/profile.selectors';
 
 @Component({
-	selector: 'app-profile-post',
+	selector: 'app-pinned-post',
 	standalone: true,
 	imports: [IconComponent, RouterLink, NgIf, AsyncPipe],
-	templateUrl: './profile-post.component.html',
-	styleUrl: './profile-post.component.scss',
+	templateUrl: './pinned-post.component.html',
+	styleUrl: './pinned-post.component.scss',
 })
-export class ProfilePostComponent {
+export class PinnedPostComponent {
 	@Input() post!: TimelinePost;
 	showMenu = false;
 	profilePictureUrl$!: Observable<string | undefined>;
@@ -27,8 +27,8 @@ export class ProfilePostComponent {
 		this.showMenu = !this.showMenu;
 	}
 
-	pinPost(postId: number) {
-		//this.store.dispatch(pinPost({ postId }));
+	unpinPost(postId: number) {
+		//this.store.dispatch(unpinPost({ postId }));
 	}
 
 	deletePost(postId: number) {

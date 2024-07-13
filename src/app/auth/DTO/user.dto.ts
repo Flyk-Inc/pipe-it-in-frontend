@@ -1,3 +1,5 @@
+import { TimelinePost } from '../../models/post.model';
+
 export interface UserDTO {
 	id: number;
 	email: string;
@@ -5,5 +7,11 @@ export interface UserDTO {
 	lastName: string;
 	username: string;
 	description?: string;
-	profilePicture?: string;
+	profilePicture?: {
+		id: string;
+	};
+	posts: TimelinePost[];
+	following: UserDTO[];
+	followers: UserDTO[];
+	pinnedPost: number;
 }

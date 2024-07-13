@@ -1,36 +1,11 @@
 <div
 	class="rounded-lg border border-grey-1 dark:border-none p-4 bg-light-card-bg dark:bg-dark-card-bg relative">
-	<a [routerLink]="'/posts/' + post.id">
-		<div class="flex flex-nowrap gap-x-2">
-			<img
-				alt="Rounded avatar"
-				class="w-12 h-12 rounded-full shrink"
-				height="12"
-				[src]="profilePictureUrl$ | async"
-				width="12" />
-			<div class="grow space-y-2">
-				<p class="post-mini-name text-secondary">
-					{{ post.user.firstName + ' ' + post.user.lastName }}
-				</p>
-				<p class="post-mini-pseudo text-grey-3 dark:text-grey-2">
-					&#64;{{ post.user.username }}
-				</p>
-				<p>{{ post.text }}</p>
-				<div class="flex justify-end gap-x-3">
-					<span class="flex items-center gap-x-1">
-						<app-icon icon="thumb_up"></app-icon>
-						<span>{{ post.likes }}</span>
-					</span>
-					<span class="flex items-center gap-x-1">
-						<app-icon icon="comment"></app-icon>
-						<span>{{ post.comments }}</span>
-					</span>
-				</div>
-			</div>
-		</div>
-	</a>
-	<!-- Three Dots Menu -->
-	<div class="absolute top-2 right-2">
+	<div class="flex justify-between items-center mb-2">
+		<span class="text-sm font-semibold text-primary flex items-center">
+			<app-icon icon="push_pin" class="mr-1"></app-icon>
+			Epinglé
+		</span>
+		<!-- Three Dots Menu -->
 		<div class="relative inline-block text-left">
 			<button
 				type="button"
@@ -60,8 +35,8 @@
 						href="#"
 						class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900"
 						role="menuitem"
-						(click)="pinPost(post.id)"
-						>Epingler le post</a
+						(click)="unpinPost(post.id)"
+						>Désépingler le post</a
 					>
 					<a
 						href="#"
@@ -74,4 +49,33 @@
 			</div>
 		</div>
 	</div>
+	<a [routerLink]="'/posts/' + post.id">
+		<div class="flex flex-nowrap gap-x-2">
+			<img
+				alt="Rounded avatar"
+				class="w-12 h-12 rounded-full shrink"
+				height="12"
+				[src]="profilePictureUrl$ | async"
+				width="12" />
+			<div class="grow space-y-2">
+				<p class="post-mini-name text-secondary">
+					{{ post.user.firstName + ' ' + post.user.lastName }}
+				</p>
+				<p class="post-mini-pseudo text-grey-3 dark:text-grey-2">
+					&#64;{{ post.user.username }}
+				</p>
+				<p>{{ post.text }}</p>
+				<div class="flex justify-end gap-x-3">
+					<span class="flex items-center gap-x-1">
+						<app-icon icon="thumb_up"></app-icon>
+						<span>{{ post.likes }}</span>
+					</span>
+					<span class="flex items-center gap-x-1">
+						<app-icon icon="comment"></app-icon>
+						<span>{{ post.comments }}</span>
+					</span>
+				</div>
+			</div>
+		</div>
+	</a>
 </div>

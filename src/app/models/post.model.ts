@@ -3,7 +3,7 @@ export interface TimelinePost {
 	text: string;
 	createdAt: Date;
 	updatedAt: Date;
-	user: { firstName: string; lastName: string; id: number };
+	user: { firstName: string; lastName: string; id: number; username: string };
 	comments: number;
 	likes: number;
 }

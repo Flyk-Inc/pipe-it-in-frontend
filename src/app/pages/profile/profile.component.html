@@ -6,14 +6,37 @@
 				<img
 					[src]="profilePictureUrl$ | async"
 					alt="User Profile Picture"
-					class="w-32 h-32 rounded-full mx-auto mb-4" />
-				<h1 class="text-xl font-semibold">
+					class="w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 rounded-full mx-auto mb-4 object-cover" />
+				<h1 class="text-xl font-semibold mb-3">
 					{{ (loggedInUser$ | async)?.username }}
 				</h1>
-				<p class="text-gray-400">{{ (loggedInUser$ | async)?.description }}</p>
+				<p class="text-gray-400 mb-2">
+					{{ (loggedInUser$ | async)?.description }}
+				</p>
 				<button class="mt-4 px-4 py-2 bg-primary text-white rounded-lg">
 					Edit profile
 				</button>
+				<div
+					class="grid grid-cols-1 sm:grid-cols-3 justify-items-center mt-8 w-full">
+					<div class="text-center order-2 sm:order-1">
+						<span class="text-xl font-semibold">{{
+							(loggedInUser$ | async)?.posts?.length || 0
+						}}</span>
+						<p class="text-gray-400">posts</p>
+					</div>
+					<div class="text-center order-1 sm:order-2">
+						<span class="text-xl font-semibold">{{
+							(loggedInUser$ | async)?.followers?.length || 0
+						}}</span>
+						<p class="text-gray-400">abonnés</p>
+					</div>
+					<div class="text-center order-3 sm:order-3">
+						<span class="text-xl font-semibold">{{
+							(loggedInUser$ | async)?.following?.length || 0
+						}}</span>
+						<p class="text-gray-400">abonnements</p>
+					</div>
+				</div>
 			</div>
 			<!-- Public Groups -->
 			<div class="mt-10 flex flex-col items-center">
@@ -24,7 +47,11 @@
 		</div>
 		<!-- Main Content -->
 		<div class="col-span-1 md:col-span-2 rounded-lg p-4">
-			<!--<app-pinned-post *ngIf="pinnedPost" [post]="pinnedPost"></app-pinned-post>-->
+			<ng-container *ngIf="pinnedPost$ | async as pinnedPost">
+				<app-pinned-post
+					*ngIf="pinnedPost"
+					[post]="pinnedPost"></app-pinned-post>
+			</ng-container>
 			<app-post-list [posts]="userPosts$ | async"></app-post-list>
 		</div>
 	</div>

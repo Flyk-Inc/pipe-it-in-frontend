@@ -1,24 +1,29 @@
 <div class="flex flex-col items-center w-full">
-	<div
-		*ngFor="let group of userGroups"
-		class="mb-4 flex items-center w-full max-w-lg">
-		<a [routerLink]="'/group/' + group.id" class="flex-shrink-0">
-			<img
-				[src]="
-					group.profilePicture
-						? group.profilePicture
-						: 'https://pbs.twimg.com/profile_images/1568802877933588482/Pnwh7rKm_400x400.jpg'
-				"
-				alt="{{ group.name }}"
-				class="w-14 h-14 rounded-full mr-4" />
-		</a>
-		<div class="flex-grow">
-			<a [routerLink]="'/group/' + group.id">
-				<h3 class="text-sm font-semibold text-white">{{ group.name }}</h3>
-				<p class="text-xs text-gray-500">
-					{{ group.memberCount || 0 }} members
-				</p>
+	<ng-container *ngIf="userGroups && userGroups.length > 0; else noGroups">
+		<div
+			*ngFor="let group of userGroups"
+			class="mb-4 flex items-center w-full max-w-lg">
+			<a [routerLink]="'/group/' + group.id" class="flex-shrink-0">
+				<img
+					[src]="
+						group.profilePicture
+							? group.profilePicture
+							: 'https://pbs.twimg.com/profile_images/1568802877933588482/Pnwh7rKm_400x400.jpg'
+					"
+					alt="{{ group.name }}"
+					class="w-14 h-14 rounded-full mr-4" />
 			</a>
+			<div class="flex-grow">
+				<a [routerLink]="'/group/' + group.id">
+					<h3 class="text-sm font-semibold text-white">{{ group.name }}</h3>
+					<p class="text-xs text-gray-500">
+						{{ group.memberCount || 0 }} members
+					</p>
+				</a>
+			</div>
 		</div>
-	</div>
+	</ng-container>
+	<ng-template #noGroups>
+		<p class="text-gray-400">No groups joined</p>
+	</ng-template>
 </div>
