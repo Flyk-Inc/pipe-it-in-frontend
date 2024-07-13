@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Group } from '../../../models/group.model';
 import { RouterModule } from '@angular/router';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { environment } from '../../../../environments/environment';
 
 @Component({
 	selector: 'app-profile-groups',
@@ -12,4 +13,5 @@ import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 })
 export class ProfileGroupsComponent {
 	@Input() userGroups: Group[] | null = [];
+	protected readonly environment = environment;
 }

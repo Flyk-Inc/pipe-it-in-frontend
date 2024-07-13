@@ -7,8 +7,8 @@
 				<img
 					[src]="
 						group.profilePicture
-							? group.profilePicture
-							: 'https://pbs.twimg.com/profile_images/1568802877933588482/Pnwh7rKm_400x400.jpg'
+							? environment.backendUrl + '/files/' + group.profilePicture
+							: 'https://cdn-icons-png.freepik.com/512/10017/10017806.png'
 					"
 					alt="{{ group.name }}"
 					class="w-20 h-20 rounded-full mr-6" />
