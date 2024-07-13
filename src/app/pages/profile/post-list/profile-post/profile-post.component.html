@@ -1,20 +1,24 @@
 <div
 	class="relative rounded-lg border border-grey-1 dark:border-none p-4 bg-light-card-bg dark:bg-dark-card-bg">
-	<a [routerLink]="'/posts/' + post.id">
+	<a [routerLink]="'/post/' + post.id">
 		<div class="flex flex-nowrap gap-x-2">
-			<img
-				alt="Rounded avatar"
-				class="w-12 h-12 rounded-full shrink"
-				height="12"
-				[src]="profilePictureUrl$ | async"
-				width="12" />
+			<a [routerLink]="'/profile/' + post.user.id">
+				<img
+					alt="Rounded avatar"
+					class="w-12 h-12 rounded-full shrink"
+					height="12"
+					[src]="profilePictureUrl$ | async"
+					width="12" />
+			</a>
 			<div class="grow space-y-2">
-				<p class="post-mini-name text-secondary">
-					{{ post.user.firstName + ' ' + post.user.lastName }}
-				</p>
-				<p class="post-mini-pseudo text-grey-3 dark:text-grey-2">
-					&#64;{{ post.user.username }}
-				</p>
+				<a [routerLink]="'/profile/' + post.user.id" class="block">
+					<p class="post-mini-name text-secondary">
+						{{ post.user.firstName + ' ' + post.user.lastName }}
+					</p>
+					<p class="post-mini-pseudo text-grey-3 dark:text-grey-2">
+						&#64;{{ post.user.username }}
+					</p>
+				</a>
 				<p>{{ post.text }}</p>
 				<div class="flex justify-end gap-x-3">
 					<span class="flex items-center gap-x-1">
