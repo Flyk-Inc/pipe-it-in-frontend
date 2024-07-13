@@ -12,7 +12,10 @@ export const selectProfileUser = createSelector(
 
 export const selectProfilePosts = createSelector(
 	selectProfileState,
-	(state: ProfileState) => state.posts
+	(state: ProfileState) => {
+		const pinnedPostId = state.user?.pinnedPost;
+		return state.posts.filter((post: TimelinePost) => post.id !== pinnedPostId);
+	}
 );
 
 export const selectProfileGroups = createSelector(
@@ -31,10 +34,12 @@ export const selectPinnedPostId = createSelector(
 );
 
 export const selectPinnedPost = createSelector(
-	selectProfilePosts,
-	selectPinnedPostId,
-	(posts: TimelinePost[], pinnedPostId: number | null) => {
-		return posts.find(post => post.id === pinnedPostId) || null;
+	selectProfileState,
+	(state: ProfileState) => {
+		const pinnedPostId = state.user?.pinnedPost;
+		return (
+			state.posts.find((post: TimelinePost) => post.id === pinnedPostId) || null
+		);
 	}
 );
 
