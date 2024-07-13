@@ -2,6 +2,10 @@ import { createReducer, on } from '@ngrx/store';
 import * as ProfileActions from './profile.actions';
 import { initialState, ProfileState } from './profile.state';
 import { environment } from '../../../environments/environment';
+import {
+	uploadProfilePictureFailure,
+	uploadProfilePictureSuccess,
+} from './profile.actions';
 
 export const profileReducers = createReducer(
 	initialState,
@@ -76,6 +80,40 @@ export const profileReducers = createReducer(
 	})),
 	on(
 		ProfileActions.loadProfileGroupsFailure,
+		(state, { error }): ProfileState => ({
+			...state,
+			error,
+		})
+	),
+
+	on(
+		ProfileActions.updateProfileSuccess,
+		(state, { user }): ProfileState => ({
+			...state,
+			user,
+			error: null,
+		})
+	),
+
+	on(
+		ProfileActions.updateProfileFailure,
+		(state, { error }): ProfileState => ({
+			...state,
+			error,
+		})
+	),
+
+	on(
+		uploadProfilePictureSuccess,
+		(state, { updatedUser }): ProfileState => ({
+			...state,
+			profilePictureUrl: updatedUser.profilePicture
+				? `${environment.backendUrl}/files/${updatedUser.profilePicture.id}`
+				: initialState.profilePictureUrl,
+		})
+	),
+	on(
+		uploadProfilePictureFailure,
 		(state, { error }): ProfileState => ({
 			...state,
 			error,

@@ -2,18 +2,34 @@
 	<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 		<!-- Left Sidebar -->
 		<div class="col-span-1 md:col-span-1 rounded-lg p-4">
-			<div class="text-center">
-				<img
-					[src]="profilePictureUrl$ | async"
-					alt="User Profile Picture"
-					class="w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 rounded-full mx-auto mb-4 object-cover" />
+			<div class="text-center relative group">
+				<div class="relative inline-block">
+					<img
+						[src]="profilePictureUrl$ | async"
+						alt="User Profile Picture"
+						class="w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 rounded-full mx-auto mb-4 object-cover" />
+					<div
+						class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 mx-auto mb-4">
+						<button (click)="triggerFileInput()">
+							<app-icon icon="upload"></app-icon>
+						</button>
+					</div>
+				</div>
+				<input
+					#profilePictureInput
+					type="file"
+					id="profilePictureInput"
+					class="hidden"
+					(change)="onFileChange($event)" />
 				<h1 class="text-xl font-semibold mb-3">
 					{{ (loggedInUser$ | async)?.username }}
 				</h1>
 				<p class="text-gray-400 mb-2">
 					{{ (loggedInUser$ | async)?.description }}
 				</p>
-				<button class="mt-4 px-4 py-2 bg-primary text-white rounded-lg">
+				<button
+					class="mt-4 px-4 py-2 bg-primary text-white rounded-lg"
+					(click)="showEditProfile = true">
 					Edit profile
 				</button>
 				<div
@@ -53,6 +69,107 @@
 			</ng-container>
 			<!-- Post List -->
 			<app-post-list [posts]="userPosts$ | async"></app-post-list>
+		</div>
+	</div>
+
+	<div *ngIf="showEditProfile" class="fixed z-10 inset-0 overflow-y-auto">
+		<div
+			class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+			<div class="fixed inset-0 transition-opacity" aria-hidden="true">
+				<div
+					class="absolute inset-0 bg-gray-500 dark:bg-gray-800 opacity-75"></div>
+			</div>
+			<span
+				class="hidden sm:inline-block sm:align-middle sm:h-screen"
+				aria-hidden="true"
+				>&#8203;</span
+			>
+			<div
+				class="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+				<div class="sm:flex sm:items-start">
+					<div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+						<h3
+							class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-200"
+							id="modal-title">
+							Edit Profile
+						</h3>
+						<div class="mt-4">
+							<form
+								(ngSubmit)="onUpdateProfile()"
+								class="flex flex-wrap gap-y-6">
+								<div class="w-full">
+									<label
+										for="firstName"
+										class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+										>First Name</label
+									>
+									<input
+										type="text"
+										name="firstName"
+										id="firstName"
+										[(ngModel)]="profileData.firstName"
+										class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+										required />
+								</div>
+								<div class="w-full">
+									<label
+										for="lastName"
+										class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+										>Last Name</label
+									>
+									<input
+										type="text"
+										name="lastName"
+										id="lastName"
+										[(ngModel)]="profileData.lastName"
+										class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+										required />
+								</div>
+								<div class="w-full">
+									<label
+										for="username"
+										class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+										>Username</label
+									>
+									<input
+										type="text"
+										name="username"
+										id="username"
+										[(ngModel)]="profileData.username"
+										class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+										required />
+								</div>
+								<div class="w-full">
+									<label
+										for="description"
+										class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+										>Description</label
+									>
+									<textarea
+										name="description"
+										id="description"
+										[(ngModel)]="profileData.description"
+										class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+										required></textarea>
+								</div>
+								<div class="w-full flex justify-end gap-x-3">
+									<button
+										type="button"
+										class="mt-4 px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:text-sm"
+										(click)="showEditProfile = false">
+										Cancel
+									</button>
+									<button
+										type="submit"
+										class="mt-4 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:text-sm">
+										Save
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

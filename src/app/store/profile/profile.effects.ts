@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { of } from 'rxjs';
+import { of, switchMap } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import * as ProfileActions from './profile.actions';
 import { SocialService } from '../../service/social.service';
 import { AuthenticationService } from '../../auth/authentication.service';
+import {
+	uploadProfilePicture,
+	uploadProfilePictureFailure,
+	uploadProfilePictureSuccess,
+} from './profile.actions';
 
 @Injectable()
 export class ProfileEffects {
@@ -90,6 +95,32 @@ export class ProfileEffects {
 						ProfileActions.deletePostSuccess({ postId: action.postId })
 					),
 					catchError(error => of(ProfileActions.loadProfileFailure({ error })))
+				)
+			)
+		);
+	});
+
+	updateProfile$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(ProfileActions.updateProfile),
+			mergeMap(action =>
+				this.socialService.updateUserProfile(action.profileData).pipe(
+					map(user => ProfileActions.updateProfileSuccess({ user })),
+					catchError(error =>
+						of(ProfileActions.updateProfileFailure({ error: error.message }))
+					)
+				)
+			)
+		);
+	});
+
+	uploadProfilePicture$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(uploadProfilePicture),
+			switchMap(action =>
+				this.socialService.uploadProfilePicture(action.file).pipe(
+					map(updatedUser => uploadProfilePictureSuccess({ updatedUser })),
+					catchError(error => of(uploadProfilePictureFailure({ error })))
 				)
 			)
 		);

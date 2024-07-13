@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 	token: string | null = null;
 	isDarkMode: boolean = false;
 	private themeSubscription!: Subscription;
-  protected readonly environment = environment;
+	protected readonly environment = environment;
 
 	constructor(
 		protected authenticationService: AuthenticationService,

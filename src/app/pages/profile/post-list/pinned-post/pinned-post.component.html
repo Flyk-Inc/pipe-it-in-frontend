@@ -6,32 +6,41 @@
 			<span class="ml-2">Epinglé</span>
 		</div>
 		<div
-			class="relative"
-			(click)="toggleMenu()"
-			(keydown.enter)="toggleMenu()"
+			class="absolute top-0 right-0 mt-2 mr-2"
+			(click)="$event.stopPropagation()"
+			(keydown.enter)="$event.stopPropagation()"
 			tabindex="0">
-			<app-icon
-				icon="more_vert"
-				class="cursor-pointer text-light-bg"></app-icon>
-			<div
-				*ngIf="showMenu"
-				class="absolute right-0 mt-2 w-48 bg-light-card-bg dark:bg-dark-card-bg border border-grey-1 dark:border-grey-3 rounded-lg shadow-lg z-50">
-				<ul class="py-1">
-					<li
-						(click)="unpinPost()"
-						(keydown.enter)="unpinPost()"
-						tabindex="0"
-						class="block px-4 py-2 text-secondary cursor-pointer hover:bg-primary hover:text-white">
-						Désépingler le post
-					</li>
-					<li
-						(click)="deletePost(post.id)"
-						(keydown.enter)="deletePost(post.id)"
-						tabindex="0"
-						class="block px-4 py-2 text-secondary cursor-pointer hover:bg-primary hover:text-white">
-						Supprimer le post
-					</li>
-				</ul>
+			<div class="relative inline-block text-left">
+				<button
+					type="button"
+					class="p-1 rounded-full bg-light-card-bg dark:bg-dark-card-bg"
+					(click)="toggleMenu()"
+					(keydown.enter)="toggleMenu()"
+					tabindex="0">
+					<app-icon icon="more_vert"></app-icon>
+				</button>
+				<div
+					*ngIf="showMenu"
+					class="absolute right-0 mt-1 w-48 bg-white dark:bg-dark-card-bg border border-grey-1 dark:border-grey-3 rounded-lg shadow-lg z-10">
+					<ul class="py-1">
+						<button
+							type="button"
+							(click)="unpinPost()"
+							(keydown.enter)="unpinPost()"
+							tabindex="0"
+							class="block w-full text-left px-4 py-2 text-sm text-grey-3 dark:text-grey-2 hover:bg-grey-1 dark:hover:bg-grey-3">
+							Désépingler le post
+						</button>
+						<button
+							type="button"
+							(click)="deletePost(post.id)"
+							(keydown.enter)="deletePost(post.id)"
+							tabindex="0"
+							class="block w-full text-left px-4 py-2 text-sm text-grey-3 dark:text-grey-2 hover:bg-grey-1 dark:hover:bg-grey-3">
+							Supprimer le post
+						</button>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>

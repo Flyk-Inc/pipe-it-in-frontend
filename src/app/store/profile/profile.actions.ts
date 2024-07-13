@@ -70,3 +70,33 @@ export const deletePostSuccess = createAction(
 	'[Profile] Delete Post Success',
 	props<{ postId: number }>()
 );
+
+export const updateProfile = createAction(
+	'[Profile] Update Profile',
+	props<{ profileData: Partial<UserDTO> }>()
+);
+
+export const updateProfileSuccess = createAction(
+	'[Profile] Update Profile Success',
+	props<{ user: UserDTO }>()
+);
+
+export const updateProfileFailure = createAction(
+	'[Profile] Update Profile Failure',
+	props<{ error: string }>()
+);
+
+export const uploadProfilePicture = createAction(
+	'[Profile] Upload Profile Picture',
+	props<{ file: File }>()
+);
+
+export const uploadProfilePictureSuccess = createAction(
+	'[Profile] Upload Profile Picture Success',
+	props<{ updatedUser: UserDTO }>()
+);
+
+export const uploadProfilePictureFailure = createAction(
+	'[Profile] Upload Profile Picture Failure',
+	props<{ error: string }>()
+);

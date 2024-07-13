@@ -6,6 +6,7 @@ import { CursoredRessource } from '../models/utils';
 import { map, Observable, Subject, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Group } from '../models/group.model';
+import { UserDTO } from '../auth/DTO/user.dto';
 
 @Injectable({
 	providedIn: 'root',
@@ -111,6 +112,34 @@ export class SocialService {
 			.pipe(
 				catchError(error => {
 					console.error('Error deleting post', error);
+					return throwError(
+						() => new Error(error.message || 'An error occurred')
+					);
+				})
+			);
+	}
+
+	updateUserProfile(profileData: Partial<UserDTO>): Observable<UserDTO> {
+		return this.httpClient
+			.patch<UserDTO>(`${this.backendUrl}/users/profile`, profileData)
+			.pipe(
+				catchError(error => {
+					console.error('Error updating profile', error);
+					return throwError(
+						() => new Error(error.message || 'An error occurred')
+					);
+				})
+			);
+	}
+
+	uploadProfilePicture(file: File): Observable<UserDTO> {
+		const formData = new FormData();
+		formData.append('file', file);
+		return this.httpClient
+			.patch<UserDTO>(`${this.backendUrl}/files/profile-picture`, formData)
+			.pipe(
+				catchError(error => {
+					console.error('Error uploading profile picture', error);
 					return throwError(
 						() => new Error(error.message || 'An error occurred')
 					);
