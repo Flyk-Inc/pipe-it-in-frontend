@@ -18,6 +18,10 @@ export const routes: Routes = [
 		loadChildren: () => import('./pages/code-home/routes').then(m => m.routes),
 	},
 	{
+		path: 'profile',
+		loadChildren: () => import('./pages/profile/routes').then(m => m.routes),
+	},
+	{
 		path: '**',
 		redirectTo: 'home',
 	},
