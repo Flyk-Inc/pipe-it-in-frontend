@@ -52,7 +52,7 @@ export class ProfileEffects {
 		return this.actions$.pipe(
 			ofType(ProfileActions.loadProfileGroups),
 			mergeMap(() =>
-				this.socialService.getUserGroups().pipe(
+				this.socialService.getCurrentUserGroups().pipe(
 					map(groups => ProfileActions.loadProfileGroupsSuccess({ groups })),
 					catchError(error =>
 						of(ProfileActions.loadProfileGroupsFailure({ error }))
