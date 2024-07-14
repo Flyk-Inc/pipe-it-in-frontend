@@ -1,1 +1,23 @@
-{}
+{
+	"hosting": {
+		"public": "dist/pipe-it-in-frontend/browser",
+		"ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+		"i18n": {
+			"root": "/"
+		},
+		"rewrites": [
+			{
+				"source": "/fr{,/**}",
+				"destination": "/fr/index.html"
+			},
+			{
+				"source": "/en/{,/**}",
+				"destination": "/en/index.html"
+			},
+			{
+				"source": "**",
+				"destination": "/en/index.html"
+			}
+		]
+	}
+}
