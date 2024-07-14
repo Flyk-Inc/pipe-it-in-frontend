@@ -15,6 +15,8 @@ import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideHighlightOptions } from 'ngx-highlightjs';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
+import { profileReducers } from './store/profile/profile.reducers';
+import { ProfileEffects } from './store/profile/profile.effects';
 
 export const appConfig: ApplicationConfig = {
 	providers: [
@@ -22,8 +24,10 @@ export const appConfig: ApplicationConfig = {
 		provideHttpClient(withInterceptors([backendAuthInterceptor])),
 		MessageService,
 		importProvidersFrom(BrowserAnimationsModule, MonacoEditorModule.forRoot()),
-		provideStore(),
-		provideEffects(),
+		provideStore({
+			profile: profileReducers,
+		}),
+		provideEffects([ProfileEffects]),
 		provideStoreDevtools({
 			maxAge: 25, // Retains last 25 states
 			logOnly: !isDevMode(), // Restrict extension to log-only mode
