@@ -1,35 +1,52 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { UserProfileState } from './user-profile.state';
+import { ProfileState } from '../profile/profile.state';
+import { TimelinePost } from '../../models/post.model';
+import { selectProfileState } from '../profile/profile.selectors';
 
-const getUserProfileState = createFeatureSelector<UserProfileState>('userProfile');
+const getUserProfileState =
+	createFeatureSelector<UserProfileState>('userProfile');
 
 export const selectUserProfile = createSelector(
-  getUserProfileState,
-  (state: UserProfileState) => state.user
+	getUserProfileState,
+	(state: UserProfileState) => state.user
 );
 
 export const selectUserProfilePictureUrl = createSelector(
-  getUserProfileState,
-  (state: UserProfileState) => state.profilePictureUrl
+	getUserProfileState,
+	(state: UserProfileState) => state.profilePictureUrl
 );
 
 export const selectUserProfilePosts = createSelector(
-  getUserProfileState,
-  (state: UserProfileState) => state.userPosts
+	getUserProfileState,
+	(state: UserProfileState) => {
+		const pinnedPostId = state.user?.pinnedPost;
+		return state.userPosts.filter(
+			(post: TimelinePost) => post.id !== pinnedPostId
+		);
+	}
 );
 
 export const selectUserProfileGroups = createSelector(
-  getUserProfileState,
-  (state: UserProfileState) => state.userGroups
+	getUserProfileState,
+	(state: UserProfileState) => state.userGroups
 );
 
 export const selectPinnedPost = createSelector(
-  getUserProfileState,
-  (state: UserProfileState) => state.userPosts.find(post => post.id === state.pinnedPost) || null
+	getUserProfileState,
+	(state: UserProfileState) => {
+		const pinnedPostId = state.user?.pinnedPost;
+		return (
+			state.userPosts.find((post: TimelinePost) => post.id === pinnedPostId) ||
+			null
+		);
+	}
 );
 
 export const selectIsFollowing = createSelector(
-  getUserProfileState,
-  (state: UserProfileState, props: { currentUserId: number }) =>
-    !!state.user?.sentFollowRequests.some(request => request.user.id === props.currentUserId && request.isAccepted)
+	getUserProfileState,
+	(state: UserProfileState, props: { currentUserId: number }) =>
+		!!state.user?.sentFollowRequests.some(
+			request => request.user.id === props.currentUserId && request.isAccepted
+		)
 );

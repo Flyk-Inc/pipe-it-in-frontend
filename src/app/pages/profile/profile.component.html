@@ -65,10 +65,14 @@
 		<div class="col-span-1 md:col-span-2 rounded-lg p-4">
 			<!-- Pinned Post -->
 			<ng-container *ngIf="pinnedPost$ | async as pinnedPost">
-				<app-pinned-post [post]="pinnedPost"></app-pinned-post>
+				<app-pinned-post
+					[post]="pinnedPost"
+					[isOwnProfile]="true"></app-pinned-post>
 			</ng-container>
 			<!-- Post List -->
-			<app-post-list [posts]="userPosts$ | async"></app-post-list>
+			<app-post-list
+				[posts]="userPosts$ | async"
+				[isOwnProfile]="true"></app-post-list>
 		</div>
 	</div>
 

@@ -1,4 +1,4 @@
-import { Component, HostListener, Input } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { TimelinePost } from '../../../../models/post.model';
 import { IconComponent } from '../../../../component/typography/icon/icon.component';
 import { RouterLink } from '@angular/router';
@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { selectProfilePictureUrl } from '../../../../store/profile/profile.selectors';
 import { deletePost, pinPost } from '../../../../store/profile/profile.actions';
+import { selectUserProfilePictureUrl } from '../../../../store/user-profile/user-profile.selectors';
 
 @Component({
 	selector: 'app-profile-post',
@@ -15,13 +16,20 @@ import { deletePost, pinPost } from '../../../../store/profile/profile.actions';
 	templateUrl: './profile-post.component.html',
 	styleUrl: './profile-post.component.scss',
 })
-export class ProfilePostComponent {
+export class ProfilePostComponent implements OnInit {
 	@Input() post!: TimelinePost;
+	@Input() isOwnProfile!: boolean;
 	showMenu = false;
 	profilePictureUrl$!: Observable<string | undefined>;
 
-	constructor(private store: Store) {
-		this.profilePictureUrl$ = this.store.select(selectProfilePictureUrl);
+	constructor(private store: Store) {}
+
+	ngOnInit() {
+		if (this.isOwnProfile) {
+			this.profilePictureUrl$ = this.store.select(selectProfilePictureUrl);
+		} else {
+			this.profilePictureUrl$ = this.store.select(selectUserProfilePictureUrl);
+		}
 	}
 
 	toggleMenu() {

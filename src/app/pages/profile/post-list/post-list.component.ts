@@ -12,4 +12,5 @@ import { ProfilePostComponent } from './profile-post/profile-post.component';
 })
 export class PostListComponent {
 	@Input() posts: TimelinePost[] | null = [];
+	@Input() isOwnProfile!: boolean;
 }

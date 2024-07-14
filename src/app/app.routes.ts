@@ -21,10 +21,11 @@ export const routes: Routes = [
 		path: 'profile',
 		loadChildren: () => import('./pages/profile/routes').then(m => m.routes),
 	},
-  {
-    path: 'profile/:userId',
-    loadChildren: () => import('./pages/user-profile/routes').then(m => m.routes),
-  },
+	{
+		path: 'profile/:userId',
+		loadChildren: () =>
+			import('./pages/user-profile/routes').then(m => m.routes),
+	},
 	{
 		path: '**',
 		redirectTo: 'home',
