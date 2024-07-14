@@ -1,7 +1,7 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code-home and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-name: Linting, formatting and testing
+name: Linting, formatting and building
 
 on:
   push:
@@ -32,6 +32,5 @@ jobs:
         run: npm run lint
       - name: Formatting check
         run: npm run format
-#      TODO: Add tests
-#    - name: tests
-#      run: npm run test
+      - name: build check
+        run: npm run build
