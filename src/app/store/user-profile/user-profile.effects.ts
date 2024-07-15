@@ -1,27 +1,26 @@
 import { Injectable } from '@angular/core';
-import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { SocialService } from '../../service/social.service';
 import {
-	followUser,
-	followUserFailure,
-	followUserSuccess,
-	loadUserProfile,
-	loadUserProfileFailure,
-	loadUserProfileGroups,
-	loadUserProfileGroupsFailure,
-	loadUserProfileGroupsSuccess,
-	loadUserProfilePosts,
-	loadUserProfilePostsFailure,
-	loadUserProfilePostsSuccess,
-	loadUserProfileSuccess,
-	unfollowUser,
-	unfollowUserFailure,
-	unfollowUserSuccess,
+  followUser,
+  followUserFailure,
+  followUserSuccess,
+  loadUserProfile,
+  loadUserProfileFailure,
+  loadUserProfileGroups,
+  loadUserProfileGroupsFailure,
+  loadUserProfileGroupsSuccess,
+  loadUserProfilePosts,
+  loadUserProfilePostsFailure,
+  loadUserProfilePostsSuccess,
+  loadUserProfileSuccess,
+  unfollowUser,
+  unfollowUserFailure,
+  unfollowUserSuccess,
 } from './user-profile.actions';
 import { Store } from '@ngrx/store';
-import { selectProfileUser } from '../profile/profile.selectors';
 import { UserProfileState } from './user-profile.state';
 
 @Injectable()
@@ -65,13 +64,12 @@ export class UserProfileEffects {
 	followUser$ = createEffect(() =>
 		this.actions$.pipe(
 			ofType(followUser),
-			concatLatestFrom(() => this.store.select(selectProfileUser)),
-			switchMap(([action, currentUser]) =>
+			switchMap(action =>
 				this.socialService.followUser(action.userId).pipe(
 					map(() =>
 						followUserSuccess({
 							userId: action.userId,
-							currentUser: currentUser!,
+							currentUser: action.currentUser,
 						})
 					),
 					catchError(error => of(followUserFailure({ error })))
