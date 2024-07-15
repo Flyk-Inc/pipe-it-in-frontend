@@ -69,7 +69,8 @@ export const unfollowUser = createAction(
 );
 
 export const unfollowUserSuccess = createAction(
-	'[User Profile] Unfollow User Success'
+	'[User Profile] Unfollow User Success',
+	props<{ userId: number; currentUser: UserDTO }>()
 );
 
 export const unfollowUserFailure = createAction(

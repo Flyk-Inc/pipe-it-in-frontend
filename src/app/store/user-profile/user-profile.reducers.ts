@@ -11,65 +11,81 @@ import {
 	setUserProfilePictureUrl,
 	unfollowUserSuccess,
 } from './user-profile.actions';
-import { initialState } from './user-profile.state';
+import { initialState, UserProfileState } from './user-profile.state';
+import { UserDTO } from '../../auth/DTO/user.dto';
 
 export const userProfileReducers = createReducer(
 	initialState,
-	on(loadUserProfileSuccess, (state, { user }) => ({
-		...state,
-		user,
-	})),
-	on(loadUserProfileGroupsSuccess, (state, { groups }) => ({
-		...state,
-		userGroups: groups,
-	})),
-	on(loadUserProfilePostsSuccess, (state, { posts }) => ({
-		...state,
-		userPosts: posts,
-	})),
-	on(setUserProfilePictureUrl, (state, { profilePictureUrl }) => ({
-		...state,
-		profilePictureUrl,
-	})),
-	on(followUserSuccess, (state, { currentUser }) => ({
-		...state,
-		user: state.user
-			? {
-					...state.user,
-					sentFollowRequests: [
-						...state.user.sentFollowRequests,
-						{
-							id: Date.now(), // Use a unique identifier for id
-							user: state.user,
-							follower: currentUser,
-							isAccepted: true,
-						},
-					],
-				}
-			: null,
-	})),
-	on(unfollowUserSuccess, state => ({
-		...state,
-		user: state.user
-			? {
-					...state.user,
-					sentFollowRequests: state.user.sentFollowRequests.filter(
-						request => request.user.id !== state.user!.id
-					),
-				}
-			: null,
-	})),
+	on(
+		loadUserProfileSuccess,
+		(state, { user }): UserProfileState => ({
+			...state,
+			user,
+		})
+	),
+	on(
+		loadUserProfileGroupsSuccess,
+		(state, { groups }): UserProfileState => ({
+			...state,
+			userGroups: groups,
+		})
+	),
+	on(
+		loadUserProfilePostsSuccess,
+		(state, { posts }): UserProfileState => ({
+			...state,
+			userPosts: posts,
+		})
+	),
+	on(
+		setUserProfilePictureUrl,
+		(state, { profilePictureUrl }): UserProfileState => ({
+			...state,
+			profilePictureUrl,
+		})
+	),
+	on(
+		followUserSuccess,
+		(state, { currentUser }): UserProfileState => ({
+			...state,
+			user: {
+				...state.user,
+				followers: [
+					...(state.user?.followers || []),
+					{
+						user: state.user,
+						follower: currentUser,
+					},
+				],
+			} as UserDTO,
+		})
+	),
+	on(
+		unfollowUserSuccess,
+		(state, { currentUser }): UserProfileState => ({
+			...state,
+			user: {
+				...state.user,
+				followers: (state.user?.followers || []).filter(
+					request => request.follower?.id !== currentUser.id
+				),
+			} as UserDTO,
+		})
+	),
 	on(
 		loadUserProfileFailure,
 		loadUserProfileGroupsFailure,
 		loadUserProfilePostsFailure,
-		(state, { error }) => ({
+		(state, { error }): UserProfileState => ({
 			...state,
 			error,
 		})
 	),
-	on(getPinnedPostSuccess, (state, { post }) => ({
-		...state,
-		userPosts: [...state.userPosts, post],
-	}))
+	on(
+		getPinnedPostSuccess,
+		(state, { post }): UserProfileState => ({
+			...state,
+			userPosts: [...state.userPosts, post],
+		})
+	)
 );

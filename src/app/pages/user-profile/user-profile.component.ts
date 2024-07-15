@@ -5,8 +5,8 @@ import { TimelinePost } from '../../models/post.model';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import {
-	selectPinnedPost,
 	selectIsFollowing,
+	selectPinnedPost,
 	selectUserProfile,
 	selectUserProfileGroups,
 	selectUserProfilePictureUrl,
@@ -29,7 +29,6 @@ import { PostListComponent } from '../profile/post-list/post-list.component';
 import { PinnedPostComponent } from '../profile/post-list/pinned-post/pinned-post.component';
 import { ProfileGroupsComponent } from '../profile/profile-groups/profile-groups.component';
 import { AuthenticationService } from '../../auth/authentication.service';
-import { selectProfileUser } from '../../store/profile/profile.selectors';
 
 @Component({
 	selector: 'app-user-profile',
@@ -48,8 +47,10 @@ import { selectProfileUser } from '../../store/profile/profile.selectors';
 })
 export class UserProfileComponent implements OnInit {
 	protected readonly environment = environment;
-	user$!: Observable<UserDTO | null>;
-	loggedInUser$!: Observable<UserDTO | null>;
+	consultedUser$!: Observable<UserDTO | null>;
+	consultedUser: UserDTO | null = null;
+	loggedInUserSubscription$ = this.authenticationService.currentUserSource;
+	loggedInUser: UserDTO | null = null;
 	userPosts$!: Observable<TimelinePost[]>;
 	userGroups$!: Observable<Group[]>;
 	profilePictureUrl$!: Observable<unknown>;
@@ -58,8 +59,8 @@ export class UserProfileComponent implements OnInit {
 
 	constructor(
 		private store: Store,
-		private route: ActivatedRoute,
-		private authService: AuthenticationService
+		protected authenticationService: AuthenticationService,
+		private route: ActivatedRoute
 	) {}
 
 	ngOnInit(): void {
@@ -67,11 +68,12 @@ export class UserProfileComponent implements OnInit {
 		if (userId) {
 			this.store.dispatch(loadUserProfile({ userId }));
 
-			this.user$ = this.store.select(selectUserProfile);
+			this.consultedUser$ = this.store.select(selectUserProfile);
 			this.profilePictureUrl$ = this.store.select(selectUserProfilePictureUrl);
 
-			this.user$.subscribe(user => {
+			this.consultedUser$.subscribe(user => {
 				if (user && user.profilePicture) {
+					this.consultedUser = user;
 					const profilePictureUrl = `${environment.backendUrl}/files/${user.profilePicture.id}`;
 					this.store.dispatch(setUserProfilePictureUrl({ profilePictureUrl }));
 				}
@@ -83,38 +85,28 @@ export class UserProfileComponent implements OnInit {
 			this.userGroups$ = this.store.select(selectUserProfileGroups);
 			this.pinnedPost$ = this.store.select(selectPinnedPost);
 
-			this.loggedInUser$ = this.store.select(selectProfileUser);
-			this.loggedInUser$.subscribe(user => {
+			this.loggedInUserSubscription$.subscribe(user => {
+				this.loggedInUser = user;
 				if (user) {
-					this.isFollowing$ = this.store.select(selectIsFollowing, {
-						currentUserId: user.id,
-					});
+					this.isFollowing$ = this.store.select(selectIsFollowing(user.id));
 				}
 			});
 		}
 	}
 
-	followUser(userId?: number) {
-		if (userId !== undefined) {
-			this.loggedInUser$
-				.subscribe(currentUser => {
-					if (currentUser) {
-						this.store.dispatch(followUser({ userId, currentUser }));
-					}
-				})
-				.unsubscribe(); // Unsubscribe to avoid memory leaks
+	followUser() {
+		const userId = this.consultedUser?.id;
+		const currentUser = this.loggedInUser;
+		if (userId && currentUser) {
+			this.store.dispatch(followUser({ userId, currentUser }));
 		}
 	}
 
-	unfollowUser(userId?: number) {
-		if (userId !== undefined) {
-			this.loggedInUser$
-				.subscribe(currentUser => {
-					if (currentUser) {
-						this.store.dispatch(unfollowUser({ userId, currentUser }));
-					}
-				})
-				.unsubscribe();
+	unfollowUser() {
+		const userId = this.consultedUser?.id;
+		const currentUser = this.loggedInUser;
+		if (userId && currentUser) {
+			this.store.dispatch(unfollowUser({ userId, currentUser }));
 		}
 	}
 }

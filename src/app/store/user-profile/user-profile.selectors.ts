@@ -1,8 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { UserProfileState } from './user-profile.state';
-import { ProfileState } from '../profile/profile.state';
 import { TimelinePost } from '../../models/post.model';
-import { selectProfileState } from '../profile/profile.selectors';
 
 const getUserProfileState =
 	createFeatureSelector<UserProfileState>('userProfile');
@@ -43,10 +41,11 @@ export const selectPinnedPost = createSelector(
 	}
 );
 
-export const selectIsFollowing = createSelector(
-	getUserProfileState,
-	(state: UserProfileState, props: { currentUserId: number }) =>
-		!!state.user?.sentFollowRequests.some(
-			request => request.user.id === props.currentUserId && request.isAccepted
-		)
-);
+export const selectIsFollowing = (currentUserId: number) =>
+	createSelector(
+		getUserProfileState,
+		(state: UserProfileState) =>
+			!!state.user?.followers.some(
+				request => request.follower.id === currentUserId
+			)
+	);

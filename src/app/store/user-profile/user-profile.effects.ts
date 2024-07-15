@@ -62,8 +62,8 @@ export class UserProfileEffects {
 		);
 	});
 
-	followUser$ = createEffect(() => {
-		return this.actions$.pipe(
+	followUser$ = createEffect(() =>
+		this.actions$.pipe(
 			ofType(followUser),
 			concatLatestFrom(() => this.store.select(selectProfileUser)),
 			switchMap(([action, currentUser]) =>
@@ -77,20 +77,25 @@ export class UserProfileEffects {
 					catchError(error => of(followUserFailure({ error })))
 				)
 			)
-		);
-	});
+		)
+	);
 
-	unfollowUser$ = createEffect(() => {
-		return this.actions$.pipe(
+	unfollowUser$ = createEffect(() =>
+		this.actions$.pipe(
 			ofType(unfollowUser),
 			switchMap(action =>
 				this.socialService.unfollowUser(action.userId).pipe(
-					map(() => unfollowUserSuccess()),
+					map(() =>
+						unfollowUserSuccess({
+							userId: action.userId,
+							currentUser: action.currentUser,
+						})
+					),
 					catchError(error => of(unfollowUserFailure({ error })))
 				)
 			)
-		);
-	});
+		)
+	);
 
 	constructor(
 		private actions$: Actions,
