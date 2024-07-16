@@ -23,7 +23,7 @@ import {
 import { AsyncPipe, NgIf } from '@angular/common';
 import { environment } from '../../../environments/environment';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IconComponent } from '../../component/typography/icon/icon.component';
 import { PostListComponent } from '../profile/post-list/post-list.component';
 import { PinnedPostComponent } from '../profile/post-list/pinned-post/pinned-post.component';
@@ -60,11 +60,20 @@ export class UserProfileComponent implements OnInit {
 	constructor(
 		private store: Store,
 		protected authenticationService: AuthenticationService,
-		private route: ActivatedRoute
+		private route: ActivatedRoute,
+		private router: Router
 	) {}
 
 	ngOnInit(): void {
 		const userId = Number(this.route.snapshot.paramMap.get('userId'));
+
+		this.loggedInUserSubscription$.subscribe(user => {
+			this.loggedInUser = user;
+			if (user && user.id === userId) {
+				this.router.navigate(['/profile']);
+			}
+		});
+
 		if (userId) {
 			this.store.dispatch(loadUserProfile({ userId }));
 

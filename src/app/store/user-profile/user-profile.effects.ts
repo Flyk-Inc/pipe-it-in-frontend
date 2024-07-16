@@ -4,21 +4,21 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { SocialService } from '../../service/social.service';
 import {
-  followUser,
-  followUserFailure,
-  followUserSuccess,
-  loadUserProfile,
-  loadUserProfileFailure,
-  loadUserProfileGroups,
-  loadUserProfileGroupsFailure,
-  loadUserProfileGroupsSuccess,
-  loadUserProfilePosts,
-  loadUserProfilePostsFailure,
-  loadUserProfilePostsSuccess,
-  loadUserProfileSuccess,
-  unfollowUser,
-  unfollowUserFailure,
-  unfollowUserSuccess,
+	followUser,
+	followUserFailure,
+	followUserSuccess,
+	loadUserProfile,
+	loadUserProfileFailure,
+	loadUserProfileGroups,
+	loadUserProfileGroupsFailure,
+	loadUserProfileGroupsSuccess,
+	loadUserProfilePosts,
+	loadUserProfilePostsFailure,
+	loadUserProfilePostsSuccess,
+	loadUserProfileSuccess,
+	unfollowUser,
+	unfollowUserFailure,
+	unfollowUserSuccess,
 } from './user-profile.actions';
 import { Store } from '@ngrx/store';
 import { UserProfileState } from './user-profile.state';
