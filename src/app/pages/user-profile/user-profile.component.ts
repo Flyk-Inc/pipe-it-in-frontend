@@ -86,9 +86,9 @@ export class UserProfileComponent implements OnInit {
 					const profilePictureUrl = `${environment.backendUrl}/files/${user.profilePicture.id}`;
 					this.store.dispatch(setUserProfilePictureUrl({ profilePictureUrl }));
 				}
+				this.store.dispatch(loadUserProfilePosts({ userId }));
 			});
 
-			this.store.dispatch(loadUserProfilePosts({ userId }));
 			this.store.dispatch(loadUserProfileGroups({ userId }));
 			this.userPosts$ = this.store.select(selectUserProfilePosts);
 			this.userGroups$ = this.store.select(selectUserProfileGroups);

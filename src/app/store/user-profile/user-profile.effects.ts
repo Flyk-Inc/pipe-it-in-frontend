@@ -20,8 +20,6 @@ import {
 	unfollowUserFailure,
 	unfollowUserSuccess,
 } from './user-profile.actions';
-import { Store } from '@ngrx/store';
-import { UserProfileState } from './user-profile.state';
 
 @Injectable()
 export class UserProfileEffects {
@@ -61,8 +59,8 @@ export class UserProfileEffects {
 		);
 	});
 
-	followUser$ = createEffect(() =>
-		this.actions$.pipe(
+	followUser$ = createEffect(() => {
+		return this.actions$.pipe(
 			ofType(followUser),
 			switchMap(action =>
 				this.socialService.followUser(action.userId).pipe(
@@ -75,11 +73,11 @@ export class UserProfileEffects {
 					catchError(error => of(followUserFailure({ error })))
 				)
 			)
-		)
-	);
+		);
+	});
 
-	unfollowUser$ = createEffect(() =>
-		this.actions$.pipe(
+	unfollowUser$ = createEffect(() => {
+		return this.actions$.pipe(
 			ofType(unfollowUser),
 			switchMap(action =>
 				this.socialService.unfollowUser(action.userId).pipe(
@@ -92,12 +90,11 @@ export class UserProfileEffects {
 					catchError(error => of(unfollowUserFailure({ error })))
 				)
 			)
-		)
-	);
+		);
+	});
 
 	constructor(
 		private actions$: Actions,
-		private socialService: SocialService,
-		private store: Store<UserProfileState>
+		private socialService: SocialService
 	) {}
 }

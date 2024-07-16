@@ -2,21 +2,21 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { UserProfileState } from './user-profile.state';
 import { TimelinePost } from '../../models/post.model';
 
-const getUserProfileState =
+const selectUserProfileState =
 	createFeatureSelector<UserProfileState>('userProfile');
 
 export const selectUserProfile = createSelector(
-	getUserProfileState,
+	selectUserProfileState,
 	(state: UserProfileState) => state.user
 );
 
 export const selectUserProfilePictureUrl = createSelector(
-	getUserProfileState,
+	selectUserProfileState,
 	(state: UserProfileState) => state.profilePictureUrl
 );
 
 export const selectUserProfilePosts = createSelector(
-	getUserProfileState,
+	selectUserProfileState,
 	(state: UserProfileState) => {
 		const pinnedPostId = state.user?.pinnedPost;
 		return state.userPosts.filter(
@@ -26,12 +26,12 @@ export const selectUserProfilePosts = createSelector(
 );
 
 export const selectUserProfileGroups = createSelector(
-	getUserProfileState,
+	selectUserProfileState,
 	(state: UserProfileState) => state.userGroups
 );
 
 export const selectPinnedPost = createSelector(
-	getUserProfileState,
+	selectUserProfileState,
 	(state: UserProfileState) => {
 		const pinnedPostId = state.user?.pinnedPost;
 		return (
@@ -43,7 +43,7 @@ export const selectPinnedPost = createSelector(
 
 export const selectIsFollowing = (currentUserId: number) =>
 	createSelector(
-		getUserProfileState,
+		selectUserProfileState,
 		(state: UserProfileState) =>
 			!!state.user?.followers.some(
 				request => request.follower.id === currentUserId
