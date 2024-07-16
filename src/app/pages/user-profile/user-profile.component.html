@@ -24,7 +24,12 @@
 					<button
 						class="mt-4 px-4 py-2 bg-primary rounded-lg"
 						(click)="followUser()">
-						Suivre
+						<span class="flex items-center gap-x-2"
+							>Suivre
+							<ng-container *ngIf="(consultedUser$ | async)?.isPrivate">
+								<app-icon icon="lock"></app-icon>
+							</ng-container>
+						</span>
 					</button>
 				</ng-template>
 				<div
@@ -68,12 +73,6 @@
 		</div>
 		<!-- Main Content -->
 		<div class="col-span-1 md:col-span-2 rounded-lg p-4">
-			<!-- Pinned Post -->
-			<ng-container *ngIf="pinnedPost$ | async as pinnedPost">
-				<app-pinned-post
-					[post]="pinnedPost"
-					[isOwnProfile]="false"></app-pinned-post>
-			</ng-container>
 			<!-- Post List -->
 			<ng-container
 				*ngIf="
@@ -81,9 +80,25 @@
 						(isFollowing$ | async) === false;
 					else showPosts
 				">
-				<div class="text-gray-400">Profil privé</div>
+				<div
+					class="text-gray-400 flex flex-col items-center justify-center h-full text-center">
+					<p class="mt-4">
+						Ce profil est privé. Vous devez suivre
+						{{ (consultedUser$ | async)?.username }} pour voir ses posts.
+					</p>
+					<img
+						src="assets/images/cadenas.svg"
+						alt="Cadenas"
+						class="w-64 h-64 text-primary dark:text-primary" />
+				</div>
 			</ng-container>
 			<ng-template #showPosts>
+				<!-- Pinned Post -->
+				<ng-container *ngIf="pinnedPost$ | async as pinnedPost">
+					<app-pinned-post
+						[post]="pinnedPost"
+						[isOwnProfile]="false"></app-pinned-post>
+				</ng-container>
 				<app-post-list
 					[posts]="userPosts$ | async"
 					[isOwnProfile]="false"></app-post-list>

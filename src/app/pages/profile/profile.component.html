@@ -101,6 +101,20 @@
 							<form
 								(ngSubmit)="onUpdateProfile()"
 								class="flex flex-wrap gap-y-6">
+								<div class="w-full flex items-center mt-4">
+									<span
+										class="block text-sm font-medium text-gray-900 dark:text-white mr-3"
+										>Profile Private</span
+									>
+									<label class="switch">
+										<input
+											type="checkbox"
+											name="isPrivate"
+											id="isPrivate"
+											[(ngModel)]="profileData.isPrivate" />
+										<span class="slider round"></span>
+									</label>
+								</div>
 								<div class="w-full">
 									<label
 										for="firstName"
