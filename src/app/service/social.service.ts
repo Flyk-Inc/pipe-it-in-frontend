@@ -149,7 +149,7 @@ export class SocialService {
 
 	getUserGroups(userId: number): Observable<Group[]> {
 		return this.httpClient
-			.get<Group[]>(`${this.backendUrl}/groups/${userId}`)
+			.get<Group[]>(`${this.backendUrl}/groups/user/${userId}`)
 			.pipe(
 				catchError(error => {
 					console.error('Error fetching user groups', error);
