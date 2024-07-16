@@ -1,0 +1,53 @@
+<div>
+	<p class="text-lg font-medium first-letter:capitalize">
+		<span i18n="@@test_from" class="first-letter:capitalize">Test of </span>
+		{{ testRun.createdAt | date: 'medium' }}
+	</p>
+
+	<p class="first-letter:capitalize">
+		<span i18n="@@executed">Executed</span>:
+		@if (testRun.executed) {
+			<span class="text-green-500" i18n="@@yes">Yes</span>
+		} @else {
+			<span class="text-red-500" i18n="@@no">No</span>
+		}
+	</p>
+
+	<p class="first-letter:capitalize">
+		<span i18n="@@error">error</span>:
+		@if (testRun.error) {
+			<span class="text-red-500" i18n="@@yes">Yes</span>
+		} @else {
+			<span i18n="@@no">No</span>
+		}
+	</p>
+
+	<p>
+		<span i18n="@@output.standard" class="capitalize">standard output</span>:
+	</p>
+	@if (testRun.stdout) {
+		<pre><code language="bash" class="text-xs max-h-60 overflow-y-scroll"  [highlight]="testRun.stdout"
+             lineNumbers></code></pre>
+	} @else {
+		<span i18n="@@nothing" class="text-grey-2 italic">nothing</span>
+	}
+	<p><span i18n="@@output.error" class="capitalize">error output</span>:</p>
+	@if (testRun.stderr) {
+		<pre><code class="text-xs max-h-60 overflow-y-scroll" [highlightAuto]="testRun.stderr"
+             lineNumbers></code></pre>
+	} @else {
+		<p i18n="@@nothing" class="text-grey-2 italic">nothing</p>
+	}
+	@if (testRun.outputFile !== undefined) {
+		<p class="first-letter:capitalize">
+			<span i18n="@@output.file" class="first-letter:capitalize"
+				>output file</span
+			>:
+			<a
+				[href]="environment.backendUrl + '/files/' + testRun.outputFile"
+				class="h-fit text-primary hover:underline">
+				<span i18n="@@download" class="capitalize">Download</span>
+			</a>
+		</p>
+	}
+</div>

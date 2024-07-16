@@ -1,6 +1,17 @@
 {
-	"locale": "en",
+	"locale": "en-US",
 	"translations": {
+		"test_from": "Test of ",
+		"executed": "Executed",
+		"yes": "Yes",
+		"no": "No",
+		"error": "error",
+		"output.standard": "standard output",
+		"nothing": "nothing",
+		"output.error": "error output",
+		"output.file": "output file",
+		"download": "Download",
+		"code.test-history": " Historique de Tests du Code ",
 		"search_post_or_pipelien": "Search Post or Pipeline",
 		"log.in": "Log in",
 		"log.out": "Log out",
@@ -21,7 +32,7 @@
 		"post": "post",
 		"cancel": "cancel",
 		"edit": "edit",
-		"code.version.title": "version's title",
+		"code.version.title": "Code's title",
 		"code.title": "Code's title",
 		"code.version": "code's versions",
 		"code.description": "Code's description",
@@ -33,13 +44,19 @@
 		"chose-a-fileType": " Choose a FileType ",
 		"output.description": "Output description",
 		"output.fileType": "output file type",
+		"code.run-test": " test this code ",
+		"fileInput.ask_upload": "Please upload a file to serve as the input for this test run",
 		"code.update.success": "code updated successfully",
 		"code.version.create.success": "new code ersion created successfully",
+		"file.size.exceeded": "The file size exceeds the maximum allowed size of 2MB",
+		"file.type.invalid": "The file type is not valid. Only {$PH} files are allowed.",
+		"code.test.launch.success": "Code test launched successfully.",
+		"code.test.runs.error": "an error occurred while fetching test runs",
 		"by": "de",
 		"language": "language",
 		"latest-version": "Latest Version",
 		"draft": "draft",
 		"your-codes": "Vos codes",
-		"code.create": "create a code"
+		"code.create": "createCodeTranslated"
 	}
 }

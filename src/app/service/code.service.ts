@@ -4,11 +4,13 @@ import { catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import {
+	CodeDetail,
 	CreateCodeDTO,
 	CreateVersionDTO,
+	RunTestCodeDTO,
+	TestRun,
 	TimelineCode,
 } from '../models/code.model';
-import { CodeDetail } from '../pages/pipelines/pipelines.component';
 
 @Injectable({
 	providedIn: 'root',
@@ -62,6 +64,29 @@ export class CodeService {
 		return this.httpClient.post<TimelineCode>(
 			`${this.backendUrl}/codes/${codeId}/version`,
 			createVersionDto
+		);
+	}
+
+	runTestCode(
+		codeId: number,
+		runTestCodeDTO: RunTestCodeDTO,
+		fileInput: File | undefined = undefined
+	) {
+		const formData = new FormData();
+		formData.append('codeContent', runTestCodeDTO.codeContent);
+		formData.append('language', runTestCodeDTO.language);
+		if (fileInput) {
+			formData.append('file', fileInput);
+		}
+		return this.httpClient.post(
+			`${this.backendUrl}/codes/${codeId}/test`,
+			formData
+		);
+	}
+
+	getTestRuns(codeId: number) {
+		return this.httpClient.get<TestRun[]>(
+			`${this.backendUrl}/codes/${codeId}/testRuns`
 		);
 	}
 }
