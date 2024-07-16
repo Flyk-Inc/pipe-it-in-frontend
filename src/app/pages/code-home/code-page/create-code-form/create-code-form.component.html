@@ -1,5 +1,5 @@
 <form
-	class="max-h-full overflow-y-scroll rounded-lg border border-grey-1 dark:border-grey-3 bg-light-card-bg dark:bg-dark-card-bg mt-2 mx-2 p-4 flex flex-col gap-y-2"
+	class="max-h-full overflow-y-scroll rounded-lg border border-grey-1 dark:border-grey-3 bg-light-card-bg dark:bg-dark-card-bg mt-2 mx-2 p-4 grid grid-cols-1 gap-y-2"
 	[formGroup]="mode === 'updateCode' ? updateCodeForm : createVersionForm">
 	<div class="w-full">
 		@if (mode === 'createVersion') {
@@ -198,10 +198,12 @@
 			</div>
 		}
 	</div>
-	<ngx-monaco-editor
-		formControlName="code"
-		[options]="editorOptions"
-		class="rounded-lg overflow-hidden"></ngx-monaco-editor>
+	<div class="min-h-80">
+		<ngx-monaco-editor
+			[options]="editorOptions"
+			class="rounded-lg !h-80"
+			formControlName="code"></ngx-monaco-editor>
+	</div>
 	<div class="flex justify-end gap-x-2">
 		<app-button
 			(click)="emitCancelEvent()"
@@ -224,13 +226,20 @@
 					[text]="postStringTranslated"></app-button>
 			}
 		}
-
-		<!--    @if (code.versions.length <= 0) {-->
-		<!--      <app-button-->
-		<!--        type="submit"-->
-		<!--        (click)="postVersion()"-->
-		<!--        [disabled]="!updateCodeForm.valid"-->
-		<!--        [text]="postStringTranslated"></app-button>-->
-		<!--    }-->
 	</div>
+	<details class="collapse border border-grey-1 dark:border-grey-2 min-h-9">
+		<summary
+			class="collapse-title text-xl font-medium first-letter:capitalize"
+			i18n="@@code.test-history">
+			Historique de Tests du Code
+		</summary>
+		<div
+			class="collapse-content p-0 max-h-60 overflow-y-scroll grid grid-cols-1 gap-y-2 px-2">
+			@for (testRun of code.testRuns; track testRun) {
+				<div class="w-full">
+					<app-code-report [testRun]="testRun"></app-code-report>
+				</div>
+			}
+		</div>
+	</details>
 </form>

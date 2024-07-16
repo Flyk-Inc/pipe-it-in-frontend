@@ -3,11 +3,6 @@ import { PopularGroupsComponent } from '../home/popular-groups/popular-groups.co
 import { SidenavComponent } from '../../component/nav/sidenav/sidenav.component';
 import { TimelineComponent } from '../home/timeline/timeline.component';
 import { CodesTimelineComponent } from './codes-timeline/codes-timeline.component';
-import { TimelineCode, Version } from '../../models/code.model';
-
-export interface CodeDetail extends TimelineCode {
-	versions: Version[];
-}
 
 @Component({
 	selector: 'app-pipelines',

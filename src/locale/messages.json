@@ -1,6 +1,16 @@
 {
-	"locale": "en",
+	"locale": "en-US",
 	"translations": {
+		"test_from": "Test of ",
+		"executed": "Executed",
+		"yes": "Yes",
+		"no": "No",
+		"error": "error",
+		"output.standard": "standard output",
+		"nothing": "nothing",
+		"output.error": "error output",
+		"output.file": "output file",
+		"download": "Download",
 		"search_post_or_pipelien": "Search Post or Pipeline",
 		"log.in": "Log in",
 		"log.out": "Log out",
@@ -14,6 +24,7 @@
 		"last-draft": " Brouillon actuel ",
 		"no-versions-yet": " no versions yet ",
 		"versions": "versions",
+		"code.test-history": " Historique de Tests du Code ",
 		"posted.on": "posted on",
 		"input": "input",
 		"output": "output",
@@ -21,7 +32,7 @@
 		"post": "post",
 		"cancel": "cancel",
 		"edit": "edit",
-		"code.version.title": "version's title",
+		"code.version.title": "Code's title",
 		"code.title": "Code's title",
 		"code.version": "code's versions",
 		"code.description": "Code's description",
@@ -40,6 +51,6 @@
 		"latest-version": "Latest Version",
 		"draft": "draft",
 		"your-codes": "Vos codes",
-		"code.create": "create a code"
+		"code.create": "createCodeTranslated"
 	}
 }

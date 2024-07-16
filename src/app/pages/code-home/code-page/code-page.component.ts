@@ -6,7 +6,6 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CodeService } from '../../../service/code.service';
-import { CodeDetail } from '../../pipelines/pipelines.component';
 import { DatePipe, NgOptimizedImage } from '@angular/common';
 import { HighlightAuto } from 'ngx-highlightjs';
 import { HighlightLineNumbers } from 'ngx-highlightjs/line-numbers';
@@ -18,10 +17,11 @@ import {
 	ReactiveFormsModule,
 	Validators,
 } from '@angular/forms';
-import { CodeLanguages } from '../../../models/code.model';
+import { CodeDetail, CodeLanguages } from '../../../models/code.model';
 import { ButtonComponent } from '../../../component/layout/button/button.component';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { CreateCodeFormComponent } from './create-code-form/create-code-form.component';
+import { CodeReportComponent } from '../../../component/code/code-report/code-report.component';
 
 @Component({
 	selector: 'app-code-home-page',
@@ -37,6 +37,7 @@ import { CreateCodeFormComponent } from './create-code-form/create-code-form.com
 		ReactiveFormsModule,
 		MonacoEditorModule,
 		CreateCodeFormComponent,
+		CodeReportComponent,
 	],
 	templateUrl: './code-page.component.html',
 	styleUrl: './code-page.component.scss',

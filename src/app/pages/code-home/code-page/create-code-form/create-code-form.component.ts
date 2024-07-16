@@ -10,14 +10,16 @@ import {
 	Validators,
 } from '@angular/forms';
 import {
+	CodeDetail,
 	CodeLanguages,
 	CodeStatus,
 	CreateCodeDTO,
 	CreateVersionDTO,
-	TimelineCode,
 } from '../../../../models/code.model';
 import { CodeService } from '../../../../service/code.service';
 import { NotificationService } from '../../../../service/notification.service';
+import { CodeReportComponent } from '../../../../component/code/code-report/code-report.component';
+import { DividerModule } from 'primeng/divider';
 
 @Component({
 	selector: 'app-create-code-form',
@@ -27,12 +29,14 @@ import { NotificationService } from '../../../../service/notification.service';
 		MonacoEditorModule,
 		PaginatorModule,
 		ReactiveFormsModule,
+		CodeReportComponent,
+		DividerModule,
 	],
 	templateUrl: './create-code-form.component.html',
 	styleUrl: './create-code-form.component.scss',
 })
 export class CreateCodeFormComponent implements OnInit {
-	@Input() code!: TimelineCode;
+	@Input() code!: CodeDetail;
 	@Input() mode: 'updateCode' | 'createVersion' = 'updateCode';
 	@Output() cancel = new EventEmitter<boolean>();
 	@Output() successSubmit = new EventEmitter<boolean>();

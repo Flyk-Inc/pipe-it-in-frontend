@@ -162,10 +162,12 @@
 			</div>
 		}
 	</div>
-	<ngx-monaco-editor
-		formControlName="code"
-		[options]="editorOptions"
-		class="rounded-lg overflow-hidden"></ngx-monaco-editor>
+	<div class="h-80">
+		<ngx-monaco-editor
+			formControlName="code"
+			[options]="editorOptions"
+			class="rounded-lg overflow-hidden"></ngx-monaco-editor>
+	</div>
 	<app-button
 		(click)="submitCreateCodeForm()"
 		[disabled]="!createCodeForm.valid"

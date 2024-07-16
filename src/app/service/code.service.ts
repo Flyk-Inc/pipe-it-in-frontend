@@ -4,11 +4,12 @@ import { catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import {
+	CodeDetail,
 	CreateCodeDTO,
 	CreateVersionDTO,
+	RunTestCodeDTO,
 	TimelineCode,
 } from '../models/code.model';
-import { CodeDetail } from '../pages/pipelines/pipelines.component';
 
 @Injectable({
 	providedIn: 'root',
@@ -62,6 +63,13 @@ export class CodeService {
 		return this.httpClient.post<TimelineCode>(
 			`${this.backendUrl}/codes/${codeId}/version`,
 			createVersionDto
+		);
+	}
+
+	runTestCode(codeId: number, runTestCodeDTO: RunTestCodeDTO) {
+		return this.httpClient.post(
+			`${this.backendUrl}/codes/${codeId}/test`,
+			runTestCodeDTO
 		);
 	}
 }
