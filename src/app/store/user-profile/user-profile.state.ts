@@ -15,6 +15,7 @@ export const initialState: UserProfileState = {
 	userGroups: [],
 	userPosts: [],
 	pinnedPost: null,
-	profilePictureUrl: '',
-	error: null,
+  profilePictureUrl:
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png',
+  error: null,
 };
