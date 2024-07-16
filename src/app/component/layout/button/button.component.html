@@ -2,9 +2,14 @@
 	[disabled]="disabled"
 	[type]="type"
 	[ngClass]="{
-		'rounded bg-blue-500 py-2 px-4 text-white font-bold capitalize': true,
-		'hover:bg-blue-700': !disabled,
-		'opacity-50': disabled
+		'rounded bg-primary text-white flex items-center': true,
+		'hover:bg-primary-accent': !disabled,
+		'opacity-50': disabled,
+		'font-bold py-2 px-4': size === 'normal',
+		'text-sm py-1 px-2': size === 'small'
 	}">
-	{{ text }}
+	<span class="block first-letter:capitalize">{{ text }}</span>
+	@if (icon) {
+		<app-icon [size]="size" [icon]="icon"></app-icon>
+	}
 </button>

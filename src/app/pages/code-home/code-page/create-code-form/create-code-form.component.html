@@ -143,6 +143,12 @@
 					</select>
 				</div>
 			</div>
+			<app-button
+				icon="content_copy"
+				text="Code pour lire le fichier d'entrée:"
+				(click)="copyHelper('read input')"
+				size="small">
+			</app-button>
 		}
 	</div>
 	<div class="w-full">
@@ -196,6 +202,12 @@
 					</select>
 				</div>
 			</div>
+			<app-button
+				icon="content_copy"
+				text="Code pour écrire le fichier de sortie:"
+				(click)="copyHelper('write output')"
+				size="small">
+			</app-button>
 		}
 	</div>
 	<div class="min-h-80">
@@ -204,6 +216,49 @@
 			class="rounded-lg !h-80"
 			formControlName="code"></ngx-monaco-editor>
 	</div>
+	<details class="collapse collapse-arrow">
+		<summary class="collapse-title">
+			<h3
+				class="header-3 text-secondary first-letter:capitalize"
+				i18n="@@code.run-test">
+				test this code
+			</h3>
+		</summary>
+		<div class="collapse-content">
+			<div class="grid grid-cols-1 gap-y-2">
+				<div class="flex flex-nowrap gap-2">
+					<app-button
+						(click)="testCode()"
+						class="shrink-0"
+						text="Run Test"
+						[disabled]="!!hasInput.value && !fileInput.value"></app-button>
+					@if (hasInput.value) {
+						<div class="w-full grow">
+							<label
+								class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
+								i18n="@@fileInput.ask_upload"
+								for="file_input"
+								>Please upload a file to serve as the input for this test
+								run</label
+							>
+							<input
+								class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600"
+								(change)="handleFileInputChange($event)"
+								id="file_input"
+								type="file" />
+							<p class="mt-1 text-sm text-grey-2" id="file_input_help">
+								(MAX. 2MB).
+							</p>
+						</div>
+					}
+				</div>
+
+				<app-code-report-history
+					[testRuns]="testRuns"></app-code-report-history>
+			</div>
+		</div>
+	</details>
+
 	<div class="flex justify-end gap-x-2">
 		<app-button
 			(click)="emitCancelEvent()"
@@ -227,19 +282,4 @@
 			}
 		}
 	</div>
-	<details class="collapse border border-grey-1 dark:border-grey-2 min-h-9">
-		<summary
-			class="collapse-title text-xl font-medium first-letter:capitalize"
-			i18n="@@code.test-history">
-			Historique de Tests du Code
-		</summary>
-		<div
-			class="collapse-content p-0 max-h-60 overflow-y-scroll grid grid-cols-1 gap-y-2 px-2">
-			@for (testRun of code.testRuns; track testRun) {
-				<div class="w-full">
-					<app-code-report [testRun]="testRun"></app-code-report>
-				</div>
-			}
-		</div>
-	</details>
 </form>

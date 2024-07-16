@@ -49,24 +49,7 @@
 					>:
 				</h3>
 			}
-			<details class="collapse border border-grey-1 dark:border-grey-2">
-				<summary
-					class="collapse-title text-xl font-medium first-letter:capitalize"
-					i18n="@@code.test-history">
-					Historique de Tests du Code
-				</summary>
-				<div
-					class="collapse-content max-h-80 overflow-y-scroll grid grid-cols-1 gap-y-2">
-					@for (testRun of code.testRuns; track testRun) {
-						<div class="w-full">
-							<div class="border-s-8 border-secondary ps-2">
-								<app-code-report [testRun]="testRun"></app-code-report>
-							</div>
-							<div class="divider !border-grey-3 dark:!border-grey-1"></div>
-						</div>
-					}
-				</div>
-			</details>
+			<app-code-report-history [testRuns]="testRuns"></app-code-report-history>
 			@for (version of code.versions; track version) {
 				<div class="rounded-lg border border-grey-1 dark:border-grey-3 p-2">
 					<h4 class="header-4">

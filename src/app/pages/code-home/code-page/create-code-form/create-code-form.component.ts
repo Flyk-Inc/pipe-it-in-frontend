@@ -15,11 +15,16 @@ import {
 	CodeStatus,
 	CreateCodeDTO,
 	CreateVersionDTO,
+	RunTestCodeDTO,
+	TestRun,
 } from '../../../../models/code.model';
 import { CodeService } from '../../../../service/code.service';
 import { NotificationService } from '../../../../service/notification.service';
 import { CodeReportComponent } from '../../../../component/code/code-report/code-report.component';
 import { DividerModule } from 'primeng/divider';
+import { CodeReportHistoryComponent } from '../../../../component/code/report-history/code-report-history.component';
+import { IconComponent } from '../../../../component/typography/icon/icon.component';
+import { InputHelper, OutputHelper } from '../../../../models/utils';
 
 @Component({
 	selector: 'app-create-code-form',
@@ -31,6 +36,8 @@ import { DividerModule } from 'primeng/divider';
 		ReactiveFormsModule,
 		CodeReportComponent,
 		DividerModule,
+		CodeReportHistoryComponent,
+		IconComponent,
 	],
 	templateUrl: './create-code-form.component.html',
 	styleUrl: './create-code-form.component.scss',
@@ -40,6 +47,7 @@ export class CreateCodeFormComponent implements OnInit {
 	@Input() mode: 'updateCode' | 'createVersion' = 'updateCode';
 	@Output() cancel = new EventEmitter<boolean>();
 	@Output() successSubmit = new EventEmitter<boolean>();
+	testRuns: TestRun[] = [];
 	hasInput = new FormControl(false);
 	hasOutput = new FormControl(false);
 
@@ -64,6 +72,8 @@ export class CreateCodeFormComponent implements OnInit {
 		inputDescription: FormControl<string>;
 		outputDescription: FormControl<string>;
 	}>;
+
+	fileInput = new FormControl<File | null>(null);
 
 	editorOptions = {
 		theme: 'vs-dark',
@@ -108,6 +118,7 @@ export class CreateCodeFormComponent implements OnInit {
 			inputDescription: [this.code.input[0]?.description],
 			outputDescription: [this.code.output[0]?.description],
 		});
+
 		this.hasInput.setValue(this.code.input.length > 0);
 		this.hasOutput.setValue(this.code.output.length > 0);
 		this.updateCodeForm.controls.language.valueChanges.subscribe(language => {
@@ -118,6 +129,8 @@ export class CreateCodeFormComponent implements OnInit {
 			theme: 'vs-dark',
 			language: this.updateCodeForm.controls.language.value,
 		};
+
+		this.loadTestRuns();
 	}
 
 	submitUpdateCodeForm() {
@@ -250,5 +263,94 @@ export class CreateCodeFormComponent implements OnInit {
 					]
 				: [],
 		};
+	}
+
+	handleFileInputChange($event: Event) {
+		const target = $event.target as HTMLInputElement;
+		const file = target.files?.[0];
+
+		if (file) {
+			const maxSizeInBytes = 2 * 1024 * 1024; // 2MB
+			const validFileType = this.hasInput.value
+				? this.updateCodeForm.controls.inputFileType.value === 'png'
+					? 'image/png'
+					: 'text/plain'
+				: '';
+
+			if (file.size > maxSizeInBytes) {
+				this.notificationService.showErrorToast(
+					$localize`:@@file.size.exceeded:The file size exceeds the maximum allowed size of 2MB`
+				);
+				this.fileInput.setValue(null);
+				return;
+			}
+
+			if (file.type !== validFileType) {
+				this.notificationService.showErrorToast(
+					$localize`:@@file.type.invalid:The file type is not valid. Only ${
+						validFileType === 'image/png' ? 'PNG' : 'TXT'
+					} files are allowed.`
+				);
+				this.fileInput.setValue(null);
+				return;
+			}
+
+			this.fileInput.setValue(file);
+		}
+	}
+
+	testCode() {
+		const runTestCodeDto: RunTestCodeDTO = {
+			codeContent: this.updateCodeForm.controls.code.value,
+			language: this.updateCodeForm.controls.language.value,
+		};
+		this.codeService
+			.runTestCode(
+				this.code.id,
+				runTestCodeDto,
+				this.fileInput.value ?? undefined
+			)
+			.subscribe({
+				next: () => {
+					this.notificationService.showSuccessToast(
+						$localize`:@@code.test.launch.success:Code test launched successfully.`
+					);
+				},
+			});
+	}
+
+	loadTestRuns() {
+		this.codeService.getTestRuns(this.code.id).subscribe({
+			next: testRuns => {
+				this.testRuns = testRuns;
+			},
+			error: () => {
+				this.notificationService.showErrorToast(
+					$localize`:@@code.test.runs.error:An error occurred while fetching test runs`
+				);
+			},
+		});
+	}
+
+	async copyHelper(need: 'read input' | 'write output') {
+		if (need === 'read input') {
+			switch (this.code.language) {
+				case CodeLanguages.javascript:
+					await navigator.clipboard.writeText(InputHelper.javascript);
+					break;
+				case CodeLanguages.python:
+					await navigator.clipboard.writeText(InputHelper.python);
+					break;
+			}
+		} else {
+			switch (this.code.language) {
+				case CodeLanguages.javascript:
+					await navigator.clipboard.writeText(OutputHelper.javascript);
+					break;
+				case CodeLanguages.python:
+					await navigator.clipboard.writeText(OutputHelper.python);
+					break;
+			}
+		}
 	}
 }

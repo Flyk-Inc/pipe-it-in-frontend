@@ -17,11 +17,12 @@ import {
 	ReactiveFormsModule,
 	Validators,
 } from '@angular/forms';
-import { CodeDetail, CodeLanguages } from '../../../models/code.model';
+import { CodeDetail, CodeLanguages, TestRun } from '../../../models/code.model';
 import { ButtonComponent } from '../../../component/layout/button/button.component';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { CreateCodeFormComponent } from './create-code-form/create-code-form.component';
 import { CodeReportComponent } from '../../../component/code/code-report/code-report.component';
+import { CodeReportHistoryComponent } from '../../../component/code/report-history/code-report-history.component';
 
 @Component({
 	selector: 'app-code-home-page',
@@ -38,6 +39,7 @@ import { CodeReportComponent } from '../../../component/code/code-report/code-re
 		MonacoEditorModule,
 		CreateCodeFormComponent,
 		CodeReportComponent,
+		CodeReportHistoryComponent,
 	],
 	templateUrl: './code-page.component.html',
 	styleUrl: './code-page.component.scss',
@@ -46,6 +48,7 @@ export class CodePageComponent implements OnInit, AfterViewChecked {
 	code?: CodeDetail;
 	loading = true;
 	error = false;
+	testRuns: TestRun[] = [];
 
 	hasInput = new FormControl(false);
 	hasOutput = new FormControl(false);
@@ -149,5 +152,17 @@ export class CodePageComponent implements OnInit, AfterViewChecked {
 			);
 			this.hasOutput.setValue(true);
 		}
+		this.loadTestRuns();
+	}
+
+	loadTestRuns() {
+		if (this.code === undefined) {
+			return;
+		}
+		this.codeService.getTestRuns(this.code.id).subscribe({
+			next: testRuns => {
+				this.testRuns = testRuns;
+			},
+		});
 	}
 }

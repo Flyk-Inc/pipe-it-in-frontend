@@ -90,6 +90,11 @@ export interface OutputDescriptionDTO {
 	description: string;
 }
 
+export interface RunTestCodeDTO {
+	codeContent: string;
+	language: string;
+}
+
 export enum CodeLanguages {
 	python = 'python',
 	javascript = 'javascript',

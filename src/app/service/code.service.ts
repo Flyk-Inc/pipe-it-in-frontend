@@ -8,6 +8,7 @@ import {
 	CreateCodeDTO,
 	CreateVersionDTO,
 	RunTestCodeDTO,
+	TestRun,
 	TimelineCode,
 } from '../models/code.model';
 
@@ -66,10 +67,26 @@ export class CodeService {
 		);
 	}
 
-	runTestCode(codeId: number, runTestCodeDTO: RunTestCodeDTO) {
+	runTestCode(
+		codeId: number,
+		runTestCodeDTO: RunTestCodeDTO,
+		fileInput: File | undefined = undefined
+	) {
+		const formData = new FormData();
+		formData.append('codeContent', runTestCodeDTO.codeContent);
+		formData.append('language', runTestCodeDTO.language);
+		if (fileInput) {
+			formData.append('file', fileInput);
+		}
 		return this.httpClient.post(
 			`${this.backendUrl}/codes/${codeId}/test`,
-			runTestCodeDTO
+			formData
+		);
+	}
+
+	getTestRuns(codeId: number) {
+		return this.httpClient.get<TestRun[]>(
+			`${this.backendUrl}/codes/${codeId}/testRuns`
 		);
 	}
 }
