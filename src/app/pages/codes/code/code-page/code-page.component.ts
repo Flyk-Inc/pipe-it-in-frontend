@@ -5,7 +5,6 @@ import {
 	OnInit,
 } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { CodeService } from '../../../service/code.service';
 import { DatePipe, NgOptimizedImage } from '@angular/common';
 import { HighlightAuto } from 'ngx-highlightjs';
 import { HighlightLineNumbers } from 'ngx-highlightjs/line-numbers';
@@ -17,12 +16,13 @@ import {
 	ReactiveFormsModule,
 	Validators,
 } from '@angular/forms';
-import { CodeDetail, CodeLanguages, TestRun } from '../../../models/code.model';
-import { ButtonComponent } from '../../../component/layout/button/button.component';
+import { ButtonComponent } from '../../../../component/layout/button/button.component';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { CreateCodeFormComponent } from './create-code-form/create-code-form.component';
-import { CodeReportComponent } from '../../../component/code/code-report/code-report.component';
-import { CodeReportHistoryComponent } from '../../../component/code/report-history/code-report-history.component';
+import { CodeReportComponent } from '../../../../component/code/code-report/code-report.component';
+import { CodeReportHistoryComponent } from '../../../../component/code/report-history/code-report-history.component';
+import { CodeDetail, CodeLanguages, TestRun } from '../../../../models/code.model';
+import { CodeService } from '../../../../service/code.service';
 
 @Component({
 	selector: 'app-code-home-page',
@@ -120,7 +120,6 @@ export class CodePageComponent implements OnInit, AfterViewChecked {
 	}
 
 	handleCancel() {
-		console.log('cancel');
 		this.switchMode('viewing');
 	}
 

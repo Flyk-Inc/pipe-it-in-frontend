@@ -10,9 +10,10 @@ import { ButtonComponent } from '../../../component/layout/button/button.compone
 import { IconComponent } from '../../../component/typography/icon/icon.component';
 import { UnderlineComponent } from '../../../component/layout/underline/underline.component';
 import { RouterLink } from '@angular/router';
+import { codeRoutePath, CodeRoutes } from '../routes';
 
 @Component({
-	selector: 'app-codes-timeline',
+	selector: 'app-personal-codes-list',
 	standalone: true,
 	imports: [
 		AsyncPipe,
@@ -23,17 +24,18 @@ import { RouterLink } from '@angular/router';
 		UnderlineComponent,
 		RouterLink,
 	],
-	templateUrl: './codes-timeline.component.html',
-	styleUrl: './codes-timeline.component.scss',
+	templateUrl: './personal-codes-list.component.html',
+	styleUrl: './personal-codes-list.component.scss',
 })
-export class CodesTimelineComponent implements OnInit {
+export class PersonalCodesListComponent implements OnInit {
 	codes$!: Observable<TimelineCode[]>;
-	createCodeTranslated: string = 'loal';
 	constructor(private store: Store) {}
 
 	ngOnInit() {
 		this.store.dispatch(loadPersonalCodes());
 		this.codes$ = this.store.select(selectAllPersonalCodes);
-		// this.createCodeTranslated= $localize `code.create-new`;
 	}
+
+  protected readonly codeRoutePath = codeRoutePath;
+  protected readonly CodeRoutes = CodeRoutes;
 }

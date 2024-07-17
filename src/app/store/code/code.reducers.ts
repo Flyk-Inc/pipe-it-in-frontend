@@ -15,7 +15,6 @@ export const codeTimelineReducer = createReducer(
 	on(
 		CodeTimelineActions.loadCodesSuccess,
 		(state, { codes }): CodeTimelineState => {
-			console.log(codes);
 			return {
 				...state,
 				personalCodes: codes,

@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ButtonComponent } from '../../../../component/layout/button/button.component';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { PaginatorModule } from 'primeng/paginator';
 import {
@@ -17,14 +16,15 @@ import {
 	CreateVersionDTO,
 	RunTestCodeDTO,
 	TestRun,
-} from '../../../../models/code.model';
-import { CodeService } from '../../../../service/code.service';
-import { NotificationService } from '../../../../service/notification.service';
-import { CodeReportComponent } from '../../../../component/code/code-report/code-report.component';
+} from '../../../../../models/code.model';
+import { ButtonComponent } from '../../../../../component/layout/button/button.component';
+import { CodeReportComponent } from '../../../../../component/code/code-report/code-report.component';
 import { DividerModule } from 'primeng/divider';
-import { CodeReportHistoryComponent } from '../../../../component/code/report-history/code-report-history.component';
-import { IconComponent } from '../../../../component/typography/icon/icon.component';
-import { InputHelper, OutputHelper } from '../../../../models/utils';
+import { CodeReportHistoryComponent } from '../../../../../component/code/report-history/code-report-history.component';
+import { IconComponent } from '../../../../../component/typography/icon/icon.component';
+import { InputHelper, OutputHelper } from '../../../../../models/utils';
+import { CodeService } from '../../../../../service/code.service';
+import { NotificationService } from '../../../../../service/notification.service';
 
 @Component({
 	selector: 'app-create-code-form',
@@ -92,45 +92,9 @@ export class CreateCodeFormComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
-		this.saveStringTranslated = $localize`:@@save.draft:save draft`;
-		this.postStringTranslated = $localize`:@@post:post`;
-		this.cancelStringTranslated = $localize`:@@cancel:cancel`;
-		this.editStringTranslated = $localize`:@@edit:edit`;
-		this.saveStringTranslated = $localize`:@@save.draft:save draft`;
-		this.updateCodeForm = this.formBuilder.nonNullable.group({
-			title: [this.code.title, Validators.required],
-			description: [this.code.description, Validators.required],
-			code: [this.code.draft, Validators.required],
-			language: [this.code.language, Validators.required],
-			inputFileType: [this.code.input[0]?.fileType],
-			outputFileType: [this.code.output[0]?.fileType],
-			inputDescription: [this.code.input[0]?.description],
-			outputDescription: [this.code.output[0]?.description],
-		});
-
-		this.createVersionForm = this.formBuilder.nonNullable.group({
-			title: [this.code.versionDraft.title, Validators.required],
-			description: [this.code.versionDraft.description, Validators.required],
-			code: [this.code.draft, Validators.required],
-			version: [this.code.versionDraft.version, Validators.required],
-			inputFileType: [this.code.input[0]?.fileType],
-			outputFileType: [this.code.output[0]?.fileType],
-			inputDescription: [this.code.input[0]?.description],
-			outputDescription: [this.code.output[0]?.description],
-		});
-
-		this.hasInput.setValue(this.code.input.length > 0);
-		this.hasOutput.setValue(this.code.output.length > 0);
-		this.updateCodeForm.controls.language.valueChanges.subscribe(language => {
-			this.editorOptions = { ...this.editorOptions, language };
-		});
-
-		this.editorOptions = {
-			theme: 'vs-dark',
-			language: this.updateCodeForm.controls.language.value,
-		};
-
-		this.loadTestRuns();
+		this.setupLocalizations();
+		this.setupForms();
+		this.setupInputOutputValidators();
 	}
 
 	submitUpdateCodeForm() {
@@ -352,5 +316,90 @@ export class CreateCodeFormComponent implements OnInit {
 					break;
 			}
 		}
+	}
+
+	private setupInputOutputValidators() {
+		this.hasInput.valueChanges.subscribe(() => {
+			this.changeInputOutputValidators();
+		});
+		this.hasOutput.valueChanges.subscribe(() => {
+			this.changeInputOutputValidators();
+		});
+	}
+
+	private changeInputOutputValidators() {
+		if (this.hasInput.value) {
+			this.updateCodeForm.controls.inputFileType.setValidators(
+				Validators.required
+			);
+			this.updateCodeForm.controls.inputDescription.setValidators(
+				Validators.required
+			);
+		} else {
+			this.updateCodeForm.controls.inputFileType.clearValidators();
+			this.updateCodeForm.controls.inputDescription.clearValidators();
+		}
+
+		if (this.hasOutput.value) {
+			this.updateCodeForm.controls.outputFileType.setValidators(
+				Validators.required
+			);
+			this.updateCodeForm.controls.outputDescription.setValidators(
+				Validators.required
+			);
+		} else {
+			this.updateCodeForm.controls.outputFileType.clearValidators();
+			this.updateCodeForm.controls.outputDescription.clearValidators();
+		}
+
+		this.updateCodeForm.controls.inputFileType.updateValueAndValidity();
+		this.updateCodeForm.controls.inputDescription.updateValueAndValidity();
+		this.updateCodeForm.controls.outputFileType.updateValueAndValidity();
+		this.updateCodeForm.controls.outputDescription.updateValueAndValidity();
+	}
+
+	private setupLocalizations() {
+		this.saveStringTranslated = $localize`:@@save.draft:save draft`;
+		this.postStringTranslated = $localize`:@@post:post`;
+		this.cancelStringTranslated = $localize`:@@cancel:cancel`;
+		this.editStringTranslated = $localize`:@@edit:edit`;
+		this.saveStringTranslated = $localize`:@@save.draft:save draft`;
+	}
+
+	private setupForms() {
+		this.updateCodeForm = this.formBuilder.nonNullable.group({
+			title: [this.code.title, Validators.required],
+			description: [this.code.description, Validators.required],
+			code: [this.code.draft, Validators.required],
+			language: [this.code.language, Validators.required],
+			inputFileType: [this.code.input[0]?.fileType],
+			outputFileType: [this.code.output[0]?.fileType],
+			inputDescription: [this.code.input[0]?.description],
+			outputDescription: [this.code.output[0]?.description],
+		});
+
+		this.createVersionForm = this.formBuilder.nonNullable.group({
+			title: [this.code.versionDraft.title, Validators.required],
+			description: [this.code.versionDraft.description, Validators.required],
+			code: [this.code.draft, Validators.required],
+			version: [this.code.versionDraft.version, Validators.required],
+			inputFileType: [this.code.input[0]?.fileType],
+			outputFileType: [this.code.output[0]?.fileType],
+			inputDescription: [this.code.input[0]?.description],
+			outputDescription: [this.code.output[0]?.description],
+		});
+
+		this.hasInput.setValue(this.code.input.length > 0);
+		this.hasOutput.setValue(this.code.output.length > 0);
+		this.updateCodeForm.controls.language.valueChanges.subscribe(language => {
+			this.editorOptions = { ...this.editorOptions, language };
+		});
+
+		this.loadTestRuns();
+
+		this.editorOptions = {
+			theme: 'vs-dark',
+			language: this.updateCodeForm.controls.language.value,
+		};
 	}
 }

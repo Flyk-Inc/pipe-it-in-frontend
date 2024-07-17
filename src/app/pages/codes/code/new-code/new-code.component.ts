@@ -10,9 +10,9 @@ import {
 	Validators,
 } from '@angular/forms';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
-import { ButtonComponent } from '../../../component/layout/button/button.component';
-import { CodeLanguages, CreateCodeDTO } from '../../../models/code.model';
-import { CodeService } from '../../../service/code.service';
+import { ButtonComponent } from '../../../../component/layout/button/button.component';
+import { CodeLanguages, CreateCodeDTO } from '../../../../models/code.model';
+import { CodeService } from '../../../../service/code.service';
 
 @Component({
 	selector: 'app-new-code',

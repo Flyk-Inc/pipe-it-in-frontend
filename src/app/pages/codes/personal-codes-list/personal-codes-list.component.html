@@ -1,8 +1,8 @@
-<div class="mx-2 pt-2 h-full overflow-y-scroll">
+<div class="mx-2 pt-2 overflow-y-scroll">
 	<div class="flex w-full">
 		<h2 class="header-3 text-primary" i18n="@@your-codes">Vos codes</h2>
 		<a
-			routerLink="/code/new"
+			routerLink="{{codeRoutePath}}/{{CodeRoutes.New}}"
 			class="ml-auto group peer-focus:hidden sm:peer-focus:block">
 			<div class="flex items-center">
 				<span i18n="@@code.create" class="hidden sm:block"

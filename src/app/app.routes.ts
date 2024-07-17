@@ -10,12 +10,8 @@ export const routes: Routes = [
 		loadChildren: () => import('./pages/home/routes').then(m => m.routes),
 	},
 	{
-		path: 'pipelines',
-		loadChildren: () => import('./pages/pipelines/routes').then(m => m.routes),
-	},
-	{
-		path: 'code',
-		loadChildren: () => import('./pages/code-home/routes').then(m => m.routes),
+		path: 'codes',
+		loadChildren: () => import('./pages/codes/routes').then(m => m.routes),
 	},
 	{
 		path: 'profile',
