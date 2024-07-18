@@ -8,6 +8,7 @@ import {
 	TabsComponent,
 } from '../../component/layout/tabs/tabs.component';
 import { codeRoutePath, CodeRoutes } from './routes';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
 	selector: 'app-codes',
@@ -18,22 +19,21 @@ import { codeRoutePath, CodeRoutes } from './routes';
 		TimelineComponent,
 		PersonalCodesListComponent,
 		TabsComponent,
+		RouterOutlet,
 	],
 	templateUrl: './code-home.component.html',
-	styleUrl: './code-home.component.scss',
 })
 export class CodeHomeComponent {
 	tabs: TabData[] = [
 		{
-			title: 'Your codes',
+			title:  $localize`:@@your-codes:your codes`,
 			id: CodeRoutes.PersonalCodes,
 			link: `/${codeRoutePath}/${CodeRoutes.PersonalCodes}`,
 		},
 		{
-			title: 'Your codes',
+      title:  $localize`:@@your-pipelines:your pipelines`,
 			id: CodeRoutes.PersonalPipelines,
-      link: `/${codeRoutePath}/${CodeRoutes.PersonalPipelines}`,
+			link: `/${codeRoutePath}/${CodeRoutes.PersonalPipelines}`,
 		},
 	];
-	activeTabId: string = 'personalCodes';
 }

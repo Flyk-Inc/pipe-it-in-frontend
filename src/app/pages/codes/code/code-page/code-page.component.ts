@@ -4,7 +4,7 @@ import {
 	Component,
 	OnInit,
 } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { DatePipe, NgOptimizedImage } from '@angular/common';
 import { HighlightAuto } from 'ngx-highlightjs';
 import { HighlightLineNumbers } from 'ngx-highlightjs/line-numbers';
@@ -76,6 +76,7 @@ export class CodePageComponent implements OnInit, AfterViewChecked {
 
 	constructor(
 		private route: ActivatedRoute,
+		private router: Router,
 		private codeService: CodeService,
 		private formBuilder: FormBuilder,
 		private changeDetectorRef: ChangeDetectorRef
@@ -97,6 +98,7 @@ export class CodePageComponent implements OnInit, AfterViewChecked {
 				this.loading = false;
 			},
 			error: () => {
+        this.redirectIfCodeIsNotLoaded()
 				this.error = true;
 				this.loading = false;
 			},
@@ -164,4 +166,8 @@ export class CodePageComponent implements OnInit, AfterViewChecked {
 			},
 		});
 	}
+
+  redirectIfCodeIsNotLoaded() {
+    this.router.navigate(['/page-not-found']);
+  }
 }

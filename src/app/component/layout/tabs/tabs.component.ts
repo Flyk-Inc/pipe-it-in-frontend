@@ -19,15 +19,26 @@ export class TabsComponent implements OnInit {
 	constructor(private router: Router) {}
 
 	@Input() tabs!: TabData[];
-	@Input() activeTabId: string = '';
+	activeTabId: string = '';
 
 	ngOnInit() {
-		// match tab.link with the curent route (without base path)
-		const currentRoute = this.router.url
-		if (!currentRoute) return;
-		const activeTab = this.tabs.find(tab => {
-			return currentRoute.includes(tab.link ?? '');
-		});
-		if (activeTab) this.activeTabId = activeTab.id;
+    this.updateActiveTab()
+    this.trackRouteChange()
 	}
+
+  trackRouteChange(){
+    this.router.events.subscribe(() => {
+      this.updateActiveTab();
+    });
+  }
+
+  updateActiveTab(){
+    const currentRoute = this.router.url
+    if (!currentRoute) return;
+    const activeTab = this.tabs.find(tab => {
+      return currentRoute.includes(tab.link ?? '');
+    });
+    if (activeTab) this.activeTabId = activeTab.id;
+
+  }
 }

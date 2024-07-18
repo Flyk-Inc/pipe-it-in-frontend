@@ -5,6 +5,8 @@ import { provideEffects } from '@ngrx/effects';
 import { codeTimelineReducer } from '../../store/code/code.reducers';
 import { CodeTimelineEffects } from '../../store/code/code.effects';
 import { BasicLayoutComponent } from '../../component/layout/basic-layout/basic-layout.component';
+import { pipelineTimelineReducer } from '../../store/pipeline/pipeline.reducers';
+import { PipelineTimelineEffects } from '../../store/pipeline/pipeline.effects';
 
 export enum CodeRoutes {
 	PersonalCodes = 'personal-codes',
@@ -20,27 +22,49 @@ export const routes: Routes = [
 		component: BasicLayoutComponent,
 		data: { routerOutlet: true }, // Define the data to be passed here
 		children: [
-      {
-        path: CodeRoutes.PersonalCodes,
-        loadComponent: () =>
-          import('./code-home.component').then(m => m.CodeHomeComponent),
-        canActivate: [AuthGuard],
-        providers: [
-          provideState({ name: 'codeTimeline', reducer: codeTimelineReducer }),
-          provideEffects(CodeTimelineEffects),
-        ],
-      },
-      {
-        path: CodeRoutes.PersonalPipelines,
-        loadComponent: () =>
-          import('./code-home.component').then(m => m.CodeHomeComponent),
-        canActivate: [AuthGuard],
-        providers: [
-          provideState({ name: 'codeTimeline', reducer: codeTimelineReducer }),
-          provideEffects(CodeTimelineEffects),
-        ],
-      },
-      {
+			{
+				path: '',
+				loadComponent: () =>
+					import('./code-home.component').then(m => m.CodeHomeComponent),
+				children: [
+					{
+						path: CodeRoutes.PersonalCodes,
+						loadComponent: () =>
+							import(
+								'./personal-codes-list/personal-codes-list.component'
+							).then(m => m.PersonalCodesListComponent),
+						canActivate: [AuthGuard],
+						providers: [
+							provideState({
+								name: 'codeTimeline',
+								reducer: codeTimelineReducer,
+							}),
+							provideEffects(CodeTimelineEffects),
+						],
+					},
+					{
+						path: CodeRoutes.PersonalPipelines,
+						loadComponent: () =>
+							import(
+								'././pipelines/personal-pipelines-list/personal-pipelines-list.component'
+							).then(m => m.PersonalPipelinesListComponent),
+						canActivate: [AuthGuard],
+						providers: [
+							provideState({
+								name: 'pipelineTimeline',
+								reducer: pipelineTimelineReducer,
+							}),
+							provideEffects(PipelineTimelineEffects),
+						],
+					},
+					{
+						path: '',
+						redirectTo: CodeRoutes.PersonalCodes,
+						pathMatch: 'full',
+					},
+				],
+			},
+			{
 				path: CodeRoutes.New,
 				loadComponent: () =>
 					import('./code/new-code/new-code.component').then(
@@ -54,11 +78,11 @@ export const routes: Routes = [
 						m => m.CodePageComponent
 					),
 			},
-      {
-        path: '',
-        redirectTo: CodeRoutes.PersonalCodes,
-        pathMatch: 'full',
-      },
-    ],
+			{
+				path: '',
+				redirectTo: CodeRoutes.PersonalCodes,
+				pathMatch: 'full',
+			},
+		],
 	},
 ];

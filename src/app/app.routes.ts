@@ -17,6 +17,10 @@ export const routes: Routes = [
 		path: 'profile',
 		loadChildren: () => import('./pages/profile/routes').then(m => m.routes),
 	},
+  {
+    path:'page-not-found',
+    loadComponent: () => import('./pagenotfound/pagenotfound.component').then(m => m.PagenotfoundComponent),
+  },
 	{
 		path: '**',
 		redirectTo: 'home',

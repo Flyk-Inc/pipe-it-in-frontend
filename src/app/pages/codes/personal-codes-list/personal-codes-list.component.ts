@@ -25,7 +25,6 @@ import { codeRoutePath, CodeRoutes } from '../routes';
 		RouterLink,
 	],
 	templateUrl: './personal-codes-list.component.html',
-	styleUrl: './personal-codes-list.component.scss',
 })
 export class PersonalCodesListComponent implements OnInit {
 	codes$!: Observable<TimelineCode[]>;

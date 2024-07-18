@@ -1,0 +1,26 @@
+<div class="mx-2 pt-2 overflow-y-scroll">
+  <div class="flex w-full">
+    <a
+      routerLink="/{{codeRoutePath}}/{{codeRoutePath}}/{{CodePipelineRoutes.New}}"
+      class="ml-auto group peer-focus:hidden sm:peer-focus:block">
+      <div class="flex items-center">
+				<span i18n="@@pipeline.create" class="hidden sm:block"
+        >createCodeTranslated</span
+        >
+        <app-icon [filled]="false" icon="add_circle" class="ps-2"></app-icon>
+      </div>
+      <app-underline></app-underline>
+    </a>
+  </div>
+  <div class="flex flex-col h-full gap-y-2 mt-2">
+    @if (pipelines$ | async; as pipelines) {
+      @if (pipelines.length) {
+        <ng-container>
+          <ng-container *ngFor="let pipeline of pipelines">
+            <app-personal-pipelines-item [pipeline]="pipeline"></app-personal-pipelines-item>
+          </ng-container>
+        </ng-container>
+      }
+    }
+  </div>
+</div>

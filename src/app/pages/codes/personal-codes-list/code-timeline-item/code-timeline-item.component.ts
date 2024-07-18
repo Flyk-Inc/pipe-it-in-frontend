@@ -10,7 +10,6 @@ import { codeRoutePath, CodeRoutes } from '../../routes';
 	standalone: true,
 	imports: [IconComponent, NgOptimizedImage, RouterLink, NgIf, TitleCasePipe],
 	templateUrl: './code-timeline-item.component.html',
-	styleUrl: './code-timeline-item.component.scss',
 })
 export class CodeTimelineItemComponent {
 	@Input() code!: TimelineCode;

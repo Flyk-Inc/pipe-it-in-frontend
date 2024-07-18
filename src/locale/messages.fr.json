@@ -20,7 +20,8 @@
 		"followers": "followers",
 		"messages": "messages",
 		"favorites": "favoris",
-		"written-by": "écrit par",
+    "resource.not-found": "Ressource introuvable",
+    "written-by": "écrit par",
 		"last-draft": "dernier brouillon",
 		"no-versions-yet": "pas encore de versions",
 		"versions": "versions",
@@ -61,6 +62,9 @@
 		"draft": "brouillon",
 		"your-codes": "vos codes",
     "your-pipelines": "vos pipelines",
-    "code.create": "Créer un code"
+    "code.create": "Créer un code",
+    "pipeline.create": "Créer une pipeline",
+    "step": "étape",
+    "steps": "étapes"
 	}
 }

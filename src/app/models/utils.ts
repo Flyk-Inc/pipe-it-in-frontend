@@ -1,9 +1,13 @@
+import { environment } from '../../environments/environment';
+
 export interface CursoredRessource<T> {
 	data: T[];
 	cursor: string;
 	limit: number;
 	total: number;
 }
+
+export const fileUrl = environment.backendUrl + '/files/';
 
 export enum InputHelper {
 	javascript = `

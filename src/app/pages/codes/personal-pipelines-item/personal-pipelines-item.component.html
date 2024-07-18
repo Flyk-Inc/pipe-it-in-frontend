@@ -1,0 +1,52 @@
+<a
+	routerLink="/{{ codeRoutePath }}/{{ pipelineRoutePath }}/{{
+		CodePipelineRoutes.Page
+	}}/{{ pipeline.id }}">
+	<div
+		class="rounded-lg border border-grey-1 dark:border-grey-3 p-4 bg-light-card-bg dark:bg-dark-card-bg hover:border-b-grey-2 cursor-pointer">
+		<div class="flex flex-nowrap gap-x-4">
+			<app-icon class="text-primary" icon="input"></app-icon>
+			<div class="grow space-y-2">
+				<div>
+					<p class="post-mini-name text-secondary">
+						{{ pipeline.title }}
+					</p>
+					<div class="post-mini-pseudo text-grey-3 dark:text-grey-2">
+						<a
+							routerLink="/user/{{ pipeline.user.id }}"
+							class="flex flex-nowrap gap-x-2 items-center w-fit">
+							<span
+								><span i18n="@@by">de</span>: &#64;{{
+									pipeline.user.lastName
+								}}</span
+							>
+							<img
+								alt="Rounded avatar"
+								class="w-5 h-5 rounded-full shrink"
+								height="12"
+								[src]="fileUrl + pipeline.user.profilePicture"
+								width="12" />
+						</a>
+					</div>
+				</div>
+				<p>{{ pipeline.description }}</p>
+        <div class="flex justify-end gap-x-3 text">
+					<span class="flex items-center gap-x-1">
+						<span class="text-secondary capitalize" i18n="@@input">language</span>:
+						<span>{{ pipeline.pipelineCodes[0].version.input[0].fileType }}</span>
+					</span>
+        </div>
+        <div class="flex justify-end gap-x-3 text">
+					<p>{{ pipeline.pipelineCodes.length }}</p>
+					<span class="flex items-center gap-x-1">
+						@if (pipeline.pipelineCodes.length > 1) {
+							<span class="text-secondary" i18n="@@steps">steps</span>
+						} @else {
+              <span class="text-secondary" i18n="@@step">step</span>
+            }
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</a>
