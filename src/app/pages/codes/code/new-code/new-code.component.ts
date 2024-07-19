@@ -13,6 +13,7 @@ import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { ButtonComponent } from '../../../../component/layout/button/button.component';
 import { CodeLanguages, CreateCodeDTO } from '../../../../models/code.model';
 import { CodeService } from '../../../../service/code.service';
+import { codeRoutePath, CodeRoutes } from '../../routes';
 
 @Component({
 	selector: 'app-new-code',
@@ -68,7 +69,11 @@ export class NewCodeComponent implements OnInit {
 			const createCodeDto = this.createFormDto();
 			this.codeService.createCode(createCodeDto).subscribe({
 				next: createdCode => {
-					this.router.navigate(['/code/' + createdCode.id]).then();
+					this.router
+						.navigate([
+							`/${codeRoutePath}/${CodeRoutes.Page}/${createdCode.id}`,
+						])
+						.then();
 				},
 			});
 		}

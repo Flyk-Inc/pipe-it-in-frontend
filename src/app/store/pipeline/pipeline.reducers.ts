@@ -29,7 +29,7 @@ export const pipelineTimelineReducer = createReducer(
 			loading: false,
 			error,
 		})
-	),
+	)
 	// on(
 	// 	PipelineTimelineActions.createPipeline,
 	// 	(state): PipelineTimelineState => ({

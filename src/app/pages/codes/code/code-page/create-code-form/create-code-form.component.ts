@@ -18,7 +18,7 @@ import {
 	TestRun,
 } from '../../../../../models/code.model';
 import { ButtonComponent } from '../../../../../component/layout/button/button.component';
-import { CodeReportComponent } from '../../../../../component/code/code-report/code-report.component';
+import { CodeReportComponent } from '../../../../../component/code/report-history/code-report/code-report.component';
 import { DividerModule } from 'primeng/divider';
 import { CodeReportHistoryComponent } from '../../../../../component/code/report-history/code-report-history.component';
 import { IconComponent } from '../../../../../component/typography/icon/icon.component';

@@ -1,15 +1,18 @@
+import { Routes } from '@angular/router';
+import { CodeRoutes } from '../routes';
+
 export enum CodePipelineRoutes {
 	Page = 'page',
-  New = 'new',
+	New = 'new',
 }
 export const pipelineRoutePath = 'pipelines';
 
-// export const routes: Routes = [
-//   {
-//     path: CodeRoutes.Page + '/:id',
-//     loadComponent: () =>
-//       import('./code/code-page/code-page.component').then(
-//         m => m.CodePageComponent
-//       ),
-//   },
-// ];
+export const routes: Routes = [
+	{
+		path: CodeRoutes.Page + '/:id',
+		loadComponent: () =>
+			import('./pipeline-page/pipeline-page.component').then(
+				m => m.PipelinePageComponent
+			),
+	},
+];

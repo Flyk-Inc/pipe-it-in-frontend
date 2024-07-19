@@ -8,7 +8,6 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { DatePipe, NgOptimizedImage } from '@angular/common';
 import { HighlightAuto } from 'ngx-highlightjs';
 import { HighlightLineNumbers } from 'ngx-highlightjs/line-numbers';
-import 'highlight.js/styles/androidstudio.min.css';
 import { PanelModule } from 'primeng/panel';
 import {
 	FormBuilder,
@@ -19,9 +18,13 @@ import {
 import { ButtonComponent } from '../../../../component/layout/button/button.component';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { CreateCodeFormComponent } from './create-code-form/create-code-form.component';
-import { CodeReportComponent } from '../../../../component/code/code-report/code-report.component';
+import { CodeReportComponent } from '../../../../component/code/report-history/code-report/code-report.component';
 import { CodeReportHistoryComponent } from '../../../../component/code/report-history/code-report-history.component';
-import { CodeDetail, CodeLanguages, TestRun } from '../../../../models/code.model';
+import {
+	CodeDetail,
+	CodeLanguages,
+	TestRun,
+} from '../../../../models/code.model';
 import { CodeService } from '../../../../service/code.service';
 
 @Component({
@@ -98,7 +101,7 @@ export class CodePageComponent implements OnInit, AfterViewChecked {
 				this.loading = false;
 			},
 			error: () => {
-        this.redirectIfCodeIsNotLoaded()
+				this.redirectIfCodeIsNotLoaded();
 				this.error = true;
 				this.loading = false;
 			},
@@ -167,7 +170,7 @@ export class CodePageComponent implements OnInit, AfterViewChecked {
 		});
 	}
 
-  redirectIfCodeIsNotLoaded() {
-    this.router.navigate(['/page-not-found']);
-  }
+	redirectIfCodeIsNotLoaded() {
+		this.router.navigate(['/page-not-found']);
+	}
 }

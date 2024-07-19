@@ -35,6 +35,6 @@ export class PersonalCodesListComponent implements OnInit {
 		this.codes$ = this.store.select(selectAllPersonalCodes);
 	}
 
-  protected readonly codeRoutePath = codeRoutePath;
-  protected readonly CodeRoutes = CodeRoutes;
+	protected readonly codeRoutePath = codeRoutePath;
+	protected readonly CodeRoutes = CodeRoutes;
 }

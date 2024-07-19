@@ -6,6 +6,7 @@ import { ToastModule } from 'primeng/toast';
 import { AuthenticationService } from './auth/authentication.service';
 import { AsyncPipe } from '@angular/common';
 import { MessagesModule } from 'primeng/messages';
+import 'highlight.js/styles/androidstudio.min.css';
 
 @Component({
 	selector: 'app-root',

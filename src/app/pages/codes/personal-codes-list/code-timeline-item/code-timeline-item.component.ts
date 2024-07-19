@@ -13,6 +13,6 @@ import { codeRoutePath, CodeRoutes } from '../../routes';
 })
 export class CodeTimelineItemComponent {
 	@Input() code!: TimelineCode;
-  protected readonly codeRoutePath = codeRoutePath;
-  protected readonly CodeRoutes = CodeRoutes;
+	protected readonly codeRoutePath = codeRoutePath;
+	protected readonly CodeRoutes = CodeRoutes;
 }

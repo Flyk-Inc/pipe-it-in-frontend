@@ -4,10 +4,9 @@ import { CodeTimelineItemComponent } from '../../personal-codes-list/code-timeli
 import { IconComponent } from '../../../../component/typography/icon/icon.component';
 import { RouterLink } from '@angular/router';
 import { UnderlineComponent } from '../../../../component/layout/underline/underline.component';
-import { codeRoutePath, CodeRoutes } from '../../routes';
+import { codeRoutePath } from '../../routes';
 import { CodePipelineRoutes } from '../routes';
 import { Store } from '@ngrx/store';
-import { loadPersonalCodes } from '../../../../store/code/code.actions';
 import { Observable } from 'rxjs';
 import { TimelinePipeline } from '../../../../models/pipeline.model';
 import { selectAllPersonalPipelines } from '../../../../store/pipeline/pipeline.selectors';

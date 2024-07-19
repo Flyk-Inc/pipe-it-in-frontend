@@ -26,12 +26,12 @@ import { RouterOutlet } from '@angular/router';
 export class CodeHomeComponent {
 	tabs: TabData[] = [
 		{
-			title:  $localize`:@@your-codes:your codes`,
+			title: $localize`:@@your-codes:your codes`,
 			id: CodeRoutes.PersonalCodes,
 			link: `/${codeRoutePath}/${CodeRoutes.PersonalCodes}`,
 		},
 		{
-      title:  $localize`:@@your-pipelines:your pipelines`,
+			title: $localize`:@@your-pipelines:your pipelines`,
 			id: CodeRoutes.PersonalPipelines,
 			link: `/${codeRoutePath}/${CodeRoutes.PersonalPipelines}`,
 		},

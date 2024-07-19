@@ -6,22 +6,41 @@ import { catchError } from 'rxjs/operators';
 import { TimelinePipeline } from '../models/pipeline.model';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root',
 })
 export class PipelineService {
-  backendUrl = environment.backendUrl;
+	backendUrl = environment.backendUrl;
 
-  constructor(private httpClient: HttpClient) {}
+	constructor(private httpClient: HttpClient) {}
 
-  getPersonalTimeLinePipelines() {
-    return this.httpClient.get<TimelinePipeline[]>(`${this.backendUrl}/pipeline`).pipe(
-      map(response => response), // Ensure this maps to an array of TimelinePost
-      catchError(error => {
-        console.error('Error fetching personal pipeline-home list', error);
-        return throwError(
-          () => new Error(error.message || 'An error occurred')
-        );
-      })
-    );
-  }
+	getPersonalTimeLinePipelines() {
+		return this.httpClient
+			.get<TimelinePipeline[]>(`${this.backendUrl}/pipeline`)
+			.pipe(
+				map(response => response), // Ensure this maps to an array of TimelinePost
+				catchError(error => {
+					console.error('Error fetching personal pipeline-home list', error);
+					return throwError(
+						() => new Error(error.message || 'An error occurred')
+					);
+				})
+			);
+	}
+
+	getPipelineById(id: number) {
+		return this.httpClient.get<TimelinePipeline>(
+			`${this.backendUrl}/pipeline/${id}`
+		);
+	}
+
+	runPipeline(pipelineId: number, fileInput: File | undefined = undefined) {
+		const formData = new FormData();
+		if (fileInput) {
+			formData.append('file', fileInput);
+		}
+		return this.httpClient.post<void>(
+			`${this.backendUrl}/pipeline/${pipelineId}/run`,
+			formData
+		);
+	}
 }

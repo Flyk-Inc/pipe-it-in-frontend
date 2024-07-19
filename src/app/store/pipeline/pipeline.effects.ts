@@ -17,7 +17,11 @@ export class PipelineTimelineEffects {
 						return PipelineTimelineActions.loadPipelinesSuccess({ pipelines });
 					}),
 					catchError(error =>
-						of(PipelineTimelineActions.loadPipelinesFailure({ error: error.message }))
+						of(
+							PipelineTimelineActions.loadPipelinesFailure({
+								error: error.message,
+							})
+						)
 					)
 				)
 			)
@@ -38,7 +42,7 @@ export class PipelineTimelineEffects {
 	// 		)
 	// 	);
 	// });
-  //
+	//
 	constructor(
 		private actions$: Actions,
 		private pipelineService: PipelineService,

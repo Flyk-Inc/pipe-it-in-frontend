@@ -79,6 +79,10 @@ export const routes: Routes = [
 					),
 			},
 			{
+				path: 'pipelines',
+				loadChildren: () => import('./pipelines/routes').then(m => m.routes),
+			},
+			{
 				path: '',
 				redirectTo: CodeRoutes.PersonalCodes,
 				pathMatch: 'full',

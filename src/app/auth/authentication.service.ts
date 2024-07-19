@@ -100,7 +100,7 @@ export class AuthenticationService {
 					this.setToken(savedToken);
 					this.authLoadingSource.next(false);
 				},
-				error: error => {
+				error: () => {
 					this.authLoadingSource.next(false);
 					this.removeToken();
 					this.removeAuthenticatedUser();

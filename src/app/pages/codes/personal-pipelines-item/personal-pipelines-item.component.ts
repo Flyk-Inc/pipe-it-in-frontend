@@ -19,5 +19,5 @@ export class PersonalPipelinesItemComponent {
 	protected readonly codeRoutePath = codeRoutePath;
 	protected readonly pipelineRoutePath = pipelineRoutePath;
 	protected readonly CodePipelineRoutes = CodePipelineRoutes;
-  protected readonly fileUrl = fileUrl;
+	protected readonly fileUrl = fileUrl;
 }
