@@ -81,10 +81,14 @@ export class UserProfileComponent implements OnInit {
 			this.profilePictureUrl$ = this.store.select(selectUserProfilePictureUrl);
 
 			this.consultedUser$.subscribe(user => {
-				if (user && user.profilePicture) {
+				if (user) {
 					this.consultedUser = user;
-					const profilePictureUrl = `${environment.backendUrl}/files/${user.profilePicture.id}`;
-					this.store.dispatch(setUserProfilePictureUrl({ profilePictureUrl }));
+					if (user.profilePicture) {
+						const profilePictureUrl = `${environment.backendUrl}/files/${user.profilePicture.id}`;
+						this.store.dispatch(
+							setUserProfilePictureUrl({ profilePictureUrl })
+						);
+					}
 				}
 				this.store.dispatch(loadUserProfilePosts({ userId }));
 			});
