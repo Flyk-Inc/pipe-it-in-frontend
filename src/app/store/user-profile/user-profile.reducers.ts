@@ -8,6 +8,8 @@ import {
 	loadUserProfilePostsFailure,
 	loadUserProfilePostsSuccess,
 	loadUserProfileSuccess,
+	sendFollowRequestFailure,
+	sendFollowRequestSuccess,
 	setUserProfilePictureUrl,
 	unfollowUserSuccess,
 } from './user-profile.actions';
@@ -86,6 +88,27 @@ export const userProfileReducers = createReducer(
 		(state, { post }): UserProfileState => ({
 			...state,
 			userPosts: [...state.userPosts, post],
+		})
+	),
+	on(
+		sendFollowRequestSuccess,
+		(state, { user }): UserProfileState => ({
+			...state,
+			user: {
+				...state.user,
+				receivedFollowRequests: [
+					...(state.user?.receivedFollowRequests || []),
+					{ follower: user, user: state.user!, isAccepted: false },
+				],
+			} as UserDTO,
+		})
+	),
+
+	on(
+		sendFollowRequestFailure,
+		(state, { error }): UserProfileState => ({
+			...state,
+			error,
 		})
 	)
 );

@@ -17,10 +17,11 @@ import {
 	loadUserProfile,
 	loadUserProfileGroups,
 	loadUserProfilePosts,
+	sendFollowRequest,
 	setUserProfilePictureUrl,
 	unfollowUser,
 } from '../../store/user-profile/user-profile.actions';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe, NgClass, NgIf } from '@angular/common';
 import { environment } from '../../../environments/environment';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -41,6 +42,7 @@ import { AuthenticationService } from '../../auth/authentication.service';
 		NgIf,
 		FormsModule,
 		IconComponent,
+		NgClass,
 	],
 	templateUrl: './user-profile.component.html',
 	styleUrl: './user-profile.component.scss',
@@ -56,6 +58,7 @@ export class UserProfileComponent implements OnInit {
 	profilePictureUrl$!: Observable<unknown>;
 	pinnedPost$!: Observable<TimelinePost | null>;
 	isFollowing$!: Observable<boolean>;
+	followRequestSent = false;
 
 	constructor(
 		private store: Store,
@@ -89,6 +92,7 @@ export class UserProfileComponent implements OnInit {
 							setUserProfilePictureUrl({ profilePictureUrl })
 						);
 					}
+					this.checkFollowRequestStatus(user);
 				}
 				this.store.dispatch(loadUserProfilePosts({ userId }));
 			});
@@ -107,10 +111,22 @@ export class UserProfileComponent implements OnInit {
 		}
 	}
 
+	checkFollowRequestStatus(user: UserDTO) {
+		const currentUserId = this.loggedInUser?.id;
+		if (currentUserId && user.receivedFollowRequests) {
+			this.followRequestSent = user.receivedFollowRequests.some(
+				request => request.follower.id === currentUserId && !request.isAccepted
+			);
+		}
+	}
+
 	followUser() {
 		const userId = this.consultedUser?.id;
 		const currentUser = this.loggedInUser;
-		if (userId && currentUser) {
+		if (this.consultedUser?.isPrivate && userId && currentUser) {
+			this.store.dispatch(sendFollowRequest({ userId, currentUser }));
+			this.followRequestSent = true;
+		} else if (userId && currentUser) {
 			this.store.dispatch(followUser({ userId, currentUser }));
 		}
 	}

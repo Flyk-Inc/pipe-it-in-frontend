@@ -25,7 +25,6 @@ export interface UserFollows {
 }
 
 export interface FollowRequest {
-	id: number;
 	follower: UserDTO;
 	user: UserDTO;
 	isAccepted: boolean;

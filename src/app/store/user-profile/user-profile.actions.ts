@@ -97,3 +97,16 @@ export const getPinnedPostFailure = createAction(
 	'[User Profile] Get Pinned Post Failure',
 	props<{ error: string }>()
 );
+
+export const sendFollowRequest = createAction(
+	'[User Profile] Send Follow Request',
+	props<{ userId: number; currentUser: UserDTO }>()
+);
+export const sendFollowRequestSuccess = createAction(
+	'[User Profile] Send Follow Request Success',
+	props<{ user: UserDTO }>()
+);
+export const sendFollowRequestFailure = createAction(
+	'[User Profile] Send Follow Request Failure',
+	props<{ error: string }>()
+);

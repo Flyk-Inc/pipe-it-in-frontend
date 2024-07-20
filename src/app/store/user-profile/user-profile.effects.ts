@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { SocialService } from '../../service/social.service';
 import {
@@ -16,6 +16,9 @@ import {
 	loadUserProfilePostsFailure,
 	loadUserProfilePostsSuccess,
 	loadUserProfileSuccess,
+	sendFollowRequest,
+	sendFollowRequestFailure,
+	sendFollowRequestSuccess,
 	unfollowUser,
 	unfollowUserFailure,
 	unfollowUserSuccess,
@@ -88,6 +91,18 @@ export class UserProfileEffects {
 						})
 					),
 					catchError(error => of(unfollowUserFailure({ error })))
+				)
+			)
+		);
+	});
+
+	sendFollowRequest$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(sendFollowRequest),
+			mergeMap(action =>
+				this.socialService.sendFollowRequest(action.userId).pipe(
+					map(() => sendFollowRequestSuccess({ user: action.currentUser })),
+					catchError(error => of(sendFollowRequestFailure({ error })))
 				)
 			)
 		);

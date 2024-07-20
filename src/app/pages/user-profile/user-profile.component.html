@@ -22,10 +22,14 @@
 				</ng-container>
 				<ng-template #notFollowing>
 					<button
-						class="mt-4 px-4 py-2 bg-primary rounded-lg"
+						class="mt-4 px-4 py-2 rounded-lg"
+						[ngClass]="
+							followRequestSent ? 'bg-secondary text-light-bg' : 'bg-primary'
+						"
+						[disabled]="followRequestSent"
 						(click)="followUser()">
-						<span class="flex items-center gap-x-2"
-							>Suivre
+						<span class="flex items-center gap-x-2">
+							{{ followRequestSent ? 'Demande envoyée' : 'Suivre' }}
 							<ng-container *ngIf="(consultedUser$ | async)?.isPrivate">
 								<app-icon icon="lock"></app-icon>
 							</ng-container>

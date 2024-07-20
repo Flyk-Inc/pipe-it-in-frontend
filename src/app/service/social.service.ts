@@ -198,4 +198,17 @@ export class SocialService {
 				})
 			);
 	}
+
+	sendFollowRequest(userId: number): Observable<void> {
+		return this.httpClient
+			.post<void>(`${this.backendUrl}/users/${userId}/follow-request`, {})
+			.pipe(
+				catchError(error => {
+					console.error('Error sending follow request', error);
+					return throwError(
+						() => new Error(error.message || 'An error occurred')
+					);
+				})
+			);
+	}
 }
