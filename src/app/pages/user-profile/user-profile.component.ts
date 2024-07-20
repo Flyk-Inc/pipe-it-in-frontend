@@ -30,6 +30,7 @@ import { PostListComponent } from '../profile/post-list/post-list.component';
 import { PinnedPostComponent } from '../profile/post-list/pinned-post/pinned-post.component';
 import { ProfileGroupsComponent } from '../profile/profile-groups/profile-groups.component';
 import { AuthenticationService } from '../../auth/authentication.service';
+import { SidenavComponent } from '../../component/nav/sidenav/sidenav.component';
 
 @Component({
 	selector: 'app-user-profile',
@@ -43,6 +44,7 @@ import { AuthenticationService } from '../../auth/authentication.service';
 		FormsModule,
 		IconComponent,
 		NgClass,
+		SidenavComponent,
 	],
 	templateUrl: './user-profile.component.html',
 	styleUrl: './user-profile.component.scss',
