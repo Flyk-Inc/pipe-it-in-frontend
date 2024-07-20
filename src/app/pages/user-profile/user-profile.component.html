@@ -66,8 +66,8 @@
 					<div class="mt-10 flex flex-col items-center">
 						<ng-container
 							*ngIf="
-								(consultedUser$ | async)?.isPrivate === false &&
-								(isFollowing$ | async) === false
+								(consultedUser$ | async)?.isPrivate === false ||
+								(isFollowing$ | async)
 							">
 							<h2 class="text-2xl font-semibold mb-4">Groups</h2>
 							<app-profile-groups
