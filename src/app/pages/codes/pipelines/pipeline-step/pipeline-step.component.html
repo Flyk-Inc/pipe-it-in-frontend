@@ -10,20 +10,22 @@
 		<p class="first-letter:capitalize">
 			{{ step.version.version }}
 		</p>
-    @if(step.version.input.length){    <div class="flex flex-nowrap gap-x-2">
-			<p>
-				<span class="font-medium first-letter:capitalize" i18n="@@input"
-					>input
-				</span>
-				<span>: {{ step.version.input[0].fileType }}</span>
-			</p>
-			<div class="grow"></div>
-			<p>
-				<span class="font-medium first-letter:capitalize" i18n="@@output"
-					>input
-				</span>
-				<span>: {{ step.version.output[0].fileType }}</span>
-			</p>
-		</div>
-    }	</div>
+		@if (step.version.input.length) {
+			<div class="flex flex-nowrap gap-x-2">
+				<p>
+					<span class="font-medium first-letter:capitalize" i18n="@@input"
+						>input
+					</span>
+					<span>: {{ step.version.input[0].fileType }}</span>
+				</p>
+				<div class="grow"></div>
+				<p>
+					<span class="font-medium first-letter:capitalize" i18n="@@output"
+						>input
+					</span>
+					<span>: {{ step.version.output[0].fileType }}</span>
+				</p>
+			</div>
+		}
+	</div>
 </div>

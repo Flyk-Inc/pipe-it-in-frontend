@@ -1,4 +1,5 @@
 import { environment } from '../../environments/environment';
+import { CodeLanguages } from './code.model';
 
 export interface CursoredRessource<T> {
 	data: T[];
@@ -10,16 +11,16 @@ export interface CursoredRessource<T> {
 export const fileUrl = environment.backendUrl + '/files/';
 
 export enum InputHelper {
-	javascript = `
-import { readFile } from 'fs';
+	javascript = `const fs = require('fs').promises;
 
-readFile('input.txt', 'utf8', (err, data) => {
-    if (err) {
+fs.readFile('input.txt', 'utf8')
+    .then(data => {
+        console.log(data);
+    })
+    .catch(err => {
         console.error('Error reading file:', err);
-        return;
-    }
-});
-  `,
+    });
+`,
 	python = `
   try:
     with open('input.txt', 'r') as file:
@@ -31,14 +32,14 @@ except Exception as e:
 }
 
 export enum OutputHelper {
-	javascript = `
-      fs.writeFile('output.txt', reversedContent, (err) => {
-        if (err) {
-            console.error('Error writing file:', err);
-            return;
-        }
+	javascript = `fs.writeFile('output.txt', reversedContent)
+    .then(() => {
+        console.log('File written successfully');
+    })
+    .catch(err => {
+        console.error('Error writing file:', err);
     });
-  `,
+`,
 	python = `
   try:
     with open('output.txt', 'w') as file:
@@ -48,3 +49,28 @@ except Exception as e:
     print('Error writing to file:', e)
   `,
 }
+
+export const copyHelper = async (
+	language: string,
+	need: 'read input' | 'write output'
+) => {
+	if (need === 'read input') {
+		switch (language) {
+			case CodeLanguages.javascript:
+				await navigator.clipboard.writeText(InputHelper.javascript);
+				break;
+			case CodeLanguages.python:
+				await navigator.clipboard.writeText(InputHelper.python);
+				break;
+		}
+	} else {
+		switch (language) {
+			case CodeLanguages.javascript:
+				await navigator.clipboard.writeText(OutputHelper.javascript);
+				break;
+			case CodeLanguages.python:
+				await navigator.clipboard.writeText(OutputHelper.python);
+				break;
+		}
+	}
+};

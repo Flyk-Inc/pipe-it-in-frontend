@@ -1,5 +1,6 @@
 <details
-	class="collapse collapse-arrow border border-grey-1 dark:border-grey-2">
+	class="collapse collapse-arrow border border-grey-1 dark:border-grey-2"
+	open>
 	<summary
 		class="collapse-title text-xl font-medium first-letter:capitalize"
 		i18n="@@code.test-history">
@@ -7,10 +8,13 @@
 	</summary>
 	<div
 		class="collapse-content max-h-80 overflow-y-scroll grid grid-cols-1 gap-y-2">
-		@for (testRun of testRuns; track testRun) {
+		@for (testRun of testRuns; track testRun; let first = $first) {
 			<div class="w-full">
 				<div class="border-s-8 border-secondary ps-2">
-					<app-code-report [testRun]="testRun"></app-code-report>
+					<app-code-report
+						id="latest_test_run"
+						[openByDefault]="first"
+						[testRun]="testRun"></app-code-report>
 				</div>
 				<div class="divider !border-grey-3 dark:!border-grey-1"></div>
 			</div>

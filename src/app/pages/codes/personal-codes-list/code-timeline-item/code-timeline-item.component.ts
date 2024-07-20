@@ -4,6 +4,7 @@ import { IconComponent } from '../../../../component/typography/icon/icon.compon
 import { NgIf, NgOptimizedImage, TitleCasePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { codeRoutePath, CodeRoutes } from '../../routes';
+import { fileUrl } from '../../../../models/utils';
 
 @Component({
 	selector: 'app-code-timeline-item',
@@ -15,4 +16,5 @@ export class CodeTimelineItemComponent {
 	@Input() code!: TimelineCode;
 	protected readonly codeRoutePath = codeRoutePath;
 	protected readonly CodeRoutes = CodeRoutes;
+	protected readonly fileUrl = fileUrl;
 }

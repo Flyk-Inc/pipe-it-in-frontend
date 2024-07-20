@@ -107,6 +107,14 @@
 					</select>
 				</div>
 			</div>
+			<app-button
+				icon="content_copy"
+				text="Code pour lire le fichier d'entrée:"
+				(click)="
+					copyHelper(createCodeForm.controls.language.value, 'read input')
+				"
+				size="small">
+			</app-button>
 		}
 	</div>
 	<div class="w-full">
@@ -160,6 +168,14 @@
 					</select>
 				</div>
 			</div>
+			<app-button
+				icon="content_copy"
+				text="Code pour écrire le fichier de sortie:"
+				(click)="
+					copyHelper(createCodeForm.controls.language.value, 'write output')
+				"
+				size="small">
+			</app-button>
 		}
 	</div>
 	<div class="h-80">

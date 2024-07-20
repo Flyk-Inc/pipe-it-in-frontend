@@ -13,5 +13,6 @@ import { environment } from '../../../../../environments/environment';
 })
 export class CodeReportComponent {
 	@Input() testRun!: TestRun;
+	@Input() openByDefault: boolean = false;
 	protected readonly environment = environment;
 }

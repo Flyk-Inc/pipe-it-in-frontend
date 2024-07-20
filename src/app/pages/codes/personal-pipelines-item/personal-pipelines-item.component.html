@@ -32,12 +32,14 @@
 				<p>{{ pipeline.description }}</p>
 				<div class="flex justify-end gap-x-3 text">
 					<span class="flex items-center gap-x-1">
-						<span class="text-secondary capitalize" i18n="@@input"
-							>language</span
-						>:
-						<span>{{
-							pipeline.pipelineCodes[0].version.input[0].fileType
-						}}</span>
+						<span class="text-secondary capitalize" i18n="@@input">input</span>:
+						@if (pipeline.pipelineCodes[0].version.input.length) {
+							<span>{{
+								pipeline.pipelineCodes[0].version.input[0].fileType
+							}}</span>
+						} @else {
+							<span i18n="@@input.none">no input</span>
+						}
 					</span>
 				</div>
 				<div class="flex justify-end gap-x-3 text">
