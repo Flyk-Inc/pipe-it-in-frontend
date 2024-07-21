@@ -1,0 +1,41 @@
+<div class="w-full flex flex-nowrap h-full">
+	<app-sidenav class="hidden sm:block w-1/5"></app-sidenav>
+	<div class="grow p-4 space-y-8">
+		<section>
+			<h2 class="text-xl font-semibold">
+				Demandes de Follow ({{ (followRequests$ | async)!!.length }})
+			</h2>
+			<div *ngIf="(followRequests$ | async)!!.length > 0" class="space-y-4">
+				<app-user-card
+					*ngFor="let request of (followRequests$ | async) || []"
+					[user]="request.follower"
+					[isFollowRequest]="true"
+					(accept)="onAccept(request.follower)"
+					(reject)="onReject(request.follower)">
+				</app-user-card>
+			</div>
+			<div
+				*ngIf="(followRequests$ | async)!!.length === 0"
+				class="text-gray-500">
+				Pas de demandes de follow.
+			</div>
+		</section>
+
+		<section>
+			<h2 class="text-xl font-semibold">
+				Followers ({{ (followers$ | async)?.length }})
+			</h2>
+			<div *ngIf="(followers$ | async)!!.length > 0" class="space-y-4">
+				<app-user-card
+					*ngFor="let follower of (followers$ | async) || []"
+					[user]="follower.follower"
+					[isFollowRequest]="false"
+					(remove)="onRemove(follower.follower)">
+				</app-user-card>
+			</div>
+			<div *ngIf="(followers$ | async)!!.length === 0" class="text-gray-500">
+				Pas de followers.
+			</div>
+		</section>
+	</div>
+</div>

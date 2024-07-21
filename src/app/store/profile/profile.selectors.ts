@@ -47,3 +47,13 @@ export const selectProfileError = createSelector(
 	selectProfileState,
 	(state: ProfileState) => state.error
 );
+
+export const selectFollowRequests = createSelector(
+	selectProfileState,
+	(state: ProfileState) => state.user?.receivedFollowRequests || []
+);
+
+export const selectFollowers = createSelector(
+	selectProfileState,
+	(state: ProfileState) => state.user?.followers || []
+);

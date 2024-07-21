@@ -27,6 +27,10 @@ export const routes: Routes = [
 			import('./pages/user-profile/routes').then(m => m.routes),
 	},
 	{
+		path: 'followers',
+		loadChildren: () => import('./pages/followers/routes').then(m => m.routes),
+	},
+	{
 		path: '**',
 		redirectTo: 'home',
 	},
