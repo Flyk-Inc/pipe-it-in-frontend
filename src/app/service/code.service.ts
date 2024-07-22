@@ -89,4 +89,10 @@ export class CodeService {
 			`${this.backendUrl}/codes/${codeId}/testRuns`
 		);
 	}
+
+	getPublicCodes(query: string) {
+		return this.httpClient.get<TimelineCode[]>(
+			`${this.backendUrl}/codes/search?${query}`
+		);
+	}
 }

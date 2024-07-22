@@ -5,7 +5,7 @@ import { IconComponent } from '../../../../component/typography/icon/icon.compon
 import { RouterLink } from '@angular/router';
 import { UnderlineComponent } from '../../../../component/layout/underline/underline.component';
 import { codeRoutePath } from '../../routes';
-import { CodePipelineRoutes } from '../routes';
+import { CodePipelineRoutes, pipelineRoutePath } from '../routes';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { TimelinePipeline } from '../../../../models/pipeline.model';
@@ -40,4 +40,5 @@ export class PersonalPipelinesListComponent implements OnInit {
 
 	protected readonly codeRoutePath = codeRoutePath;
 	protected readonly CodePipelineRoutes = CodePipelineRoutes;
+	protected readonly pipelineRoutePath = pipelineRoutePath;
 }

@@ -1,0 +1,61 @@
+<form
+	class="max-h-full overflow-y-scroll rounded-lg border border-grey-1 dark:border-grey-3 bg-light-card-bg dark:bg-dark-card-bg mt-2 mx-2 p-4 grid grid-cols-1 gap-y-2"
+	[formGroup]="createPipelineForm">
+	<div class="w-full">
+		<label
+			class="first-letter:capitalize block mb-1 text-sm font-medium text-gray-900 dark:text-white"
+			for="title"
+			i18n="@@pipeline.title"
+			>Code's title</label
+		>
+		<input
+			formControlName="title"
+			class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+			id="title"
+			name="title"
+			placeholder="Transformateur"
+			required />
+	</div>
+	<div class="w-full">
+		<label
+			class="first-letter:capitalize block mb-1 text-sm font-medium text-gray-900 dark:text-white"
+			for="description"
+			i18n="@@pipeline.description"
+			>Code's description</label
+		>
+		<textarea
+			formControlName="description"
+			class="bg-gray-50 resize-none border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+			id="description"
+			name="description"
+			required
+			rows="4"></textarea>
+	</div>
+
+	<div class="grid grid-cols-1 gap-2">
+		<h4
+			class="header-4 text-secondary first-letter:capitalize"
+			i18n="@@pipeline.steps">
+			pipeline steps
+		</h4>
+		<app-pipeline-steps-creator
+			(stepsValidityChange)="handleStepsValidityChange($event)"
+			(stepsChange)="handleStepsCHange($event)"></app-pipeline-steps-creator>
+	</div>
+
+	<app-button
+		class="w-fit"
+		[text]="'Create pipeline'"
+		[disabled]="
+			createPipelineForm.invalid ||
+			!createPipelineForm.controls.pipelineCodes.value.length ||
+			!stepsValidity
+		"
+		(click)="createPipeline()"></app-button>
+	<p>createPipelineForm.invalid: {{ createPipelineForm.invalid }}</p>
+	<p>
+		createPipelineForm.controls.pipelineCodes.value.length:
+		{{ createPipelineForm.controls.pipelineCodes.value.length }}
+	</p>
+	<p>stepsValidity: {{ stepsValidity }}</p>
+</form>

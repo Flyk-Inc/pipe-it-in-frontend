@@ -1,6 +1,9 @@
 {
 	"locale": "fr",
 	"translations": {
+		"input.none": "pas d'entrée",
+		"output.none": "pas de sortie",
+		"addToSteps": "Ajouter aux étapes",
 		"pipeline.history": "historique de la pipeline",
 		"executed": "éxécuté",
 		"yes": "oui",
@@ -27,6 +30,8 @@
 		"no-versions-yet": "pas encore de versions",
 		"versions": "versions",
 		"test_from": "test du",
+		"code.select": "sélectionner un code",
+		"code.version.select": "sélectionner une version pour ce code",
 		"posted.on": "posté le",
 		"input": "entrée",
 		"output": "sortie",
@@ -65,10 +70,12 @@
 		"your-codes": "vos codes",
 		"your-pipelines": "vos pipelines",
 		"code.create": "Créer un code",
-		"input.none": "pas d'entrée",
 		"pipeline.create": "Créer une pipeline",
 		"step": "étape",
 		"steps": "étapes",
+		"pipeline.title": "pipeline's title",
+		"pipeline.description": "pipeline's description",
+		"pipeline.steps": "pipeline steps",
 		"test-results": "Résultats des tests",
 		"pipeline.run.new": "nouveau résultat de pipeline"
 	}
