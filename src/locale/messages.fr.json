@@ -51,6 +51,7 @@
 		"file.size.exceeded": "La taille du fichier dépasse la taille maximale autorisée de 2MB",
 		"file.type.invalid": "Le type de fichier n'est pas valide. Seuls les fichiers {$PH} sont autorisés.",
 		"code.test.launch.success": "Test de code lancé avec succès",
+		"code.test.new": "nouveaux résultats de test arrivés",
 		"code.test.runs.error": "une erreur est survenue lors de la récupération des tests",
 		"save.draft": "sauvegarder le brouillon",
 		"post": "poster",
@@ -64,9 +65,11 @@
 		"your-codes": "vos codes",
 		"your-pipelines": "vos pipelines",
 		"code.create": "Créer un code",
+		"input.none": "pas d'entrée",
 		"pipeline.create": "Créer une pipeline",
 		"step": "étape",
 		"steps": "étapes",
-		"test-results": "Résultats des tests"
+		"test-results": "Résultats des tests",
+		"pipeline.run.new": "nouveau résultat de pipeline"
 	}
 }

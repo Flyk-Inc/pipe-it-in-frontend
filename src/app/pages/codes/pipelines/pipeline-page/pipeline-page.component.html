@@ -79,7 +79,9 @@
 				<h3 class="header-3 text-secondary capitalize" i18n="@@test-results">
 					Test Results
 				</h3>
-				<app-run-history [runs]="pipeline.runs"></app-run-history>
+				<app-run-history
+					#runHistoryElement
+					[runs]="pipeline.runs"></app-run-history>
 			</div>
 		</div>
 	</div>

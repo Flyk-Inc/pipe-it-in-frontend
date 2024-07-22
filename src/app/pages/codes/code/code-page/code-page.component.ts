@@ -2,7 +2,9 @@ import {
 	AfterViewChecked,
 	ChangeDetectorRef,
 	Component,
+	ElementRef,
 	OnInit,
+	ViewChild,
 } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { DatePipe, NgOptimizedImage } from '@angular/common';
@@ -23,9 +25,11 @@ import { CodeReportHistoryComponent } from '../../../../component/code/report-hi
 import {
 	CodeDetail,
 	CodeLanguages,
+	RunTestCodeDTO,
 	TestRun,
 } from '../../../../models/code.model';
 import { CodeService } from '../../../../service/code.service';
+import { NotificationService } from '../../../../service/notification.service';
 
 @Component({
 	selector: 'app-code-home-page',
@@ -48,6 +52,9 @@ import { CodeService } from '../../../../service/code.service';
 	styleUrl: './code-page.component.scss',
 })
 export class CodePageComponent implements OnInit, AfterViewChecked {
+	@ViewChild('testHistoryElement')
+	testHistoryElementRef!: ElementRef;
+
 	code?: CodeDetail;
 	loading = true;
 	error = false;
@@ -55,6 +62,8 @@ export class CodePageComponent implements OnInit, AfterViewChecked {
 
 	hasInput = new FormControl(false);
 	hasOutput = new FormControl(false);
+	fileInput = new FormControl<File | null>(null);
+
 	updateCodeForm = this.formBuilder.nonNullable.group({
 		title: ['', Validators.required],
 		description: ['', Validators.required],
@@ -82,7 +91,8 @@ export class CodePageComponent implements OnInit, AfterViewChecked {
 		private router: Router,
 		private codeService: CodeService,
 		private formBuilder: FormBuilder,
-		private changeDetectorRef: ChangeDetectorRef
+		private changeDetectorRef: ChangeDetectorRef,
+		private notificationService: NotificationService
 	) {}
 
 	ngOnInit() {
@@ -91,6 +101,7 @@ export class CodePageComponent implements OnInit, AfterViewChecked {
 		this.cancelStringTranslated = $localize`:@@cancel:cancel`;
 		this.editStringTranslated = $localize`:@@edit:edit`;
 		this.loadCode();
+		this.setupPeriodicTestRunRefresh();
 	}
 
 	loadCode() {
@@ -159,18 +170,113 @@ export class CodePageComponent implements OnInit, AfterViewChecked {
 		this.loadTestRuns();
 	}
 
+	handleFileInputChange($event: Event) {
+		const target = $event.target as HTMLInputElement;
+		const file = target.files?.[0];
+
+		if (file) {
+			const maxSizeInBytes = 2 * 1024 * 1024; // 2MB
+			const validFileType = this.hasInput.value
+				? this.updateCodeForm.controls.inputFileType.value === 'png'
+					? 'image/png'
+					: 'text/plain'
+				: '';
+
+			if (file.size > maxSizeInBytes) {
+				this.notificationService.showErrorToast(
+					$localize`:@@file.size.exceeded:The file size exceeds the maximum allowed size of 2MB`
+				);
+				this.fileInput.setValue(null);
+				return;
+			}
+
+			if (file.type !== validFileType) {
+				this.notificationService.showErrorToast(
+					$localize`:@@file.type.invalid:The file type is not valid. Only ${
+						validFileType === 'image/png' ? 'PNG' : 'TXT'
+					} files are allowed.`
+				);
+				this.fileInput.setValue(null);
+				return;
+			}
+
+			this.fileInput.setValue(file);
+		}
+	}
+
+	testCode() {
+		const runTestCodeDto: RunTestCodeDTO = {
+			codeContent: this.updateCodeForm.controls.code.value,
+			language: this.updateCodeForm.controls.language.value,
+		};
+		this.codeService
+			.runTestCode(
+				this.code!.id,
+				runTestCodeDto,
+				this.fileInput.value ?? undefined
+			)
+			.subscribe({
+				next: () => {
+					this.notificationService.showSuccessToast(
+						$localize`:@@code.test.launch.success:Code test launched successfully.`
+					);
+					this.scrollToTestHistory();
+					this.resetFileInput();
+				},
+			});
+	}
+
 	loadTestRuns() {
 		if (this.code === undefined) {
 			return;
 		}
 		this.codeService.getTestRuns(this.code.id).subscribe({
 			next: testRuns => {
-				this.testRuns = testRuns;
+				if (this.testRuns.length && this.testRuns.length !== testRuns.length) {
+					this.testRuns = testRuns;
+					this.notifyNewTestRunArrived();
+				}
 			},
 		});
 	}
 
-	redirectIfCodeIsNotLoaded() {
+	private scrollToTestHistory() {
+		const latestTestRunElement = document.getElementById('latest_test_run');
+		if (latestTestRunElement) {
+			latestTestRunElement.scrollIntoView({
+				behavior: 'smooth',
+			});
+			return;
+		}
+		this.testHistoryElementRef.nativeElement.scrollIntoView({
+			behavior: 'smooth',
+		});
+	}
+
+	private notifyNewTestRunArrived() {
+		this.notificationService.showSuccessToast(
+			$localize`:@@code.test.new:New test run results arrived.`
+		);
+		this.scrollToTestHistory();
+	}
+
+	private redirectIfCodeIsNotLoaded() {
 		this.router.navigate(['/page-not-found']);
+	}
+
+	private resetFileInput() {
+		this.fileInput.setValue(null);
+		const inputElement = document.getElementById(
+			'file_input'
+		) as HTMLInputElement;
+		if (inputElement) {
+			inputElement.value = '';
+		}
+	}
+
+	private setupPeriodicTestRunRefresh() {
+		setInterval(() => {
+			this.loadTestRuns();
+		}, 10000);
 	}
 }

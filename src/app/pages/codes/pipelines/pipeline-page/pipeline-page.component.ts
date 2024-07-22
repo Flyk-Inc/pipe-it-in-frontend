@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { TimelinePipeline } from '../../../../models/pipeline.model';
 import { PipelineService } from '../../../../service/pipeline.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -26,6 +26,9 @@ import { FormControl } from '@angular/forms';
 	templateUrl: './pipeline-page.component.html',
 })
 export class PipelinePageComponent implements OnInit {
+	@ViewChild('runHistoryElement')
+	runHistoryElementRef!: ElementRef;
+
 	pipelineId!: number;
 	pipeline?: TimelinePipeline;
 	fileInput = new FormControl<File | null>(null);
@@ -38,6 +41,7 @@ export class PipelinePageComponent implements OnInit {
 
 	ngOnInit() {
 		this.loadPipeline();
+		this.setupPeriodicRunRefresh();
 	}
 
 	loadPipeline() {
@@ -45,6 +49,12 @@ export class PipelinePageComponent implements OnInit {
 		this.pipelineService
 			.getPipelineById(this.pipelineId)
 			.subscribe((pipeline: TimelinePipeline) => {
+				if (
+					this.pipeline &&
+					pipeline.runs.length !== this.pipeline?.pipelineCodes.length
+				) {
+					this.notifyNewRunArrived();
+				}
 				this.pipeline = pipeline;
 			});
 	}
@@ -56,6 +66,7 @@ export class PipelinePageComponent implements OnInit {
 			.subscribe({
 				next: () => {
 					this.notificationService.showSuccessToast('Pipeline is running');
+					this.resetFileInput();
 				},
 				error: error => {
 					this.notificationService.showErrorToast(error);
@@ -95,5 +106,41 @@ export class PipelinePageComponent implements OnInit {
 
 			this.fileInput.setValue(file);
 		}
+	}
+
+	private notifyNewRunArrived() {
+		this.notificationService.showSuccessToast(
+			$localize`:@@pipeline.run.new:new pipeline run results arrived.`
+		);
+		this.scrollToTestHistory();
+	}
+
+	private scrollToTestHistory() {
+		const latestRunElement = document.getElementById('latest_run');
+		if (latestRunElement) {
+			latestRunElement.scrollIntoView({
+				behavior: 'smooth',
+			});
+			return;
+		}
+		this.runHistoryElementRef.nativeElement.scrollIntoView({
+			behavior: 'smooth',
+		});
+	}
+
+	private resetFileInput() {
+		this.fileInput.setValue(null);
+		const inputElement = document.getElementById(
+			'file_input'
+		) as HTMLInputElement;
+		if (inputElement) {
+			inputElement.value = '';
+		}
+	}
+
+	private setupPeriodicRunRefresh() {
+		setInterval(() => {
+			this.loadPipeline();
+		}, 10000);
 	}
 }

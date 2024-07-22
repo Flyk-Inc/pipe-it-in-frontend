@@ -9,7 +9,7 @@
 	<div
 		class="collapse-content max-h-80 overflow-y-scroll grid grid-cols-1 gap-y-2">
 		@for (run of runs; track run; let first = $first) {
-			<div class="w-full">
+			<div class="w-full" [id]="first ? 'latest_run' : undefined">
 				<div class="ps-2">
 					<details [open]="first" class="collapse collapse-arrow">
 						<summary class="collapse-title header-5 w-fit">

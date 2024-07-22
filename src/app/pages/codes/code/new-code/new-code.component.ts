@@ -14,6 +14,7 @@ import { ButtonComponent } from '../../../../component/layout/button/button.comp
 import { CodeLanguages, CreateCodeDTO } from '../../../../models/code.model';
 import { CodeService } from '../../../../service/code.service';
 import { codeRoutePath, CodeRoutes } from '../../routes';
+import { copyHelper } from '../../../../models/utils';
 
 @Component({
 	selector: 'app-new-code',
@@ -103,4 +104,6 @@ export class NewCodeComponent implements OnInit {
 				: [],
 		};
 	}
+
+	protected readonly copyHelper = copyHelper;
 }

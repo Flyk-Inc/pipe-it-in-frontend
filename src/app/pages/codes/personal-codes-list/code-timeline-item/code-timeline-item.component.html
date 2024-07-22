@@ -21,7 +21,11 @@
 								alt="Rounded avatar"
 								class="w-5 h-5 rounded-full shrink"
 								height="12"
-								ngSrc="https://pbs.twimg.com/profile_images/1568802877933588482/Pnwh7rKm_400x400.jpg"
+								[ngSrc]="
+									code.author.profilePicture
+										? fileUrl + code.author.profilePicture
+										: '/assets/images/default_pfp.png'
+								"
 								width="12" />
 						</a>
 					</div>
