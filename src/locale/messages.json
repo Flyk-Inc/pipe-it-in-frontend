@@ -90,6 +90,8 @@
 		"email.confirmed": "Email confirmed",
 		"account.already": "Already have an account?",
 		"account.none": "Don't have an account?",
-		"sign-up.ask": "Sign up"
+		"sign-up.ask": "Sign up",
+		"confirm": "Confirm",
+		"modify": "Modify"
 	}
 }

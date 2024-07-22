@@ -15,8 +15,16 @@ import { ButtonComponent } from '../../../../component/layout/button/button.comp
 import { NotificationService } from '../../../../service/notification.service';
 import { CodeReportHistoryComponent } from '../../../../component/code/report-history/code-report-history.component';
 import { RunHistoryComponent } from '../../../../component/code/pipeline/run-history/run-history.component';
-import { FormControl } from '@angular/forms';
+import {
+	FormBuilder,
+	FormControl,
+	FormsModule,
+	ReactiveFormsModule,
+	Validators,
+} from '@angular/forms';
 import { interval, Subscription } from 'rxjs';
+import { PipelineStepsCreatorComponent } from '../../../../component/code/pipeline-steps-creator/pipeline-steps-creator.component';
+import { Version } from '../../../../models/code.model';
 
 @Component({
 	selector: 'app-pipeline-page',
@@ -29,6 +37,9 @@ import { interval, Subscription } from 'rxjs';
 		ButtonComponent,
 		CodeReportHistoryComponent,
 		RunHistoryComponent,
+		PipelineStepsCreatorComponent,
+		FormsModule,
+		ReactiveFormsModule,
 	],
 	templateUrl: './pipeline-page.component.html',
 })
@@ -36,15 +47,28 @@ export class PipelinePageComponent implements OnInit, OnDestroy {
 	@ViewChild('runHistoryElement')
 	runHistoryElementRef!: ElementRef;
 
+	mode: 'view' | 'edit' = 'view';
 	pipelineId!: number;
 	pipeline?: TimelinePipeline;
 	fileInput = new FormControl<File | null>(null);
+	confirmString = $localize`:@@confirm:Confirm`;
+	modifyString = $localize`:@@modify:Modify`;
+	cancelString = $localize`:@@cancel:Cancel`;
+
+	createPipelineForm = this.formBuilder.nonNullable.group({
+		title: ['', Validators.required],
+		description: ['', Validators.required],
+		pipelineCodes: [<Version[]>[], Validators.required],
+	});
+	stepsValidity = false;
+
 	private intervalSubscription!: Subscription;
 
 	constructor(
 		private pipelineService: PipelineService,
 		private route: ActivatedRoute,
-		private notificationService: NotificationService
+		private notificationService: NotificationService,
+		private formBuilder: FormBuilder
 	) {}
 
 	ngOnInit() {
@@ -67,11 +91,12 @@ export class PipelinePageComponent implements OnInit, OnDestroy {
 					this.pipeline &&
 					pipeline.runs.length !== this.pipeline.runs.length
 				) {
-					this.pipeline = pipeline;
+					this.setPipeline(pipeline);
+
 					this.notifyNewRunArrived();
 					return;
 				}
-				this.pipeline = pipeline;
+				this.setPipeline(pipeline);
 			});
 	}
 
@@ -144,6 +169,11 @@ export class PipelinePageComponent implements OnInit, OnDestroy {
 		});
 	}
 
+	setPipeline(pipeline: TimelinePipeline) {
+		this.pipeline = pipeline;
+		this.fillForm(pipeline);
+	}
+
 	private resetFileInput() {
 		this.fileInput.setValue(null);
 		const inputElement = document.getElementById(
@@ -158,5 +188,61 @@ export class PipelinePageComponent implements OnInit, OnDestroy {
 		this.intervalSubscription = interval(10000).subscribe(() => {
 			this.loadPipeline();
 		});
+	}
+
+	protected pipelineCodesToVersions() {
+		return this.pipeline?.pipelineCodes.map(pipelineCode => {
+			return pipelineCode.version;
+		});
+	}
+
+	fillForm(pipeline: TimelinePipeline) {
+		this.createPipelineForm.controls.title.setValue(pipeline.title);
+		this.createPipelineForm.controls.description.setValue(pipeline.description);
+		this.createPipelineForm.controls.pipelineCodes.setValue(
+			this.pipelineCodesToVersions() ?? []
+		);
+	}
+
+	handleStepsCHange($event: Version[]) {
+		this.createPipelineForm.controls.pipelineCodes.setValue($event);
+	}
+
+	handleStepsValidityChange($event: boolean) {
+		this.stepsValidity = $event;
+	}
+
+	updatePipeline() {
+		const dto = this.createDto();
+		this.pipelineService.updatePipeline(dto, this.pipeline!.id).subscribe({
+			next: pipeline => {
+				this.setPipeline(pipeline);
+				this.switchMode('view');
+			},
+		});
+	}
+
+	private createDto() {
+		return {
+			title: this.createPipelineForm.controls.title.value,
+			description: this.createPipelineForm.controls.description.value,
+			pipelineCodes: this.createPipelineForm.controls.pipelineCodes.value.map(
+				(version, index) => {
+					return {
+						code_version_id: version.id,
+						step: index + 1,
+					};
+				}
+			),
+		};
+	}
+
+	switchMode(to: 'view' | 'edit') {
+		if (to === 'edit' && this.intervalSubscription) {
+			this.intervalSubscription.unsubscribe();
+		} else if (to === 'view') {
+			this.setupPeriodicRunRefresh();
+		}
+		this.mode = to;
 	}
 }
