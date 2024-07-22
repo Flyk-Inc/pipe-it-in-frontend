@@ -1,4 +1,4 @@
-import { Component, HostListener, Input } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { TimelinePost } from '../../../../models/post.model';
 import { IconComponent } from '../../../../component/typography/icon/icon.component';
 import { RouterLink } from '@angular/router';
@@ -10,6 +10,7 @@ import {
 	deletePost,
 	unpinPost,
 } from '../../../../store/profile/profile.actions';
+import { selectUserProfilePictureUrl } from '../../../../store/user-profile/user-profile.selectors';
 
 @Component({
 	selector: 'app-pinned-post',
@@ -18,13 +19,20 @@ import {
 	templateUrl: './pinned-post.component.html',
 	styleUrl: './pinned-post.component.scss',
 })
-export class PinnedPostComponent {
+export class PinnedPostComponent implements OnInit {
 	@Input() post!: TimelinePost;
+	@Input() isOwnProfile!: boolean;
 	showMenu = false;
 	profilePictureUrl$!: Observable<string | undefined>;
 
-	constructor(private store: Store) {
-		this.profilePictureUrl$ = this.store.select(selectProfilePictureUrl);
+	constructor(private store: Store) {}
+
+	ngOnInit() {
+		if (this.isOwnProfile) {
+			this.profilePictureUrl$ = this.store.select(selectProfilePictureUrl);
+		} else {
+			this.profilePictureUrl$ = this.store.select(selectUserProfilePictureUrl);
+		}
 	}
 
 	toggleMenu() {

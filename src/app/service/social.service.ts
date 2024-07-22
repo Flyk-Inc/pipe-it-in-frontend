@@ -53,7 +53,7 @@ export class SocialService {
 			);
 	}
 
-	getUserGroups(): Observable<Group[]> {
+	getCurrentUserGroups(): Observable<Group[]> {
 		return this.httpClient.get<Group[]>(`${this.backendUrl}/groups`).pipe(
 			catchError(error => {
 				console.error('Error fetching user groups', error);
@@ -140,6 +140,71 @@ export class SocialService {
 			.pipe(
 				catchError(error => {
 					console.error('Error uploading profile picture', error);
+					return throwError(
+						() => new Error(error.message || 'An error occurred')
+					);
+				})
+			);
+	}
+
+	getUserGroups(userId: number): Observable<Group[]> {
+		return this.httpClient
+			.get<Group[]>(`${this.backendUrl}/groups/user/${userId}`)
+			.pipe(
+				catchError(error => {
+					console.error('Error fetching user groups', error);
+					return throwError(
+						() => new Error(error.message || 'An error occurred')
+					);
+				})
+			);
+	}
+
+	getUserProfile(userId: number): Observable<UserDTO> {
+		return this.httpClient
+			.get<UserDTO>(`${this.backendUrl}/users/${userId}`)
+			.pipe(
+				catchError(error => {
+					console.error('Error fetching user profile', error);
+					return throwError(
+						() => new Error(error.message || 'An error occurred')
+					);
+				})
+			);
+	}
+
+	followUser(userId: number): Observable<void> {
+		return this.httpClient
+			.post<void>(`${this.backendUrl}/users/${userId}/follow`, {})
+			.pipe(
+				catchError(error => {
+					console.error('Error following user', error);
+					return throwError(
+						() => new Error(error.message || 'An error occurred')
+					);
+				})
+			);
+	}
+
+	unfollowUser(userId: number): Observable<void> {
+		return this.httpClient
+			.post<void>(`${this.backendUrl}/users/${userId}/unfollow`, {})
+			.pipe(
+				catchError(error => {
+					console.error('Error unfollowing user', error);
+					return throwError(
+						() => new Error(error.message || 'An error occurred')
+					);
+				})
+			);
+	}
+
+	sendFollowRequest(userId: number): Observable<void> {
+		return this.httpClient
+			.post<void>(`${this.backendUrl}/users/${userId}/follow-request`, {})
+			.pipe(
+				catchError(error => {
+					console.error('Error sending follow request', error);
 					return throwError(
 						() => new Error(error.message || 'An error occurred')
 					);

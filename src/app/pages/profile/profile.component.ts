@@ -26,6 +26,7 @@ import { environment } from '../../../environments/environment';
 import { PinnedPostComponent } from './post-list/pinned-post/pinned-post.component';
 import { FormsModule } from '@angular/forms';
 import { IconComponent } from '../../component/typography/icon/icon.component';
+import { SidenavComponent } from '../../component/nav/sidenav/sidenav.component';
 
 @Component({
 	selector: 'app-profile',
@@ -38,6 +39,7 @@ import { IconComponent } from '../../component/typography/icon/icon.component';
 		NgIf,
 		FormsModule,
 		IconComponent,
+		SidenavComponent,
 	],
 	templateUrl: './profile.component.html',
 	styleUrl: './profile.component.scss',
