@@ -241,6 +241,10 @@ export class CodePageComponent implements OnInit, AfterViewChecked, OnDestroy {
 		}
 		this.codeService.getTestRuns(this.code.id).subscribe({
 			next: testRuns => {
+				if (this.testRuns.length === 0) {
+					this.testRuns = testRuns;
+					return;
+				}
 				if (this.testRuns.length && this.testRuns.length !== testRuns.length) {
 					this.testRuns = testRuns;
 					this.notifyNewTestRunArrived();
