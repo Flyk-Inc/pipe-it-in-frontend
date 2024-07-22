@@ -35,8 +35,8 @@ export class FollowersComponent implements OnInit {
 		this.followers$ = this.store.select(selectFollowers);
 	}
 
-	onAccept(user: UserDTO) {
-		this.store.dispatch(acceptFollowRequest({ userId: user.id }));
+	onAccept(follower: UserDTO) {
+		this.store.dispatch(acceptFollowRequest({ userId: follower.id }));
 	}
 
 	onReject(user: UserDTO) {

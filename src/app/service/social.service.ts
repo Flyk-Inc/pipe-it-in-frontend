@@ -211,4 +211,43 @@ export class SocialService {
 				})
 			);
 	}
+
+	acceptFollowRequest(followerId: number): Observable<void> {
+		return this.httpClient
+			.patch<void>(`${this.backendUrl}/users/${followerId}/follow-request`, {})
+			.pipe(
+				catchError(error => {
+					console.error('Error accepting follow request', error);
+					return throwError(
+						() => new Error(error.message || 'An error occurred')
+					);
+				})
+			);
+	}
+
+	rejectFollowRequest(followerId: number): Observable<void> {
+		return this.httpClient
+			.delete<void>(`${this.backendUrl}/users/${followerId}/follow-request`, {})
+			.pipe(
+				catchError(error => {
+					console.error('Error rejecting follow request', error);
+					return throwError(
+						() => new Error(error.message || 'An error occurred')
+					);
+				})
+			);
+	}
+
+	removeFollower(followerId: number): Observable<void> {
+		return this.httpClient
+			.delete<void>(`${this.backendUrl}/users/followers/${followerId}`, {})
+			.pipe(
+				catchError(error => {
+					console.error('Error removing follower', error);
+					return throwError(
+						() => new Error(error.message || 'An error occurred')
+					);
+				})
+			);
+	}
 }

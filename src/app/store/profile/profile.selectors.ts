@@ -50,7 +50,10 @@ export const selectProfileError = createSelector(
 
 export const selectFollowRequests = createSelector(
 	selectProfileState,
-	(state: ProfileState) => state.user?.receivedFollowRequests || []
+	(state: ProfileState) =>
+		state.user?.receivedFollowRequests?.filter(
+			request => !request.isAccepted
+		) || []
 );
 
 export const selectFollowers = createSelector(

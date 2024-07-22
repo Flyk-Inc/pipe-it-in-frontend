@@ -3,13 +3,17 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of, switchMap } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import * as ProfileActions from './profile.actions';
-import { SocialService } from '../../service/social.service';
-import { AuthenticationService } from '../../auth/authentication.service';
 import {
+	acceptFollowRequest,
+	loadProfile,
+	rejectFollowRequest,
+	removeFollower,
 	uploadProfilePicture,
 	uploadProfilePictureFailure,
 	uploadProfilePictureSuccess,
 } from './profile.actions';
+import { SocialService } from '../../service/social.service';
+import { AuthenticationService } from '../../auth/authentication.service';
 
 @Injectable()
 export class ProfileEffects {
@@ -121,6 +125,48 @@ export class ProfileEffects {
 				this.socialService.uploadProfilePicture(action.file).pipe(
 					map(updatedUser => uploadProfilePictureSuccess({ updatedUser })),
 					catchError(error => of(uploadProfilePictureFailure({ error })))
+				)
+			)
+		);
+	});
+
+	acceptFollowRequest$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(acceptFollowRequest),
+			mergeMap(action =>
+				this.socialService.acceptFollowRequest(action.userId).pipe(
+					map(() => loadProfile()),
+					catchError(error =>
+						of({ type: '[Profile] Accept Follow Request Failure', error })
+					)
+				)
+			)
+		);
+	});
+
+	rejectFollowRequest$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(rejectFollowRequest),
+			mergeMap(action =>
+				this.socialService.rejectFollowRequest(action.userId).pipe(
+					map(() => loadProfile()),
+					catchError(error =>
+						of({ type: '[Profile] Reject Follow Request Failure', error })
+					)
+				)
+			)
+		);
+	});
+
+	removeFollower$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(removeFollower),
+			mergeMap(action =>
+				this.socialService.removeFollower(action.userId).pipe(
+					map(() => loadProfile()),
+					catchError(error =>
+						of({ type: '[Profile] Remove Follower Failure', error })
+					)
 				)
 			)
 		);

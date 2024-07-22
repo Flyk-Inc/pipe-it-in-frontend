@@ -1,19 +1,25 @@
 <div class="relative">
 	<div class="grid grid-cols-3 items-center p-4">
 		<div class="flex items-center col-span-2 space-x-4">
-			<img
-				class="w-12 h-12 rounded-full"
-				[ngSrc]="
-					user.profilePicture
-						? environment.backendUrl + '/files/' + user.profilePicture.id
-						: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png'
-				"
-				height="12"
-				width="12"
-				alt="User avatar" />
+			<a [routerLink]="['/profile', user.id]">
+				<img
+					class="w-12 h-12 rounded-full"
+					[ngSrc]="
+						user.profilePicture
+							? environment.backendUrl + '/files/' + user.profilePicture.id
+							: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png'
+					"
+					height="12"
+					width="12"
+					alt="User avatar" />
+			</a>
 			<div>
-				<p class="font-semibold">{{ user.firstName + ' ' + user.lastName }}</p>
-				<p class="text-gray-500">&#64;{{ user.username }}</p>
+				<a [routerLink]="['/profile', user.id]">
+					<p class="font-semibold">
+						{{ user.firstName + ' ' + user.lastName }}
+					</p>
+					<p class="text-gray-500">&#64;{{ user.username }}</p>
+				</a>
 			</div>
 		</div>
 		<div class="flex justify-end col-span-1 space-x-2">
@@ -27,10 +33,9 @@
 					Refuser
 				</button>
 			</div>
-			<div *ngIf="!isFollowRequest" class="flex gap-2">
-				<button class="text-red-500" (click)="onRemove()">✖</button>
+			<div *ngIf="!isFollowRequest" class="flex justify-end">
+				<button class="text-primary" (click)="onRemove()">✖</button>
 			</div>
 		</div>
 	</div>
-	<a [routerLink]="['/profile', user.id]" class="absolute inset-0"> </a>
 </div>
