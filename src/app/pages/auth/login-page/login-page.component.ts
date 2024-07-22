@@ -25,7 +25,7 @@ export class LoginPageComponent implements OnInit {
 	});
 	private userNotActivatedString = $localize`:@@user.not.activated:User not activated`;
 	private emailConfirmedString = $localize`:@@email.confirmed:Email confirmed`;
-  loginString = $localize`:@@register:Sign Up`;
+	loginString = $localize`:@@register:Sign Up`;
 
 	constructor(
 		private authenticationService: AuthenticationService,

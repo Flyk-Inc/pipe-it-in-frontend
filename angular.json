@@ -81,9 +81,9 @@
 						"fr": {
 							"localize": ["fr"]
 						},
-            "en": {
-              "localize": ["en"]
-            }
+						"en": {
+							"localize": ["en"]
+						}
 					},
 					"defaultConfiguration": "production"
 				},
