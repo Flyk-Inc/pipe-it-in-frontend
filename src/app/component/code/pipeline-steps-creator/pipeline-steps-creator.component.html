@@ -17,7 +17,7 @@
 			let last = $last
 		) {
 			<app-pipeline-steps-creator-item
-        [totalSteps]="selectedSteps.value.length"
+				[totalSteps]="selectedSteps.value.length"
 				(stepDelete)="deleteStep($event)"
 				(stepMove)="moveStep($event.step, $event.direction)"
 				[inputProblem]="stepsValidity[index].inputError"

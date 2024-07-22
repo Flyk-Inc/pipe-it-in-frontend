@@ -22,6 +22,20 @@
 						width="12" />
 				</a>
 			</p>
+			@if (code.input.length) {
+				<p class="text-sm first-letter:capitalize">
+					<span i18n="@@input">input</span>:
+					<span>({{ code.input[0].fileType }})</span>
+					{{ code.input[0].description }}
+				</p>
+			}
+			@if (code.output.length) {
+				<p class="text-sm first-letter:capitalize">
+					<span i18n="@@output">output</span>:
+					<span>({{ code.output[0].fileType }})</span>
+					{{ code.output[0].description }}
+				</p>
+			}
 			<p>{{ code.description }}</p>
 			<div>
 				<span class="header-3 text-secondary"

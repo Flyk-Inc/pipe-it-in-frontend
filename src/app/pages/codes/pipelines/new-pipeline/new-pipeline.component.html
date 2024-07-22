@@ -44,7 +44,7 @@
 	</div>
 
 	<app-button
-    class="w-fit"
+		class="w-fit"
 		[text]="'Create pipeline'"
 		[disabled]="
 			createPipelineForm.invalid ||
@@ -52,7 +52,10 @@
 			!stepsValidity
 		"
 		(click)="createPipeline()"></app-button>
-  <p>createPipelineForm.invalid: {{ createPipelineForm.invalid }}</p>
-  <p>createPipelineForm.controls.pipelineCodes.value.length: {{ createPipelineForm.controls.pipelineCodes.value.length }}</p>
-  <p>stepsValidity: {{ stepsValidity }}</p>
+	<p>createPipelineForm.invalid: {{ createPipelineForm.invalid }}</p>
+	<p>
+		createPipelineForm.controls.pipelineCodes.value.length:
+		{{ createPipelineForm.controls.pipelineCodes.value.length }}
+	</p>
+	<p>stepsValidity: {{ stepsValidity }}</p>
 </form>

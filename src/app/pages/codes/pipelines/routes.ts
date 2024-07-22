@@ -14,11 +14,11 @@ export const routes: Routes = [
 				m => m.PipelinePageComponent
 			),
 	},
-  {
-    path: CodePipelineRoutes.New,
-    loadComponent: () =>
-      import('./new-pipeline/new-pipeline.component').then(
-        m => m.NewPipelineComponent
-      ),
-  },
+	{
+		path: CodePipelineRoutes.New,
+		loadComponent: () =>
+			import('./new-pipeline/new-pipeline.component').then(
+				m => m.NewPipelineComponent
+			),
+	},
 ];

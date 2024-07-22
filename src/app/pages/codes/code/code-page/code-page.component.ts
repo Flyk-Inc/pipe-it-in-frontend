@@ -3,6 +3,7 @@ import {
 	ChangeDetectorRef,
 	Component,
 	ElementRef,
+	OnDestroy,
 	OnInit,
 	ViewChild,
 } from '@angular/core';
@@ -30,6 +31,7 @@ import {
 } from '../../../../models/code.model';
 import { CodeService } from '../../../../service/code.service';
 import { NotificationService } from '../../../../service/notification.service';
+import { interval, Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-code-home-page',
@@ -51,7 +53,7 @@ import { NotificationService } from '../../../../service/notification.service';
 	templateUrl: './code-page.component.html',
 	styleUrl: './code-page.component.scss',
 })
-export class CodePageComponent implements OnInit, AfterViewChecked {
+export class CodePageComponent implements OnInit, AfterViewChecked, OnDestroy {
 	@ViewChild('testHistoryElement')
 	testHistoryElementRef!: ElementRef;
 
@@ -59,6 +61,7 @@ export class CodePageComponent implements OnInit, AfterViewChecked {
 	loading = true;
 	error = false;
 	testRuns: TestRun[] = [];
+	private intervalSubscription!: Subscription;
 
 	hasInput = new FormControl(false);
 	hasOutput = new FormControl(false);
@@ -102,6 +105,12 @@ export class CodePageComponent implements OnInit, AfterViewChecked {
 		this.editStringTranslated = $localize`:@@edit:edit`;
 		this.loadCode();
 		this.setupPeriodicTestRunRefresh();
+	}
+
+	ngOnDestroy() {
+		if (this.intervalSubscription) {
+			this.intervalSubscription.unsubscribe();
+		}
 	}
 
 	loadCode() {
@@ -261,7 +270,7 @@ export class CodePageComponent implements OnInit, AfterViewChecked {
 	}
 
 	private redirectIfCodeIsNotLoaded() {
-		this.router.navigate(['/page-not-found']);
+		this.router.navigate(['/page-not-found']).then();
 	}
 
 	private resetFileInput() {
@@ -275,8 +284,8 @@ export class CodePageComponent implements OnInit, AfterViewChecked {
 	}
 
 	private setupPeriodicTestRunRefresh() {
-		setInterval(() => {
+		this.intervalSubscription = interval(10000).subscribe(() => {
 			this.loadTestRuns();
-		}, 10000);
+		});
 	}
 }

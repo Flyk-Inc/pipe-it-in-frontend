@@ -23,7 +23,7 @@ export class PipelineStepsCreatorItemComponent {
 	@Input() step!: number;
 	@Input() inputProblem: boolean = false;
 	@Input() outputProblem: boolean = false;
-  @Input() totalSteps!: number;
+	@Input() totalSteps!: number;
 
 	moveStep(step: number, direction: 'right' | 'left') {
 		this.stepMove.emit({ step, direction });

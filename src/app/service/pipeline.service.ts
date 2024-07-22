@@ -44,10 +44,10 @@ export class PipelineService {
 		);
 	}
 
-  createPipeline(dto: CreatePipelineDTO) {
-    return this.httpClient.post<TimelinePipeline>(
-      `${this.backendUrl}/pipeline`,
-      dto
-    );
-  }
+	createPipeline(dto: CreatePipelineDTO) {
+		return this.httpClient.post<TimelinePipeline>(
+			`${this.backendUrl}/pipeline`,
+			dto
+		);
+	}
 }

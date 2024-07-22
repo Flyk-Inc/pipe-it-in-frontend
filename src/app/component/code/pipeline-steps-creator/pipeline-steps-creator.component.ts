@@ -102,21 +102,24 @@ export class PipelineStepsCreatorComponent implements OnInit {
 		return inputOutputCheckArray;
 	}
 
-  moveStep(step: number, direction: 'right' | 'left') {
-    const steps = this.selectedSteps.value;
-    const currentIndex = step - 1; // Adjust for human-readable index
-    const newIndex = currentIndex + (direction === 'right' ? 1 : -1);
+	moveStep(step: number, direction: 'right' | 'left') {
+		const steps = this.selectedSteps.value;
+		const currentIndex = step - 1; // Adjust for human-readable index
+		const newIndex = currentIndex + (direction === 'right' ? 1 : -1);
 
-    if (newIndex >= 0 && newIndex < steps.length) {
-      [steps[currentIndex], steps[newIndex]] = [steps[newIndex], steps[currentIndex]];
-      this.selectedSteps.setValue([...steps]);
-    }
-  }
+		if (newIndex >= 0 && newIndex < steps.length) {
+			[steps[currentIndex], steps[newIndex]] = [
+				steps[newIndex],
+				steps[currentIndex],
+			];
+			this.selectedSteps.setValue([...steps]);
+		}
+	}
 
 	deleteStep(step: number) {
 		const steps = this.selectedSteps.value;
-		if (step >= 0 ) {
-			steps.splice(step-1, 1);
+		if (step >= 0) {
+			steps.splice(step - 1, 1);
 			this.selectedSteps.setValue([...steps]);
 		}
 	}
