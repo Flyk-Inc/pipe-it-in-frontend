@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { TestRun } from '../../../models/code.model';
-import { CodeReportComponent } from '../code-report/code-report.component';
+import { CodeReportComponent } from './code-report/code-report.component';
 
 @Component({
 	selector: 'app-code-report-history',

@@ -1,6 +1,8 @@
 {
 	"locale": "en-US",
 	"translations": {
+		"pipeline.history": "pipeline's history",
+		"code.test-history": " Historique de Tests du Code ",
 		"test_from": "Test of ",
 		"executed": "Executed",
 		"yes": "Yes",
@@ -11,16 +13,18 @@
 		"output.error": "error output",
 		"output.file": "output file",
 		"download": "Download",
-		"code.test-history": " Historique de Tests du Code ",
 		"search_post_or_pipelien": "Search Post or Pipeline",
 		"log.in": "Log in",
 		"log.out": "Log out",
 		"home": "Home",
 		"groups": "Groupes",
-		"pipelines": "Pipelines",
+		"codes": "Codes",
 		"followers": "Followers",
 		"messages": "Messages",
 		"favorites": "Favoris",
+		"resource.not-found": "Resource not found",
+		"your-codes": "your codes",
+		"your-pipelines": "your pipelines",
 		"written-by": "de",
 		"last-draft": " Brouillon actuel ",
 		"no-versions-yet": " no versions yet ",
@@ -51,12 +55,15 @@
 		"file.size.exceeded": "The file size exceeds the maximum allowed size of 2MB",
 		"file.type.invalid": "The file type is not valid. Only {$PH} files are allowed.",
 		"code.test.launch.success": "Code test launched successfully.",
-		"code.test.runs.error": "an error occurred while fetching test runs",
+		"code.test.runs.error": "An error occurred while fetching test runs",
 		"by": "de",
 		"language": "language",
 		"latest-version": "Latest Version",
 		"draft": "draft",
-		"your-codes": "Vos codes",
-		"code.create": "createCodeTranslated"
+		"code.create": "createCodeTranslated",
+		"steps": "steps",
+		"step": "step",
+		"pipeline.create": "createCodeTranslated",
+		"test-results": " Test Results "
 	}
 }

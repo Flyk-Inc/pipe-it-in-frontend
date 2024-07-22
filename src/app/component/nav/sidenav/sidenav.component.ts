@@ -3,6 +3,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { IconComponent } from '../../typography/icon/icon.component';
 import { NgClass, NgForOf, TitleCasePipe } from '@angular/common';
 import { UnderlineComponent } from '../../layout/underline/underline.component';
+import { codeRoutePath } from '../../../pages/codes/routes';
 
 @Component({
 	selector: 'app-sidenav',
@@ -33,8 +34,8 @@ export class SidenavComponent {
 		},
 		{
 			icon: 'code',
-			label: $localize`:@@pipelines:Pipelines`,
-			route: '/pipelines',
+			label: $localize`:@@codes:Codes`,
+			route: '/' + codeRoutePath,
 		},
 		{
 			icon: 'person',

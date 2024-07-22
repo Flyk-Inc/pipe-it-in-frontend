@@ -14,7 +14,6 @@ export class CodeTimelineEffects {
 			mergeMap(() =>
 				this.codeService.getTimeLineCodes().pipe(
 					map(codes => {
-						console.log(codes);
 						return CodeTimelineActions.loadCodesSuccess({ codes });
 					}),
 					catchError(error =>

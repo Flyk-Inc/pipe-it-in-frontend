@@ -39,8 +39,11 @@ export interface TestRun {
 	outputFile?: string;
 	stderr?: string;
 	stdout?: string;
-	step?: string;
 	createdAt: string;
+}
+
+export interface PipelineStep extends TestRun {
+	step: number;
 }
 
 export interface Version {

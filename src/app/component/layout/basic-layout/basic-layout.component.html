@@ -1,0 +1,12 @@
+<div class="w-full flex flex-nowrap h-full">
+	<app-sidenav class="hidden sm:block w-1/5"></app-sidenav>
+	<div class="flex flex-col grow h-full w-4/5">
+		<div class="flex-grow overflow-y-scroll">
+			@if (routerOutlet) {
+				<router-outlet></router-outlet>
+			} @else {
+				<ng-content></ng-content>
+			}
+		</div>
+	</div>
+</div>

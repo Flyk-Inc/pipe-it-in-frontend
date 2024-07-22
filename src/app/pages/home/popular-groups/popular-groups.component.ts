@@ -22,7 +22,6 @@ export class PopularGroupsComponent implements OnInit {
 
 	loadPopularGroups(): void {
 		this.socialService.getPopularGroups().subscribe(groups => {
-			console.log(groups);
 			this.publicGroups = groups;
 		});
 	}

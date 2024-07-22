@@ -1,0 +1,13 @@
+<div class="tabs tabs-bordered" role="tablist">
+	@for ($tab of tabs; track $tab) {
+		<a
+			role="tab"
+			[routerLink]="$tab.link"
+			[ngClass]="{
+				'capitalize tab text-2xl font-medium': true,
+				'!text-primary !border-b-primary tab-active': activeTabId === $tab.id
+			}"
+			>{{ $tab.title }}</a
+		>
+	}
+</div>
