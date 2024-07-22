@@ -7,10 +7,21 @@ import { Message, MessageService } from 'primeng/api';
 export class NotificationService {
 	constructor(private primeMessageService: MessageService) {}
 
+	errorString = $localize`:@@error:Error`;
+	successString = $localize`:@@success:Success`;
+
 	showSuccessToast(message: string) {
 		this.primeMessageService.add({
 			severity: 'success',
-			summary: 'Success',
+			summary: this.successString,
+			detail: message,
+		});
+	}
+
+	showInfoToast(message: string) {
+		this.primeMessageService.add({
+			severity: 'info',
+			summary: 'Info',
 			detail: message,
 		});
 	}
@@ -18,7 +29,7 @@ export class NotificationService {
 	showErrorToast(message: string) {
 		this.primeMessageService.add({
 			severity: 'error',
-			summary: 'Error',
+			summary: this.errorString,
 			detail: message,
 		});
 	}

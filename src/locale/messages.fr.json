@@ -77,6 +77,22 @@
 		"pipeline.description": "pipeline's description",
 		"pipeline.steps": "pipeline steps",
 		"test-results": "Résultats des tests",
-		"pipeline.run.new": "nouveau résultat de pipeline"
+		"pipeline.run.new": "nouveau résultat de pipeline",
+		"firstname": "Prénom",
+		"lastname": "Nom de famille",
+		"username": "Pseudo",
+		"email": "Email",
+		"password": "Mot de passe",
+		"confirm-password": "Confirmer le mot de passe",
+		"register": "S'inscrire",
+		"sign-up": "S'inscrire",
+		"user.email.already.exists": "Un utilisateur avec cet email existe déjà",
+		"success": "Succès",
+		"email.confirmation.sent": "Un email de confirmation a été envoyé à votre adresse email",
+		"user.not.activated": "Votre email n'a pas encore été activé",
+		"email.confirmed": "Email confirmé",
+		"account.already": "Vous avez déjà un compte ?",
+		"account.none": "Vous n'avez pas de compte ?",
+		"sign-up.ask": "Inscrivez-vous"
 	}
 }
