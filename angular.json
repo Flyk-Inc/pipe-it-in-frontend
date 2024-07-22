@@ -80,7 +80,10 @@
 						},
 						"fr": {
 							"localize": ["fr"]
-						}
+						},
+            "en": {
+              "localize": ["en"]
+            }
 					},
 					"defaultConfiguration": "production"
 				},
@@ -91,7 +94,7 @@
 							"buildTarget": "pipe-it-in-frontend:build:production"
 						},
 						"development": {
-							"buildTarget": "pipe-it-in-frontend:build:development"
+							"buildTarget": "pipe-it-in-frontend:build:development,en"
 						},
 						"fr": {
 							"buildTarget": "pipe-it-in-frontend:build:development,fr"

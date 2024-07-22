@@ -74,6 +74,22 @@
 		"pipeline.steps": "pipeline steps",
 		"pipeline.create": "createCodeTranslated",
 		"test-results": " Test Results ",
-		"pipeline.run.new": "new pipeline run results arrived."
+		"pipeline.run.new": "new pipeline run results arrived.",
+		"username": "Username",
+		"firstname": "First Name",
+		"lastname": "Last Name",
+		"email": "Email",
+		"password": "Password",
+		"confirm-password": "Confirm Password",
+		"register": "Register",
+		"sign-up": "Sign Up",
+		"user.email.already.exists": "User with this email already exists",
+		"success": "Success",
+		"email.confirmation.sent": "Email confirmation sent",
+		"user.not.activated": "email has not been activated",
+		"email.confirmed": "Email confirmed",
+		"account.already": "Already have an account?",
+		"account.none": "Don't have an account?",
+		"sign-up.ask": "Sign up"
 	}
 }

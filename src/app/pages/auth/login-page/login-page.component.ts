@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
 	FormBuilder,
 	FormsModule,
@@ -6,7 +6,7 @@ import {
 	Validators,
 } from '@angular/forms';
 import { AuthenticationService } from '../../../auth/authentication.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '../../../service/notification.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ButtonComponent } from '../../../component/layout/button/button.component';
@@ -18,17 +18,29 @@ import { ButtonComponent } from '../../../component/layout/button/button.compone
 	templateUrl: './login-page.component.html',
 	styleUrl: './login-page.component.scss',
 })
-export class LoginPageComponent {
+export class LoginPageComponent implements OnInit {
 	signInForm = new FormBuilder().nonNullable.group({
 		email: ['', [Validators.required, Validators.email]],
 		password: ['', [Validators.required]],
 	});
+	private userNotActivatedString = $localize`:@@user.not.activated:User not activated`;
+	private emailConfirmedString = $localize`:@@email.confirmed:Email confirmed`;
+  loginString = $localize`:@@register:Sign Up`;
 
 	constructor(
 		private authenticationService: AuthenticationService,
 		private router: Router,
+		private route: ActivatedRoute,
 		private notificationService: NotificationService
 	) {}
+
+	ngOnInit() {
+		this.route.queryParams.subscribe(params => {
+			if (params['emailConfirmed'] === 'true') {
+				this.notificationService.showSuccessToast(this.emailConfirmedString);
+			}
+		});
+	}
 
 	signInWithGoogle() {
 		this.authenticationService.signInWithGooglePopup().subscribe({
@@ -52,13 +64,23 @@ export class LoginPageComponent {
 					this.redirectOnSucessfulSignIn();
 				},
 				error: (error: HttpErrorResponse) => {
-					this.notificationService.showErrorToast(error.error.message);
-					console.error('error', error);
+					this.checkSignUpError(error.error.message);
 				},
 			});
 	}
 
 	private redirectOnSucessfulSignIn() {
 		this.router.navigate(['/']).then();
+	}
+
+	checkSignUpError(errorMessage: string) {
+		switch (errorMessage) {
+			case 'user.not.activated':
+				this.notificationService.showErrorToast(this.userNotActivatedString);
+				break;
+			default:
+				this.notificationService.showErrorToast(errorMessage);
+				break;
+		}
 	}
 }
