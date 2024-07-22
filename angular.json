@@ -43,7 +43,10 @@
 								"output": "/assets/monaco/"
 							}
 						],
-						"styles": ["src/styles.scss"],
+						"styles": [
+							"src/styles.scss",
+							"node_modules/@ng-select/ng-select/themes/default.theme.css"
+						],
 						"scripts": [],
 						"localize": true,
 						"i18nMissingTranslation": "error"

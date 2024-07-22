@@ -23,3 +23,14 @@ export interface Run {
 	createdAt: string;
 	updatedAt: string;
 }
+
+export interface CreatePipelineDTO {
+	title: string;
+	description: string;
+	pipelineCodes: CreatePipelineCodeDTO[];
+}
+
+export interface CreatePipelineCodeDTO {
+	code_version_id: number;
+	step: number;
+}

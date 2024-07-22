@@ -1,0 +1,32 @@
+<div class="grid grid-cols-1 gap-5">
+	<app-version-selector
+		(versionSelected)="onVersionSelection($event)"></app-version-selector>
+	<app-button
+		(click)="addToSteps()"
+		[text]="addToStepsButtonLabel"
+		[disabled]="
+			!currentlySelectedVersion.value || selectedSteps.value.length >= 5
+		"></app-button>
+
+	<div
+		class="h-fit accent-yellow-100 w-full overflow-x-scroll flex flex-nowrap">
+		@for (
+			step of selectedSteps.value;
+			track step;
+			let index = $index;
+			let last = $last
+		) {
+			<app-pipeline-steps-creator-item
+        [totalSteps]="selectedSteps.value.length"
+				(stepDelete)="deleteStep($event)"
+				(stepMove)="moveStep($event.step, $event.direction)"
+				[inputProblem]="stepsValidity[index].inputError"
+				[outputProblem]="stepsValidity[index].outputError"
+				[version]="step"
+				[step]="index + 1"></app-pipeline-steps-creator-item>
+			@if (!last) {
+				<app-icon icon="arrow_right_alt"></app-icon>
+			}
+		}
+	</div>
+</div>

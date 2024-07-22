@@ -3,7 +3,7 @@ import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { map, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { TimelinePipeline } from '../models/pipeline.model';
+import { CreatePipelineDTO, TimelinePipeline } from '../models/pipeline.model';
 
 @Injectable({
 	providedIn: 'root',
@@ -43,4 +43,11 @@ export class PipelineService {
 			formData
 		);
 	}
+
+  createPipeline(dto: CreatePipelineDTO) {
+    return this.httpClient.post<TimelinePipeline>(
+      `${this.backendUrl}/pipeline`,
+      dto
+    );
+  }
 }

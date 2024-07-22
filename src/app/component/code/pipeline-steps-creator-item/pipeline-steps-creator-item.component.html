@@ -1,0 +1,64 @@
+<div class="items-center gap-x-2 w-72">
+	<p class="first-letter:capitalize text-center">
+		<!--		<span i18n="@@step">Step</span>: {{ version.step }}-->
+		{{ step }}
+	</p>
+	<div class="border-t-2 border-secondary p-2 grow">
+		<p class="font-medium first-letter:capitalize truncate">
+			{{ version.title }}
+		</p>
+		<p class="first-letter:capitalize">
+			{{ version.version }}
+		</p>
+		<div class="flex flex-nowrap gap-x-2">
+			@if (version.input.length) {
+				<p [ngClass]="{ 'text-red-500': inputProblem }">
+					<span class="font-medium first-letter:capitalize" i18n="@@input"
+						>input
+					</span>
+					<span>: {{ version.input[0].fileType }}</span>
+				</p>
+			} @else {
+				<p
+					[ngClass]="{
+						'text-red-500': inputProblem,
+						'text-gray-500': !inputProblem
+					}"
+					i18n="@@input.none">
+					no input
+				</p>
+			}
+			<div class="grow"></div>
+			@if (version.output.length) {
+				<p [ngClass]="{ 'text-red-500': outputProblem }">
+					<span class="font-medium first-letter:capitalize" i18n="@@output"
+						>input
+					</span>
+					<span>: {{ version.output[0].fileType }}</span>
+				</p>
+			} @else {
+				<p
+					[ngClass]="{
+						'text-red-500': outputProblem,
+						'text-gray-500': !outputProblem
+					}"
+					i18n="@@output.none">
+					no output
+				</p>
+			}
+		</div>
+	</div>
+	<div class="flex flex-nowrap justify-end">
+		<app-icon icon="delete" (click)="deleteStep(step)"></app-icon>
+		@if (step !== 1) {
+			<app-icon
+				icon="arrow_left_alt"
+				(click)="moveStep(step, 'left')"></app-icon>
+		}
+		@if (step !== totalSteps) {
+			<app-icon
+				icon="arrow_right_alt"
+				(click)="moveStep(step, 'right')"></app-icon>
+		}
+	</div>
+</div>

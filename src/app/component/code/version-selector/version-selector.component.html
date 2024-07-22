@@ -1,0 +1,41 @@
+<div class="grid grid-cols-1 gap-2">
+	<div class="w-full">
+		<label
+			class="first-letter:capitalize block mb-1 text-sm font-medium text-gray-900 dark:text-white"
+			for="code-select"
+			i18n="@@code.select"
+			>select a code</label
+		>
+		<ng-select
+			id="code-select"
+			appendTo="body"
+			[items]="$codes | async"
+			bindLabel="title"
+			[loading]="codesLoading"
+			[trackByFn]="trackByFn"
+			(search)="codesInput$.next($event.term)"
+			(change)="onCodeChange($event)"
+			typeToSearchText="Please enter 2 or more characters">
+		</ng-select>
+	</div>
+	@if (selectedCode.value) {
+		<div class="w-full">
+			<label
+				class="first-letter:capitalize block mb-1 text-sm font-medium text-gray-900 dark:text-white"
+				for="version-select"
+				i18n="@@code.version.select"
+				>select a version for this code</label
+			>
+			<ng-select
+				id="version-select"
+				appendTo="body"
+				[items]="$codeVersions | async"
+				bindLabel="version"
+				(change)="onVersionChange($event)"
+        [formControl]="selectedCodeVersion"
+				typeToSearchText="Please enter 2 or more characters">
+				>
+			</ng-select>
+		</div>
+	}
+</div>

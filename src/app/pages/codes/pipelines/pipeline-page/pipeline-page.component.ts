@@ -1,4 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+	Component,
+	ElementRef,
+	OnDestroy,
+	OnInit,
+	ViewChild,
+} from '@angular/core';
 import { TimelinePipeline } from '../../../../models/pipeline.model';
 import { PipelineService } from '../../../../service/pipeline.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -10,6 +16,7 @@ import { NotificationService } from '../../../../service/notification.service';
 import { CodeReportHistoryComponent } from '../../../../component/code/report-history/code-report-history.component';
 import { RunHistoryComponent } from '../../../../component/code/pipeline/run-history/run-history.component';
 import { FormControl } from '@angular/forms';
+import { interval, Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-pipeline-page',
@@ -25,13 +32,14 @@ import { FormControl } from '@angular/forms';
 	],
 	templateUrl: './pipeline-page.component.html',
 })
-export class PipelinePageComponent implements OnInit {
+export class PipelinePageComponent implements OnInit, OnDestroy {
 	@ViewChild('runHistoryElement')
 	runHistoryElementRef!: ElementRef;
 
 	pipelineId!: number;
 	pipeline?: TimelinePipeline;
 	fileInput = new FormControl<File | null>(null);
+	private intervalSubscription!: Subscription;
 
 	constructor(
 		private pipelineService: PipelineService,
@@ -44,6 +52,12 @@ export class PipelinePageComponent implements OnInit {
 		this.setupPeriodicRunRefresh();
 	}
 
+	ngOnDestroy() {
+		if (this.intervalSubscription) {
+			this.intervalSubscription.unsubscribe();
+		}
+	}
+
 	loadPipeline() {
 		this.pipelineId = Number(this.route.snapshot.params['id']);
 		this.pipelineService
@@ -51,9 +65,11 @@ export class PipelinePageComponent implements OnInit {
 			.subscribe((pipeline: TimelinePipeline) => {
 				if (
 					this.pipeline &&
-					pipeline.runs.length !== this.pipeline?.pipelineCodes.length
+					pipeline.runs.length !== this.pipeline.runs.length
 				) {
+					this.pipeline = pipeline;
 					this.notifyNewRunArrived();
+					return;
 				}
 				this.pipeline = pipeline;
 			});
@@ -139,8 +155,8 @@ export class PipelinePageComponent implements OnInit {
 	}
 
 	private setupPeriodicRunRefresh() {
-		setInterval(() => {
+		this.intervalSubscription = interval(10000).subscribe(() => {
 			this.loadPipeline();
-		}, 10000);
+		});
 	}
 }
