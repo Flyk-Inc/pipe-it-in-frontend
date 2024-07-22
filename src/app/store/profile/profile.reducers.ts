@@ -91,7 +91,6 @@ export const profileReducers = createReducer(
 		(state, { user }): ProfileState => ({
 			...state,
 			user,
-			error: null,
 		})
 	),
 

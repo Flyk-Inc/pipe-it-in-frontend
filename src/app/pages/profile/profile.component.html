@@ -1,74 +1,84 @@
 <div class="container mx-auto p-4">
-	<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-		<!-- Left Sidebar -->
-		<div class="col-span-1 md:col-span-1 rounded-lg p-4">
-			<div class="text-center relative group">
-				<div class="relative inline-block">
-					<img
-						[src]="profilePictureUrl$ | async"
-						alt="User Profile Picture"
-						class="w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 rounded-full mx-auto mb-4 object-cover" />
-					<div
-						class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 mx-auto mb-4">
-						<button (click)="triggerFileInput()">
-							<app-icon icon="upload"></app-icon>
+	<div class="flex flex-nowrap h-full">
+		<!-- Side Navigation -->
+		<app-sidenav class="hidden sm:block w-1/5"></app-sidenav>
+		<!-- Profile Content -->
+		<div class="grow p-2">
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+				<!-- Left Sidebar -->
+				<div class="col-span-1 md:col-span-1 rounded-lg p-4">
+					<div class="text-center relative group">
+						<div class="relative inline-block">
+							<img
+								[src]="profilePictureUrl$ | async"
+								alt="User Profile Picture"
+								class="w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 rounded-full mx-auto mb-4 object-cover" />
+							<div
+								class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 mx-auto mb-4">
+								<button (click)="triggerFileInput()">
+									<app-icon icon="upload"></app-icon>
+								</button>
+							</div>
+						</div>
+						<input
+							#profilePictureInput
+							type="file"
+							id="profilePictureInput"
+							class="hidden"
+							(change)="onFileChange($event)" />
+						<h1 class="text-xl font-semibold mb-3">
+							{{ (loggedInUser$ | async)?.username }}
+						</h1>
+						<p class="text-gray-400 mb-2">
+							{{ (loggedInUser$ | async)?.description }}
+						</p>
+						<button
+							class="mt-4 px-4 py-2 bg-primary text-white rounded-lg"
+							(click)="showEditProfile = true">
+							Edit profile
 						</button>
+						<div class="flex flex-wrap justify-between mt-8 w-full">
+							<div class="text-center mb-4 flex-1 mx-2 min-w-[100px]">
+								<span class="text-xl font-semibold">{{
+									(loggedInUser$ | async)?.posts?.length || 0
+								}}</span>
+								<p class="text-gray-400">posts</p>
+							</div>
+							<div class="text-center mb-4 flex-1 mx-2 min-w-[100px]">
+								<span class="text-xl font-semibold">{{
+									(loggedInUser$ | async)?.followers?.length || 0
+								}}</span>
+								<p class="text-gray-400">abonnés</p>
+							</div>
+							<div class="text-center flex-1 mx-2 min-w-[100px]">
+								<span class="text-xl font-semibold">{{
+									(loggedInUser$ | async)?.following?.length || 0
+								}}</span>
+								<p class="text-gray-400">abonnements</p>
+							</div>
+						</div>
+					</div>
+					<!-- Public Groups -->
+					<div class="mt-10 flex flex-col items-center">
+						<h2 class="text-2xl font-semibold mb-4">Groups</h2>
+						<app-profile-groups
+							[userGroups]="userGroups$ | async"></app-profile-groups>
 					</div>
 				</div>
-				<input
-					#profilePictureInput
-					type="file"
-					id="profilePictureInput"
-					class="hidden"
-					(change)="onFileChange($event)" />
-				<h1 class="text-xl font-semibold mb-3">
-					{{ (loggedInUser$ | async)?.username }}
-				</h1>
-				<p class="text-gray-400 mb-2">
-					{{ (loggedInUser$ | async)?.description }}
-				</p>
-				<button
-					class="mt-4 px-4 py-2 bg-primary text-white rounded-lg"
-					(click)="showEditProfile = true">
-					Edit profile
-				</button>
-				<div
-					class="grid grid-cols-1 sm:grid-cols-3 justify-items-center mt-8 w-full">
-					<div class="text-center order-2 sm:order-1">
-						<span class="text-xl font-semibold">{{
-							(loggedInUser$ | async)?.posts?.length || 0
-						}}</span>
-						<p class="text-gray-400">posts</p>
-					</div>
-					<div class="text-center order-1 sm:order-2">
-						<span class="text-xl font-semibold">{{
-							(loggedInUser$ | async)?.followers?.length || 0
-						}}</span>
-						<p class="text-gray-400">abonnés</p>
-					</div>
-					<div class="text-center order-3 sm:order-3">
-						<span class="text-xl font-semibold">{{
-							(loggedInUser$ | async)?.following?.length || 0
-						}}</span>
-						<p class="text-gray-400">abonnements</p>
-					</div>
+				<!-- Main Content -->
+				<div class="col-span-1 md:col-span-2 rounded-lg p-4">
+					<!-- Pinned Post -->
+					<ng-container *ngIf="pinnedPost$ | async as pinnedPost">
+						<app-pinned-post
+							[post]="pinnedPost"
+							[isOwnProfile]="true"></app-pinned-post>
+					</ng-container>
+					<!-- Post List -->
+					<app-post-list
+						[posts]="userPosts$ | async"
+						[isOwnProfile]="true"></app-post-list>
 				</div>
 			</div>
-			<!-- Public Groups -->
-			<div class="mt-10 flex flex-col items-center">
-				<h2 class="text-2xl font-semibold mb-4">Groups</h2>
-				<app-profile-groups
-					[userGroups]="userGroups$ | async"></app-profile-groups>
-			</div>
-		</div>
-		<!-- Main Content -->
-		<div class="col-span-1 md:col-span-2 rounded-lg p-4">
-			<!-- Pinned Post -->
-			<ng-container *ngIf="pinnedPost$ | async as pinnedPost">
-				<app-pinned-post [post]="pinnedPost"></app-pinned-post>
-			</ng-container>
-			<!-- Post List -->
-			<app-post-list [posts]="userPosts$ | async"></app-post-list>
 		</div>
 	</div>
 
@@ -97,6 +107,20 @@
 							<form
 								(ngSubmit)="onUpdateProfile()"
 								class="flex flex-wrap gap-y-6">
+								<div class="w-full flex items-center mt-4">
+									<span
+										class="block text-sm font-medium text-gray-900 dark:text-white mr-3"
+										>Profile Private</span
+									>
+									<label class="switch">
+										<input
+											type="checkbox"
+											name="isPrivate"
+											id="isPrivate"
+											[(ngModel)]="profileData.isPrivate" />
+										<span class="slider round"></span>
+									</label>
+								</div>
 								<div class="w-full">
 									<label
 										for="firstName"

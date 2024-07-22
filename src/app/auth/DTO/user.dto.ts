@@ -11,7 +11,21 @@ export interface UserDTO {
 		id: string;
 	};
 	posts: TimelinePost[];
-	following: UserDTO[];
-	followers: UserDTO[];
+	following: UserFollows[];
+	followers: UserFollows[];
 	pinnedPost: number | null;
+	isPrivate: boolean;
+	sentFollowRequests: FollowRequest[];
+	receivedFollowRequests: FollowRequest[];
+}
+
+export interface UserFollows {
+	follower: UserDTO;
+	user: UserDTO;
+}
+
+export interface FollowRequest {
+	follower: UserDTO;
+	user: UserDTO;
+	isAccepted: boolean;
 }

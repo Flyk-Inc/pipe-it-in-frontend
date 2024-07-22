@@ -34,6 +34,7 @@
 		</div>
 	</a>
 	<div
+		*ngIf="isOwnProfile"
 		class="absolute top-0 right-0 mt-2 mr-2"
 		(click)="$event.stopPropagation()"
 		(keydown.enter)="$event.stopPropagation()"

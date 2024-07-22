@@ -5,16 +5,19 @@
 			alt="Rounded avatar"
 			class="w-12 h-12 rounded-full shrink"
 			height="12"
-			ngSrc="https://pbs.twimg.com/profile_images/1568802877933588482/Pnwh7rKm_400x400.jpg"
+			[ngSrc]="
+				post.user.profilePicture
+					? environment.backendUrl + '/files/' + post.user.profilePicture.id
+					: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png'
+			"
 			width="12" />
 		<div class="grow space-y-2">
-			<a class="h-fit" routerLink="/user/{{ post.user.id }}">
+			<a class="h-fit" routerLink="/profile/{{ post.user.id }}">
 				<p class="post-mini-name text-secondary">
 					{{ post.user.firstName + ' ' + post.user.lastName }}
 				</p>
-				<!--   TODO: Remove line below once username is implemented  -->
 				<p class="post-mini-pseudo text-grey-3 dark:text-grey-2">
-					&#64;{{ post.user.lastName }}
+					&#64;{{ post.user.username }}
 				</p>
 			</a>
 			<p>{{ post.text }}</p>
