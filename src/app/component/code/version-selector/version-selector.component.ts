@@ -22,11 +22,18 @@ import { CodeService } from '../../../service/code.service';
 import { catchError } from 'rxjs/operators';
 import { AsyncPipe } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { IconComponent } from '../../typography/icon/icon.component';
 
 @Component({
 	selector: 'app-version-selector',
 	standalone: true,
-	imports: [AsyncPipe, NgSelectModule, FormsModule, ReactiveFormsModule],
+	imports: [
+		AsyncPipe,
+		NgSelectModule,
+		FormsModule,
+		ReactiveFormsModule,
+		IconComponent,
+	],
 	templateUrl: './version-selector.component.html',
 })
 export class VersionSelectorComponent implements OnInit, OnDestroy {
