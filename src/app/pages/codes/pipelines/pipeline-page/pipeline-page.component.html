@@ -1,0 +1,88 @@
+@if (pipeline) {
+	<div
+		class="max-h-full overflow-y-scroll rounded-lg border border-grey-1 dark:border-grey-3 bg-light-card-bg dark:bg-dark-card-bg mt-2 mx-2 p-4 grid grid-cols-1 gap-y-5">
+		<h2 class="header-2 text-primary">{{ pipeline.title }}</h2>
+		<div class="grid grid-cols-1 gap-y-2">
+			<p>
+				<a
+					routerLink="/user/{{ pipeline.user.id }}"
+					class="flex flex-nowrap gap-x-2 items-center w-fit">
+					<span
+						><span
+							class="inline-block first-letter:uppercase"
+							i18n="@@written-by"
+							>de</span
+						>: &#64;{{ pipeline.user.lastName }}</span
+					>
+					<img
+						alt="Rounded avatar"
+						class="w-5 h-5 rounded-full shrink"
+						height="12"
+						ngSrc="https://pbs.twimg.com/profile_images/1568802877933588482/Pnwh7rKm_400x400.jpg"
+						width="12" />
+				</a>
+			</p>
+			<p>{{ pipeline.description }}</p>
+			@if (pipeline.pipelineCodes[0].version.input.length) {
+				<p class="first-letter:capitalize">
+					<span i18n="@@input.fileType">input</span>:
+					{{ pipeline.pipelineCodes[0].version.input[0].fileType }}
+				</p>
+			}
+		</div>
+		<div class="grid grid-cols-1 gap-y-2">
+			<h3>
+				<span class="header-3 text-secondary capitalize" i18n="@@steps"
+					>steps</span
+				>:
+			</h3>
+			<div class="flex flex-nowrap w-full overflow-x-scroll gap-x-5">
+				@for (step of pipeline.pipelineCodes; track step; let last = $last) {
+					<app-pipeline-step [step]="step"></app-pipeline-step>
+					@if (!last) {
+						<app-icon icon="arrow_right_alt"></app-icon>
+					}
+				}
+			</div>
+		</div>
+
+		<div class="grid grid-cols-1 gap-y-2">
+			<div class="flex flex-nowrap gap-2">
+				<app-button
+					(click)="runPipeline()"
+					class="shrink-0"
+					text="Run Test"
+					[disabled]="
+						!!pipeline.pipelineCodes[0].version.input.length && !fileInput.value
+					"></app-button>
+				@if (pipeline.pipelineCodes[0].version.input.length) {
+					<div class="w-full grow">
+						<label
+							class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
+							i18n="@@fileInput.ask_upload"
+							for="file_input"
+							>Please upload a file to serve as the input for this test
+							run</label
+						>
+						<input
+							class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600"
+							(change)="handleFileInputChange($event)"
+							id="file_input"
+							type="file" />
+						<p class="mt-1 text-sm text-grey-2" id="file_input_help">
+							(MAX. 2MB).
+						</p>
+					</div>
+				}
+			</div>
+			<div>
+				<h3 class="header-3 text-secondary capitalize" i18n="@@test-results">
+					Test Results
+				</h3>
+				<app-run-history
+					#runHistoryElement
+					[runs]="pipeline.runs"></app-run-history>
+			</div>
+		</div>
+	</div>
+}

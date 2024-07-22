@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from './auth/auth.guard';
 
 export const routes: Routes = [
 	{
@@ -11,11 +12,12 @@ export const routes: Routes = [
 	},
 	{
 		path: 'pipelines',
-		loadChildren: () => import('./pages/pipelines/routes').then(m => m.routes),
+		loadChildren: () =>
+			import('./pages/codes/pipelines/routes').then(m => m.routes),
 	},
 	{
-		path: 'code',
-		loadChildren: () => import('./pages/code-home/routes').then(m => m.routes),
+		path: 'codes',
+		loadChildren: () => import('./pages/codes/routes').then(m => m.routes),
 	},
 	{
 		path: 'profile',
@@ -25,6 +27,14 @@ export const routes: Routes = [
 		path: 'profile/:userId',
 		loadChildren: () =>
 			import('./pages/user-profile/routes').then(m => m.routes),
+	},
+	{
+		path: 'page-not-found',
+		canActivate: [AuthGuard],
+		loadComponent: () =>
+			import('./pagenotfound/pagenotfound.component').then(
+				m => m.PagenotfoundComponent
+			),
 	},
 	{
 		path: 'followers',

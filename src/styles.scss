@@ -7,6 +7,7 @@
 /* Variables */
 :root {
 	--primary: #f1895c;
+	--primary-accent: #dd6e7b;
 	--secondary: #516079;
 	--light-bg: #fffcfa;
 	--dark-bg: #2e3244;
@@ -41,10 +42,33 @@ body {
 	@apply text-xl font-medium;
 }
 
+.header-5 {
+	@apply text-lg font-normal;
+}
+
 .post-mini-name {
 	@apply font-medium text-[1em];
 }
 
 .post-mini-pseudo {
 	@apply text-[1em];
+}
+
+// NG-Select
+// dark mode
+@media (prefers-color-scheme: dark) {
+	.ng-select > .ng-select-container {
+		background: var(--dark-bg) !important;
+		border-color: var(--grey-2) !important;
+		color: var(--text-main-dark-color) !important;
+	}
+	.ng-select.ng-select-disabled > .ng-select-container {
+		background: var(--grey-bg-dark) !important;
+		border-color: var(--grey-2) !important;
+		color: var(--grey-2) !important;
+	}
+	.ng-option {
+		background: var(--dark-card-bg) !important;
+		color: var(--text-main-dark-color) !important;
+	}
 }

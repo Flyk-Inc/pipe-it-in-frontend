@@ -50,13 +50,9 @@ export class TimelineComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.postForm.controls['text'].valueChanges.subscribe(() =>
-			console.log(this.postForm.controls['text'].value.length)
-		);
 		this.posts$ = this.store.select(selectAllPosts);
 		this.store.dispatch(loadPosts());
 		this.socialService.newPostAdded.subscribe(() => {
-			console.log('new post added');
 			this.postForm.controls['text'].setValue('');
 			this.postForm.reset();
 		});
@@ -70,7 +66,6 @@ export class TimelineComponent implements OnInit {
 	// }
 
 	createPost() {
-		console.log('valid', this.postForm.valid);
 		if (this.postForm.valid) {
 			this.store.dispatch(createPost({ createPostDTO: this.postForm.value }));
 		}

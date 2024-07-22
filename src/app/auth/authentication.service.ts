@@ -45,7 +45,6 @@ export class AuthenticationService {
 
 	signInWithGooglePopup() {
 		// TODO implement signInWithGooglePopup
-		console.log('signInWithGooglePopup');
 		return of();
 	}
 
@@ -67,7 +66,6 @@ export class AuthenticationService {
 			.post<{ access_token: string }>(`${this.backendUrl}/auth/login`, formData)
 			.pipe(
 				tap(response => {
-					console.log(response);
 					this.setToken(response.access_token);
 				}),
 				switchMap(() => {
@@ -102,8 +100,7 @@ export class AuthenticationService {
 					this.setToken(savedToken);
 					this.authLoadingSource.next(false);
 				},
-				error: error => {
-					console.log(error);
+				error: () => {
 					this.authLoadingSource.next(false);
 					this.removeToken();
 					this.removeAuthenticatedUser();
@@ -117,7 +114,6 @@ export class AuthenticationService {
 	}
 
 	private removeToken() {
-		console.log('removeToken');
 		this.tokenSource.next(null);
 		this.lstorageService.removeString('access_token');
 	}
@@ -128,7 +124,6 @@ export class AuthenticationService {
 
 	private setAuthenticatedUser(user: UserDTO) {
 		this.currentUserSource.next(user);
-		console.log('user', user);
 	}
 
 	private removeAuthenticatedUser() {

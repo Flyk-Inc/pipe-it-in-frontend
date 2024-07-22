@@ -1,0 +1,37 @@
+<details
+	open
+	class="collapse collapse-arrow border border-grey-1 dark:border-grey-2">
+	<summary
+		class="collapse-title text-xl font-medium first-letter:capitalize"
+		i18n="@@pipeline.history">
+		pipeline's history
+	</summary>
+	<div
+		class="collapse-content max-h-80 overflow-y-scroll grid grid-cols-1 gap-y-2">
+		@for (run of runs; track run; let first = $first) {
+			<div class="w-full" [id]="first ? 'latest_run' : undefined">
+				<div class="ps-2">
+					<details [open]="first" class="collapse collapse-arrow">
+						<summary class="collapse-title header-5 w-fit">
+							Run from {{ run.createdAt | date: 'medium' }}
+							@if (first) {
+								<span class="badge bg-primary text-text-main-dark-color"
+									>Last run</span
+								>
+							}
+						</summary>
+						<div class="collapse-content">
+							<div class="w-full overflow-x-scroll flex flex-nowrap gap-x-4">
+								@for (pipelineStep of run.runReport; track pipelineStep) {
+									<app-run-report-step
+										[testRun]="pipelineStep"></app-run-report-step>
+								}
+							</div>
+						</div>
+					</details>
+				</div>
+				<div class="divider !border-grey-3 dark:!border-grey-1"></div>
+			</div>
+		}
+	</div>
+</details>

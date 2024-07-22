@@ -20,9 +20,30 @@ export interface TimelineCode {
 	updateAt: string;
 }
 
+export interface CodeDetail extends TimelineCode {
+	versions: Version[];
+	testRuns: TestRun[];
+}
+
 interface FileDescription {
 	fileType: string;
 	description: string;
+}
+
+export interface TestRun {
+	id: string;
+	executed: boolean;
+	error: boolean;
+	needsInput: boolean;
+	inputFile?: string;
+	outputFile?: string;
+	stderr?: string;
+	stdout?: string;
+	createdAt: string;
+}
+
+export interface PipelineStep extends TestRun {
+	step: number;
 }
 
 export interface Version {
@@ -57,6 +78,11 @@ export interface CreateVersionDTO {
 	output: OutputDescriptionDTO[];
 }
 
+export interface RunTestCodeDTO {
+	codeContent: string;
+	language: string;
+}
+
 export interface InputDescriptionDTO {
 	fileType: string;
 	description: string;
@@ -67,6 +93,11 @@ export interface OutputDescriptionDTO {
 	description: string;
 }
 
+export interface RunTestCodeDTO {
+	codeContent: string;
+	language: string;
+}
+
 export enum CodeLanguages {
 	python = 'python',
 	javascript = 'javascript',
@@ -74,5 +105,4 @@ export enum CodeLanguages {
 
 export enum CodeStatus {
 	active = 'active',
-	hidden = 'hidden',
 }

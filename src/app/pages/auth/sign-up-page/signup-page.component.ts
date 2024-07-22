@@ -74,11 +74,4 @@ export class SignupPageComponent {
 	checkSignUpError(errorMessage: string) {
 		this.errorMessage = this.notificationService.getErrorMessage(errorMessage);
 	}
-
-	/*
-    signUpWithGoogle() {
-      // TODO implement signUpWithGoogle
-      console.log('signUpWithGoogle')
-    }
-  */
 }
