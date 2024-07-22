@@ -37,6 +37,10 @@ export const routes: Routes = [
 			),
 	},
 	{
+		path: 'followers',
+		loadChildren: () => import('./pages/followers/routes').then(m => m.routes),
+	},
+	{
 		path: '**',
 		redirectTo: 'home',
 	},

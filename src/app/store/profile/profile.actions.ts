@@ -100,3 +100,18 @@ export const uploadProfilePictureFailure = createAction(
 	'[Profile] Upload Profile Picture Failure',
 	props<{ error: string }>()
 );
+
+export const acceptFollowRequest = createAction(
+	'[Profile] Accept Follow Request',
+	props<{ userId: number }>()
+);
+
+export const rejectFollowRequest = createAction(
+	'[Profile] Reject Follow Request',
+	props<{ userId: number }>()
+);
+
+export const removeFollower = createAction(
+	'[Profile] Remove Follower',
+	props<{ userId: number }>()
+);
