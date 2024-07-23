@@ -93,5 +93,7 @@
 		"sign-up.ask": "Sign up",
 		"code.link.action": "Link a code",
 		"publish": "publish"
+		"confirm": "Confirm",
+		"modify": "Modify"
 	}
 }

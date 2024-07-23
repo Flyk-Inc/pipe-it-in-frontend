@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Run } from '../../../../models/pipeline.model';
 import { CodeReportComponent } from '../../report-history/code-report/code-report.component';
 import { DatePipe } from '@angular/common';
@@ -10,12 +10,6 @@ import { RunReportStepComponent } from '../run-report-step/run-report-step.compo
 	imports: [CodeReportComponent, DatePipe, RunReportStepComponent],
 	templateUrl: './run-history.component.html',
 })
-export class RunHistoryComponent implements OnInit {
+export class RunHistoryComponent {
 	@Input() runs!: Run[];
-
-	ngOnInit() {
-		this.runs.sort((a, b) => {
-			return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-		});
-	}
 }

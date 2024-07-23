@@ -77,7 +77,7 @@ export class NewPipelineComponent {
 				(version, index) => {
 					return {
 						code_version_id: version.id,
-						step: index,
+						step: index + 1,
 					};
 				}
 			),

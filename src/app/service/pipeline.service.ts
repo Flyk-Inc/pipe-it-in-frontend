@@ -50,4 +50,11 @@ export class PipelineService {
 			dto
 		);
 	}
+
+	updatePipeline(dto: Partial<CreatePipelineDTO>, pipelineId: number) {
+		return this.httpClient.patch<TimelinePipeline>(
+			`${this.backendUrl}/pipeline/${pipelineId}`,
+			dto
+		);
+	}
 }

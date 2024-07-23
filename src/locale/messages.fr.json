@@ -95,6 +95,8 @@
 		"email.confirmed": "Email confirmé",
 		"account.already": "Vous avez déjà un compte ?",
 		"account.none": "Vous n'avez pas de compte ?",
-		"sign-up.ask": "Inscrivez-vous"
+		"sign-up.ask": "Inscrivez-vous",
+		"confirm": "Confirmer",
+		"modify": "Modifier"
 	}
 }
