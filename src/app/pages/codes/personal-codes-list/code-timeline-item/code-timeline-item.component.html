@@ -44,7 +44,7 @@
 						>:
 						<span
 							*ngIf="code.versions && code.versions.length; else draftTemplate"
-							>{{ code.versions[code.versions.length - 1].version }}</span
+							>{{ code.versions[0].version }}</span
 						>
 						<ng-template #draftTemplate>
 							<span i18n="@@draft">draft</span

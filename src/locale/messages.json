@@ -63,6 +63,7 @@
 		"code.update.success": "code updated successfully",
 		"code.version.create.success": "new code ersion created successfully",
 		"code.test.runs.error": "An error occurred while fetching test runs",
+		"code.version.already.exists": "Code version with this version title already exists",
 		"by": "de",
 		"language": "language",
 		"latest-version": "Latest Version",
@@ -92,7 +93,7 @@
 		"account.none": "Don't have an account?",
 		"sign-up.ask": "Sign up",
 		"code.link.action": "Link a code",
-		"publish": "publish"
+		"publish": "publish",
 		"confirm": "Confirm",
 		"modify": "Modify"
 	}
