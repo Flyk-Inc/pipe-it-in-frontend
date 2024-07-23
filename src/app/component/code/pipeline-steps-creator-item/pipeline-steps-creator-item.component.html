@@ -52,11 +52,13 @@
 		<app-icon icon="delete" (click)="deleteStep(step)"></app-icon>
 		@if (step !== 1) {
 			<app-icon
+				class="cursor-pointer"
 				icon="arrow_left_alt"
 				(click)="moveStep(step, 'left')"></app-icon>
 		}
 		@if (step !== totalSteps) {
 			<app-icon
+				class="cursor-pointer"
 				icon="arrow_right_alt"
 				(click)="moveStep(step, 'right')"></app-icon>
 		}

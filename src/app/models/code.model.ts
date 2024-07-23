@@ -57,6 +57,7 @@ export interface Version {
 	output: FileDescription[];
 	createdAt: string;
 	updatedAt: string;
+	code?: TimelineCode;
 }
 
 export interface CreateCodeDTO {

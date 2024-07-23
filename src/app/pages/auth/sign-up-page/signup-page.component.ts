@@ -20,10 +20,15 @@ export class SignupPageComponent {
 		email: ['', [Validators.required, Validators.email]],
 		password: ['', [Validators.required]],
 		confirmPassword: ['', [Validators.required]],
+		username: ['', [Validators.required]],
 		firstName: ['', [Validators.required]],
 		lastName: ['', [Validators.required]],
 	});
 	protected errorMessage: Message[] = [];
+
+	registerString = $localize`:@@register:Sign Up`;
+	userAlreadyExistsString = $localize`:@@user.email.already.exists:User already exists`;
+	confirmationEmailSentString = $localize`:@@email.confirmation.sent:Confirmation email sent`;
 
 	constructor(
 		private authenticationService: AuthenticationService,
@@ -53,6 +58,7 @@ export class SignupPageComponent {
 			email,
 			firstName: this.signUpForm.controls.firstName.value,
 			lastName: this.signUpForm.controls.lastName.value,
+			username: this.signUpForm.controls.username.value,
 		};
 		this.authenticationService
 			.signUpWithEmail(password, userToCreate)
@@ -62,16 +68,23 @@ export class SignupPageComponent {
 				},
 				error: (error: HttpErrorResponse) => {
 					this.checkSignUpError(error.error.message);
-					console.error('error', error);
 				},
 			});
 	}
 
 	redirectOnSucessfulSignUp() {
 		this.router.navigate(['/auth/login']).then();
+		this.notificationService.showInfoToast(this.confirmationEmailSentString);
 	}
 
 	checkSignUpError(errorMessage: string) {
-		this.errorMessage = this.notificationService.getErrorMessage(errorMessage);
+		switch (errorMessage) {
+			case 'user.email.already.exists':
+				this.notificationService.showErrorToast(this.userAlreadyExistsString);
+				break;
+			default:
+				this.notificationService.getErrorMessage(errorMessage);
+				break;
+		}
 	}
 }

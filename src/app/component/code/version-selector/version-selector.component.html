@@ -16,6 +16,16 @@
 			(search)="codesInput$.next($event.term)"
 			(change)="onCodeChange($event)"
 			typeToSearchText="Please enter 2 or more characters">
+			<ng-template ng-label-tmp ng-option-tmp let-item="item">
+				<div class="flex items center gap-x-2">
+					<app-icon [filled]="false" icon="code" class="ps-2"></app-icon>
+					<span class="ps-2">{{ item.title }}</span>
+					<div class="flex gap-x-2 text-sm items-center">
+						<span i18n="@@by">by</span>
+						<p class="text-primary">&#64;{{ item.author.username }}</p>
+					</div>
+				</div>
+			</ng-template>
 		</ng-select>
 	</div>
 	@if (selectedCode.value) {
@@ -35,6 +45,13 @@
 				[formControl]="selectedCodeVersion"
 				typeToSearchText="Please enter 2 or more characters">
 				>
+				<ng-template ng-label-tmp ng-option-tmp let-item="item">
+					<div class="flex items center gap-x-2">
+						<app-icon [filled]="false" icon="code" class="ps-2"></app-icon>
+						<span class="text-primary">{{ item.version }}</span>
+						<span class="ps-2">{{ item.title }}</span>
+					</div>
+				</ng-template>
 			</ng-select>
 		</div>
 	}

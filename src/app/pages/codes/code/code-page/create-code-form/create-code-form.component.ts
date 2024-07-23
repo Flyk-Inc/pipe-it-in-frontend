@@ -24,6 +24,7 @@ import { IconComponent } from '../../../../../component/typography/icon/icon.com
 import { CodeService } from '../../../../../service/code.service';
 import { NotificationService } from '../../../../../service/notification.service';
 import { copyHelper } from '../../../../../models/utils';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
 	selector: 'app-create-code-form',
@@ -81,6 +82,7 @@ export class CreateCodeFormComponent implements OnInit {
 	postStringTranslated = 'post';
 	cancelStringTranslated = 'cancel';
 	editStringTranslated = 'edit';
+	private codeVersionAlreadyExistsString = 'alreadyexists';
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -119,6 +121,9 @@ export class CreateCodeFormComponent implements OnInit {
 							$localize`:@@code.version.create.success:new code ersion created successfully`
 						);
 						this.emitSuccessEvent();
+					},
+					error: (error: HttpErrorResponse) => {
+						this.checkSignUpError(error.error.message);
 					},
 				});
 		}
@@ -256,9 +261,17 @@ export class CreateCodeFormComponent implements OnInit {
 			this.updateCodeForm.controls.inputDescription.setValidators(
 				Validators.required
 			);
+			this.createVersionForm.controls.inputFileType.setValidators(
+				Validators.required
+			);
+			this.createVersionForm.controls.inputDescription.setValidators(
+				Validators.required
+			);
 		} else {
 			this.updateCodeForm.controls.inputFileType.clearValidators();
 			this.updateCodeForm.controls.inputDescription.clearValidators();
+			this.createVersionForm.controls.inputFileType.clearValidators();
+			this.createVersionForm.controls.inputDescription.clearValidators();
 		}
 
 		if (this.hasOutput.value) {
@@ -268,15 +281,27 @@ export class CreateCodeFormComponent implements OnInit {
 			this.updateCodeForm.controls.outputDescription.setValidators(
 				Validators.required
 			);
+			this.createVersionForm.controls.outputFileType.setValidators(
+				Validators.required
+			);
+			this.createVersionForm.controls.outputDescription.setValidators(
+				Validators.required
+			);
 		} else {
 			this.updateCodeForm.controls.outputFileType.clearValidators();
 			this.updateCodeForm.controls.outputDescription.clearValidators();
+			this.createVersionForm.controls.outputFileType.clearValidators();
+			this.createVersionForm.controls.outputDescription.clearValidators();
 		}
 
 		this.updateCodeForm.controls.inputFileType.updateValueAndValidity();
 		this.updateCodeForm.controls.inputDescription.updateValueAndValidity();
 		this.updateCodeForm.controls.outputFileType.updateValueAndValidity();
 		this.updateCodeForm.controls.outputDescription.updateValueAndValidity();
+		this.createVersionForm.controls.inputFileType.updateValueAndValidity();
+		this.createVersionForm.controls.inputDescription.updateValueAndValidity();
+		this.createVersionForm.controls.outputFileType.updateValueAndValidity();
+		this.createVersionForm.controls.outputDescription.updateValueAndValidity();
 	}
 
 	private setupLocalizations() {
@@ -285,6 +310,7 @@ export class CreateCodeFormComponent implements OnInit {
 		this.cancelStringTranslated = $localize`:@@cancel:cancel`;
 		this.editStringTranslated = $localize`:@@edit:edit`;
 		this.saveStringTranslated = $localize`:@@save.draft:save draft`;
+		this.codeVersionAlreadyExistsString = $localize`:@@code.version.already.exists:Code version already exists`;
 	}
 
 	private setupForms() {
@@ -322,6 +348,19 @@ export class CreateCodeFormComponent implements OnInit {
 			theme: 'vs-dark',
 			language: this.updateCodeForm.controls.language.value,
 		};
+	}
+
+	private checkSignUpError(errorMessage: string) {
+		switch (errorMessage) {
+			case 'code.version.already.exists':
+				this.notificationService.showErrorToast(
+					this.codeVersionAlreadyExistsString
+				);
+				break;
+			default:
+				this.notificationService.getErrorMessage(errorMessage);
+				break;
+		}
 	}
 
 	protected readonly copyHelper = copyHelper;

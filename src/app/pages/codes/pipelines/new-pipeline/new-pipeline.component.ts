@@ -38,6 +38,9 @@ export class NewPipelineComponent {
 		pipelineCodes: [<Version[]>[], Validators.required],
 	});
 	stepsValidity = false;
+
+	createPipelineText = $localize`:@@pipeline.create:Create Pipeline`;
+
 	constructor(
 		private formBuilder: FormBuilder,
 		private pipelineService: PipelineService,
@@ -74,7 +77,7 @@ export class NewPipelineComponent {
 				(version, index) => {
 					return {
 						code_version_id: version.id,
-						step: index,
+						step: index + 1,
 					};
 				}
 			),
