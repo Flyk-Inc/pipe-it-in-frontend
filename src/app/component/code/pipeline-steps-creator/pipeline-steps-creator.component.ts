@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { VersionSelectorComponent } from '../version-selector/version-selector.component';
 import { BehaviorSubject } from 'rxjs';
 import { Version } from '../../../models/code.model';
@@ -26,6 +26,7 @@ export interface stepInputOutput {
 	templateUrl: './pipeline-steps-creator.component.html',
 })
 export class PipelineStepsCreatorComponent implements OnInit {
+	@Input() versionInput?: Version[];
 	@Output() stepsChange = new EventEmitter<Version[]>();
 	@Output() stepsValidityChange = new EventEmitter<boolean>();
 	currentlySelectedVersion = new BehaviorSubject<Version | null>(null);
@@ -38,6 +39,9 @@ export class PipelineStepsCreatorComponent implements OnInit {
 
 	ngOnInit() {
 		this.setupStepValidation();
+		if (this.versionInput) {
+			this.selectedSteps.setValue(this.versionInput);
+		}
 	}
 
 	protected addToSteps() {
