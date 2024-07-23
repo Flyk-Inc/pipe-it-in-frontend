@@ -10,7 +10,6 @@ import { UnderlineComponent } from '../../layout/underline/underline.component';
 	standalone: true,
 	imports: [RouterLink, IconComponent, UnderlineComponent],
 	templateUrl: './version-minified-link.component.html',
-	styleUrl: './version-minified-link.component.scss',
 })
 export class VersionMinifiedLinkComponent {
 	@Input() version!: Version;
