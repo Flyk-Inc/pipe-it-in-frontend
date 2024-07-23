@@ -1,3 +1,5 @@
+import { Version } from './code.model';
+
 export interface TimelinePost {
 	id: number;
 	text: string;
@@ -12,6 +14,7 @@ export interface TimelinePost {
 	};
 	comments: number;
 	likes: number;
+	version?: Version;
 }
 
 export interface CreatePostDto {

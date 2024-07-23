@@ -1,0 +1,16 @@
+<div
+	class="rounded border border-grey-1 dark:border-secondary p-2 hover:border-secondary hover:dark:border-text-main-dark-color">
+	<a
+		routerLink="/{{ codeRoutePath }}/{{ CodeRoutes.Page }}/{{
+			version.code?.id
+		}}"
+		class="flex gap-x-2">
+		<span class="text-primary">{{ version.version }}</span>
+		<span class="text-secondary">{{ version.title }}</span>
+		<span class="grow"></span>
+		@if (version.code) {
+			<span i18n="@@by">by</span>
+			<span class="text-primary">{{ version.code.author.firstName }}</span>
+		}
+	</a>
+</div>

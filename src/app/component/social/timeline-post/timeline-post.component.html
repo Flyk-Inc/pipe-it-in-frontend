@@ -1,5 +1,5 @@
 <div
-	class="rounded-lg border border-grey-1 dark:border-none p-4 bg-light-card-bg dark:bg-dark-card-bg">
+	class="rounded-lg border border-grey-1 dark:border-none p-4 bg-light-card-bg dark:bg-dark-card-bg grid-cols-1 grid gap-y-2">
 	<div class="flex flex-nowrap gap-x-2">
 		<img
 			alt="Rounded avatar"
@@ -33,4 +33,8 @@
 			</div>
 		</div>
 	</div>
+	@if (post.version) {
+		<app-version-minified-link
+			[version]="post.version"></app-version-minified-link>
+	}
 </div>
