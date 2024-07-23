@@ -30,6 +30,8 @@
 		"no-versions-yet": "pas encore de versions",
 		"versions": "versions",
 		"test_from": "test du",
+		"code.link.action": "Associer un code",
+		"publish": "publier",
 		"code.select": "sélectionner un code",
 		"code.version.select": "sélectionner une version pour ce code",
 		"posted.on": "posté le",
@@ -94,6 +96,8 @@
 		"email.confirmed": "Email confirmé",
 		"account.already": "Vous avez déjà un compte ?",
 		"account.none": "Vous n'avez pas de compte ?",
-		"sign-up.ask": "Inscrivez-vous"
+		"sign-up.ask": "Inscrivez-vous",
+		"confirm": "Confirmer",
+		"modify": "Modifier"
 	}
 }
