@@ -1,15 +1,30 @@
 <div class="h-full flex flex-col gap-y-2 mx-2 pt-2">
-	<form (ngSubmit)="createPost()" [formGroup]="postForm">
+	<form [formGroup]="postForm">
 		<textarea
 			class="w-full resize-none rounded-lg outline-none border border-grey-1 dark:border-grey-3 bg-grey-bg dark:bg-grey-bg-dark p-4 placeholder:text-grey-2"
 			[formControl]="textControl"
 			rows="3"
 			placeholder="Écrire un post"></textarea>
-		<div class="flex justify-end">
+		@if (displayCodeSelector) {
+			<app-version-selector
+				(versionSelected)="attachVersion($event)"
+				(close)="
+					toggleCodeSelector(!displayCodeSelector)
+				"></app-version-selector>
+		}
+		<div class="flex justify-end gap-x-2">
+			@if (textControl.value.length) {
+				<app-button
+					[disabled]="postForm.invalid"
+					class="self-end"
+					[text]="linkACode"
+					(click)="toggleCodeSelector(!displayCodeSelector)"></app-button>
+			}
 			<app-button
+				(click)="createPost()"
 				[disabled]="postForm.invalid"
 				class="self-end"
-				text="Publier"
+				[text]="publishText"
 				type="submit"></app-button>
 		</div>
 	</form>
