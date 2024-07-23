@@ -76,7 +76,6 @@
 		"pipeline.create": "createCodeTranslated",
 		"test-results": " Test Results ",
 		"pipeline.run.new": "new pipeline run results arrived.",
-		"success": "Success",
 		"username": "Username",
 		"firstname": "First Name",
 		"lastname": "Last Name",
@@ -94,7 +93,7 @@
 		"account.none": "Don't have an account?",
 		"sign-up.ask": "Sign up",
 		"code.link.action": "Link a code",
-		"publish": "publish"
+		"publish": "publish",
 		"confirm": "Confirm",
 		"modify": "Modify"
 	}
