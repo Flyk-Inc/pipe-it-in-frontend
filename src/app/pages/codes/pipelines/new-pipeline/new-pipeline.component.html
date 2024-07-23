@@ -43,13 +43,15 @@
 			(stepsChange)="handleStepsCHange($event)"></app-pipeline-steps-creator>
 	</div>
 
-	<app-button
-		class="w-fit"
-		[text]="'Create pipeline'"
-		[disabled]="
-			createPipelineForm.invalid ||
-			!createPipelineForm.controls.pipelineCodes.value.length ||
-			!stepsValidity
-		"
-		(click)="createPipeline()"></app-button>
+	<div class="flex justify-end">
+		<app-button
+			class="w-fit"
+			[text]="createPipelineText"
+			[disabled]="
+				createPipelineForm.invalid ||
+				!createPipelineForm.controls.pipelineCodes.value.length ||
+				!stepsValidity
+			"
+			(click)="createPipeline()"></app-button>
+	</div>
 </form>

@@ -91,6 +91,8 @@
 		"account.already": "Already have an account?",
 		"account.none": "Don't have an account?",
 		"sign-up.ask": "Sign up",
+		"code.link.action": "Link a code",
+		"publish": "publish"
 		"confirm": "Confirm",
 		"modify": "Modify"
 	}
