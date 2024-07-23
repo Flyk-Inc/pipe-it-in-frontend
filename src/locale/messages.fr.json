@@ -58,6 +58,7 @@
 		"code.test.launch.success": "Test de code lancé avec succès",
 		"code.test.new": "nouveaux résultats de test arrivés",
 		"code.test.runs.error": "une erreur est survenue lors de la récupération des tests",
+		"code.version.already.exists": "Une version de code avec ce titre de version existe déjà",
 		"save.draft": "sauvegarder le brouillon",
 		"post": "poster",
 		"cancel": "annuler",

@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {
+	AfterViewChecked,
+	ChangeDetectorRef,
+	Component,
+	OnInit,
+} from '@angular/core';
 import { HighlightLineNumbers } from 'ngx-highlightjs/line-numbers';
 import { NgOptimizedImage } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
@@ -31,7 +36,7 @@ import { copyHelper } from '../../../../models/utils';
 	templateUrl: './new-code.component.html',
 	styleUrl: './new-code.component.scss',
 })
-export class NewCodeComponent implements OnInit {
+export class NewCodeComponent implements OnInit, AfterViewChecked {
 	hasInput = new FormControl(false);
 	hasOutput = new FormControl(false);
 	createCodeForm = this.formBuilder.nonNullable.group({
@@ -39,10 +44,10 @@ export class NewCodeComponent implements OnInit {
 		description: ['', Validators.required],
 		code: ['', Validators.required],
 		language: [CodeLanguages.javascript, Validators.required],
-		inputFileType: [''],
-		outputFileType: [''],
-		inputDescription: [''],
-		outputDescription: [''],
+		inputFileType: ['', this.hasInput.value ? Validators.required : []],
+		outputFileType: ['', this.hasOutput.value ? Validators.required : []],
+		inputDescription: ['', this.hasInput.value ? Validators.required : []],
+		outputDescription: ['', this.hasOutput.value ? Validators.required : []],
 	});
 
 	editorOptions = {
@@ -55,7 +60,8 @@ export class NewCodeComponent implements OnInit {
 	constructor(
 		private formBuilder: FormBuilder,
 		private codeService: CodeService,
-		private router: Router
+		private router: Router,
+		private changeDetectorRef: ChangeDetectorRef
 	) {}
 
 	ngOnInit() {
@@ -63,6 +69,11 @@ export class NewCodeComponent implements OnInit {
 		this.createCodeForm.controls.language.valueChanges.subscribe(language => {
 			this.editorOptions = { ...this.editorOptions, language };
 		});
+		this.setupInputOutputValidators();
+	}
+
+	ngAfterViewChecked(): void {
+		this.changeDetectorRef.detectChanges();
 	}
 
 	submitCreateCodeForm() {
@@ -103,6 +114,46 @@ export class NewCodeComponent implements OnInit {
 					]
 				: [],
 		};
+	}
+
+	private setupInputOutputValidators() {
+		this.hasInput.valueChanges.subscribe(() => {
+			this.changeInputOutputValidators();
+		});
+		this.hasOutput.valueChanges.subscribe(() => {
+			this.changeInputOutputValidators();
+		});
+	}
+
+	private changeInputOutputValidators() {
+		if (this.hasInput.value) {
+			this.createCodeForm.controls.inputFileType.setValidators(
+				Validators.required
+			);
+			this.createCodeForm.controls.inputDescription.setValidators(
+				Validators.required
+			);
+		} else {
+			this.createCodeForm.controls.inputFileType.clearValidators();
+			this.createCodeForm.controls.inputDescription.clearValidators();
+		}
+
+		if (this.hasOutput.value) {
+			this.createCodeForm.controls.outputFileType.setValidators(
+				Validators.required
+			);
+			this.createCodeForm.controls.outputDescription.setValidators(
+				Validators.required
+			);
+		} else {
+			this.createCodeForm.controls.outputFileType.clearValidators();
+			this.createCodeForm.controls.outputDescription.clearValidators();
+		}
+
+		this.createCodeForm.controls.inputFileType.updateValueAndValidity();
+		this.createCodeForm.controls.inputDescription.updateValueAndValidity();
+		this.createCodeForm.controls.outputFileType.updateValueAndValidity();
+		this.createCodeForm.controls.outputDescription.updateValueAndValidity();
 	}
 
 	protected readonly copyHelper = copyHelper;
