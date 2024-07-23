@@ -11,23 +11,7 @@
 					<p class="post-mini-name text-secondary">
 						{{ pipeline.title }}
 					</p>
-					<div class="post-mini-pseudo text-grey-3 dark:text-grey-2">
-						<a
-							routerLink="/user/{{ pipeline.user.id }}"
-							class="flex flex-nowrap gap-x-2 items-center w-fit">
-							<span
-								><span i18n="@@by">de</span>: &#64;{{
-									pipeline.user.lastName
-								}}</span
-							>
-							<img
-								alt="Rounded avatar"
-								class="w-5 h-5 rounded-full shrink"
-								height="12"
-								[src]="fileUrl + pipeline.user.profilePicture"
-								width="12" />
-						</a>
-					</div>
+					<app-user-link [user]="pipeline.user"></app-user-link>
 				</div>
 				<p>{{ pipeline.description }}</p>
 				<div class="flex justify-end gap-x-3 text">

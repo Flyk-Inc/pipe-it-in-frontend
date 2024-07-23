@@ -8,11 +8,26 @@ import { Store } from '@ngrx/store';
 
 @Injectable()
 export class CodeTimelineEffects {
-	loadCodes$ = createEffect(() => {
+	loadUserCodes$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(CodeTimelineActions.loadPersonalCodes),
 			mergeMap(() =>
-				this.codeService.getTimeLineCodes().pipe(
+				this.codeService.getTimeLineCodes(true).pipe(
+					map(codes => {
+						return CodeTimelineActions.loadCodesSuccess({ codes });
+					}),
+					catchError(error =>
+						of(CodeTimelineActions.loadCodesFailure({ error: error.message }))
+					)
+				)
+			)
+		);
+	});
+	loadAllUserRelatedCodes$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(CodeTimelineActions.loadAllTimelineCodes),
+			mergeMap(() =>
+				this.codeService.getTimeLineCodes(false).pipe(
 					map(codes => {
 						return CodeTimelineActions.loadCodesSuccess({ codes });
 					}),

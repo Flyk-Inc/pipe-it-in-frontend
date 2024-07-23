@@ -6,6 +6,7 @@ export interface TimelineCode {
 	description: string;
 	author: UserDTO;
 	language: CodeLanguages;
+	status: CodeStatus;
 	draft: string;
 	versionDraft: {
 		title: string;
@@ -15,7 +16,6 @@ export interface TimelineCode {
 	versions: Version[];
 	input: FileDescription[];
 	output: FileDescription[];
-	status: string;
 	createAt: string;
 	updateAt: string;
 }
@@ -106,4 +106,5 @@ export enum CodeLanguages {
 
 export enum CodeStatus {
 	active = 'active',
+	hidden = 'hidden',
 }

@@ -76,6 +76,9 @@ export class CreateCodeFormComponent implements OnInit {
 	editorOptions = {
 		theme: 'vs-dark',
 		language: 'javascript',
+		lineNumbers: function (lineNumber: number) {
+			return `<span style="padding-right:4px">${lineNumber}</span>`;
+		},
 	};
 
 	saveStringTranslated = 'save';
@@ -345,7 +348,7 @@ export class CreateCodeFormComponent implements OnInit {
 		this.loadTestRuns();
 
 		this.editorOptions = {
-			theme: 'vs-dark',
+			...this.editorOptions,
 			language: this.updateCodeForm.controls.language.value,
 		};
 	}

@@ -8,27 +8,7 @@
 					<p class="post-mini-name text-secondary">
 						{{ code.title }}
 					</p>
-					<div class="post-mini-pseudo text-grey-3 dark:text-grey-2">
-						<a
-							routerLink="/user/{{ code.author.id }}"
-							class="flex flex-nowrap gap-x-2 items-center w-fit">
-							<span
-								><span i18n="@@by">de</span>: &#64;{{
-									code.author.lastName
-								}}</span
-							>
-							<img
-								alt="Rounded avatar"
-								class="w-5 h-5 rounded-full shrink"
-								height="12"
-								[ngSrc]="
-									code.author.profilePicture
-										? fileUrl + code.author.profilePicture
-										: '/assets/images/default_pfp.png'
-								"
-								width="12" />
-						</a>
-					</div>
+					<app-user-link [user]="code.author"></app-user-link>
 				</div>
 				<p>{{ code.description }}</p>
 				<div class="flex justify-end gap-x-3 text">
