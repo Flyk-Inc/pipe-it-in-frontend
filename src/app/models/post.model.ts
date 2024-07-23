@@ -10,11 +10,36 @@ export interface TimelinePost {
 		username: string;
 		profilePicture?: { id: string };
 	};
-	comments: number;
+	comments: PostComment[];
 	likes: number;
 }
 
 export interface CreatePostDto {
 	text: string;
 	groupId?: number;
+}
+
+export interface PostComment {
+	id: number;
+	user: {
+		firstName: string;
+		lastName: string;
+		id: number;
+		username: string;
+		profilePicture?: { id: string };
+	};
+	parent: PostComment;
+	content: string;
+	createdAt: Date;
+	updatedAt: Date;
+	replies: PostComment[];
+	reactions: Reaction[];
+}
+
+export interface Reaction {
+	user: {
+		id: number;
+	};
+	isLike: boolean;
+	createdAt: Date;
 }

@@ -1,0 +1,92 @@
+<div class="w-full flex flex-nowrap h-full">
+	<app-sidenav class="hidden sm:block w-1/5"></app-sidenav>
+	<div class="grow p-4 space-y-8">
+		<ng-container *ngIf="post$ | async as post">
+			<div
+				class="rounded-lg border border-grey-1 dark:border-none p-4 bg-light-card-bg dark:bg-dark-card-bg">
+				<div class="flex flex-nowrap gap-x-2">
+					<a class="h-fit" [routerLink]="['/profile', post.user.id]">
+						<img
+							alt="Rounded avatar"
+							class="w-12 h-12 rounded-full shrink"
+							height="12"
+							[src]="
+								post.user.profilePicture
+									? environment.backendUrl +
+										'/files/' +
+										post.user.profilePicture.id
+									: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png'
+							"
+							width="12" />
+					</a>
+					<div class="grow space-y-2">
+						<a class="h-fit" [routerLink]="['/profile', post.user.id]">
+							<p class="post-mini-name text-secondary">
+								{{ post.user.firstName + ' ' + post.user.lastName }}
+							</p>
+							<p class="post-mini-pseudo text-grey-3 dark:text-grey-2">
+								&#64;{{ post.user.username }}
+							</p>
+						</a>
+						<p>{{ post.text }}</p>
+						<div class="flex justify-end gap-x-3">
+							<span
+								class="flex items-center gap-x-1"
+								(click)="onLikePost(post.id)">
+								<app-icon icon="thumb_up"></app-icon>
+								<span>{{ post.likes }}</span>
+							</span>
+							<span class="flex items-center gap-x-1">
+								<app-icon icon="comment"></app-icon>
+								<span>{{ post.comments.length }}</span>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</ng-container>
+
+		<div class="space-y-4">
+			<h2 class="text-xl font-semibold">Comments</h2>
+			<div
+				*ngFor="let comment of comments$ | async"
+				class="rounded-lg border border-grey-1 dark:border-none p-4 bg-light-card-bg dark:bg-dark-card-bg">
+				<div class="flex items-center space-x-4">
+					<a class="h-fit" [routerLink]="['/profile', comment.user.id]">
+						<img
+							class="w-8 h-8 rounded-full"
+							[src]="
+								comment.user.profilePicture
+									? environment.backendUrl +
+										'/files/' +
+										comment.user.profilePicture.id
+									: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png'
+							"
+							alt="User avatar" />
+					</a>
+					<div>
+						<a class="h-fit" [routerLink]="['/profile', comment.user.id]">
+							<p class="font-semibold">
+								{{ comment.user.firstName + ' ' + comment.user.lastName }}
+							</p>
+							<p class="text-gray-500">&#64;{{ comment.user.username }}</p>
+						</a>
+					</div>
+				</div>
+				<p class="mt-2">{{ comment.content }}</p>
+				<div class="flex justify-end mt-2 space-x-2">
+					<button
+						class="bg-primary text-white px-3 py-1 rounded"
+						(click)="onLikeComment(comment.id)">
+						Like {{ comment.reactions.length }}
+					</button>
+					<button
+						class="bg-secondary text-white px-3 py-1 rounded"
+						(click)="onDislikeComment(comment.id)">
+						Dislike {{ comment.reactions.length }}
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { CreatePostDto, TimelinePost } from '../models/post.model';
+import { CreatePostDto, TimelinePost, PostComment } from '../models/post.model';
 import { CursoredRessource } from '../models/utils';
 import { map, Observable, Subject, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -244,6 +244,32 @@ export class SocialService {
 			.pipe(
 				catchError(error => {
 					console.error('Error removing follower', error);
+					return throwError(
+						() => new Error(error.message || 'An error occurred')
+					);
+				})
+			);
+	}
+
+	getPost(postId: number): Observable<TimelinePost> {
+		return this.httpClient
+			.get<TimelinePost>(`${this.backendUrl}/posts/details/${postId}`)
+			.pipe(
+				catchError(error => {
+					console.error('Error fetching post comments', error);
+					return throwError(
+						() => new Error(error.message || 'An error occurred')
+					);
+				})
+			);
+	}
+
+	getPostComments(postId: number): Observable<PostComment[]> {
+		return this.httpClient
+			.get<PostComment[]>(`${this.backendUrl}/posts/${postId}/comments`)
+			.pipe(
+				catchError(error => {
+					console.error('Error fetching post comments', error);
 					return throwError(
 						() => new Error(error.message || 'An error occurred')
 					);
