@@ -16,7 +16,7 @@ import { Store } from '@ngrx/store';
 import { PostComment } from '../../../../models/post.model';
 import { RouterLink } from '@angular/router';
 import { environment } from '../../../../../environments/environment';
-import { DatePipe, NgIf } from '@angular/common';
+import { DatePipe, NgClass, NgIf } from '@angular/common';
 import { IconComponent } from '../../../../component/typography/icon/icon.component';
 import { ButtonComponent } from '../../../../component/layout/button/button.component';
 
@@ -30,6 +30,7 @@ import { ButtonComponent } from '../../../../component/layout/button/button.comp
 		ReactiveFormsModule,
 		ButtonComponent,
 		NgIf,
+		NgClass,
 	],
 	templateUrl: './replies.component.html',
 	styleUrl: './replies.component.scss',
@@ -39,6 +40,8 @@ export class RepliesComponent implements OnInit {
 	@Input() postId!: number;
 	likeCount: number = 0;
 	dislikeCount: number = 0;
+	isLiked: boolean = false;
+	isDisliked: boolean = false;
 	replyForm: FormGroup;
 	textControl = new FormControl('', [Validators.required]);
 
@@ -56,6 +59,15 @@ export class RepliesComponent implements OnInit {
 			this.dislikeCount = this.comment.reactions.filter(
 				reaction => !reaction.isLike
 			).length;
+
+			const userId = this.comment.user.id;
+
+			this.isLiked = this.comment.reactions.some(
+				r => r.user.id == userId && r.isLike
+			);
+			this.isDisliked = this.comment.reactions.some(
+				r => r.user.id == userId && !r.isLike
+			);
 		}
 	}
 
