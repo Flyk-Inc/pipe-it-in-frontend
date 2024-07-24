@@ -1,5 +1,5 @@
 import { UserDTO } from '../auth/DTO/user.dto';
-import { PipelineStep, Version } from './code.model';
+import { CodeStatus, PipelineStep, Version } from './code.model';
 
 export interface TimelinePipeline {
 	id: number;
@@ -8,6 +8,7 @@ export interface TimelinePipeline {
 	user: UserDTO;
 	pipelineCodes: PipelineCode[];
 	runs: Run[];
+	status: CodeStatus;
 	createAt: string;
 	updateAt: string;
 }

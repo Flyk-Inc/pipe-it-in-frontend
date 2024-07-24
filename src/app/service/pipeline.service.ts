@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { CreatePipelineDTO, TimelinePipeline } from '../models/pipeline.model';
+import { CodeStatus } from '../models/code.model';
 
 @Injectable({
 	providedIn: 'root',
@@ -20,6 +21,20 @@ export class PipelineService {
 				map(response => response), // Ensure this maps to an array of TimelinePost
 				catchError(error => {
 					console.error('Error fetching personal pipeline-home list', error);
+					return throwError(
+						() => new Error(error.message || 'An error occurred')
+					);
+				})
+			);
+	}
+
+	getAllTimeLinePipelines() {
+		return this.httpClient
+			.get<TimelinePipeline[]>(`${this.backendUrl}/pipeline/timeline`)
+			.pipe(
+				map(response => response), // Ensure this maps to an array of TimelinePost
+				catchError(error => {
+					console.error('Error fetching all pipelines for timeline', error);
 					return throwError(
 						() => new Error(error.message || 'An error occurred')
 					);
@@ -55,6 +70,14 @@ export class PipelineService {
 		return this.httpClient.patch<TimelinePipeline>(
 			`${this.backendUrl}/pipeline/${pipelineId}`,
 			dto
+		);
+	}
+
+	updatePipelineVisibility(pipelineId: number, newStatus: CodeStatus) {
+		console.log(newStatus);
+		return this.httpClient.patch<TimelinePipeline>(
+			`${this.backendUrl}/pipeline/${pipelineId}`,
+			{ status: newStatus }
 		);
 	}
 }

@@ -20,15 +20,14 @@
 					required />
 			</div>
 		}
+
 		<div class="grid grid-cols-1 gap-y-2">
 			<p>
 				<a
 					routerLink="/user/{{ pipeline.user.id }}"
 					class="flex flex-nowrap gap-x-2 items-center w-fit">
 					<span
-						><span
-							class="inline-block first-letter:uppercase"
-							i18n="@@written-by"
+						><span class="inline-block first-letter:uppercase" i18n="@@by"
 							>de</span
 						>: &#64;{{ pipeline.user.lastName }}</span
 					>
@@ -66,6 +65,34 @@
 				</p>
 			}
 		</div>
+		@if (mode === 'view') {
+			<div class="flex flex-nowrap items-center gap-2">
+				<button (click)="swapVisibility()">
+					<!-- eslint-disable-next-line @angular-eslint/template/label-has-associated-control -->
+					<label
+						[ngClass]="{
+							swap: true,
+							'swap-active': pipeline.status === CodeStatus.active
+						}">
+						<div class="swap-on">
+							<app-icon icon="visibility"></app-icon>
+						</div>
+						<div class="swap-off">
+							<app-icon icon="visibility_off"></app-icon>
+						</div>
+					</label>
+				</button>
+				@if (pipeline.status === CodeStatus.active) {
+					<span class="first-letter:capitalize"
+						><span i18n="@@visibility.public">visibilité: publique</span></span
+					>
+				} @else {
+					<span class="first-letter:capitalize"
+						><span i18n="@@visibility.private">visibilité: privée</span></span
+					>
+				}
+			</div>
+		}
 		@if (mode === 'view') {
 			<div class="grid grid-cols-1 gap-y-2">
 				<h3>

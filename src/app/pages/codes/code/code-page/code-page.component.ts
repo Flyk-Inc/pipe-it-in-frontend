@@ -92,6 +92,7 @@ export class CodePageComponent implements OnInit, AfterViewChecked, OnDestroy {
 	postStringTranslated = 'post';
 	cancelStringTranslated = 'cancel';
 	editStringTranslated = 'edit';
+	runTestStringTranslated = 'run test';
 
 	constructor(
 		private route: ActivatedRoute,
@@ -107,6 +108,7 @@ export class CodePageComponent implements OnInit, AfterViewChecked, OnDestroy {
 		this.postStringTranslated = $localize`:@@post:post`;
 		this.cancelStringTranslated = $localize`:@@cancel:cancel`;
 		this.editStringTranslated = $localize`:@@edit:edit`;
+		this.runTestStringTranslated = $localize`:@@run.test:run test`;
 		this.loadCode();
 		this.setupPeriodicTestRunRefresh();
 	}
@@ -278,7 +280,7 @@ export class CodePageComponent implements OnInit, AfterViewChecked, OnDestroy {
 	}
 
 	private redirectIfCodeIsNotLoaded() {
-		this.router.navigate(['/page-not-found']).then();
+		this.router.navigate(['/404']).then();
 	}
 
 	private resetFileInput() {
