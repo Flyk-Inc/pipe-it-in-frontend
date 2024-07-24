@@ -7,8 +7,8 @@ import {
 } from '@angular/core';
 import { TimelinePipeline } from '../../../../models/pipeline.model';
 import { PipelineService } from '../../../../service/pipeline.service';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { NgOptimizedImage } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { NgClass, NgOptimizedImage } from '@angular/common';
 import { PipelineStepComponent } from '../pipeline-step/pipeline-step.component';
 import { IconComponent } from '../../../../component/typography/icon/icon.component';
 import { ButtonComponent } from '../../../../component/layout/button/button.component';
@@ -24,7 +24,7 @@ import {
 } from '@angular/forms';
 import { interval, Subscription } from 'rxjs';
 import { PipelineStepsCreatorComponent } from '../../../../component/code/pipeline-steps-creator/pipeline-steps-creator.component';
-import { Version } from '../../../../models/code.model';
+import { CodeStatus, Version } from '../../../../models/code.model';
 
 @Component({
 	selector: 'app-pipeline-page',
@@ -40,6 +40,7 @@ import { Version } from '../../../../models/code.model';
 		PipelineStepsCreatorComponent,
 		FormsModule,
 		ReactiveFormsModule,
+		NgClass,
 	],
 	templateUrl: './pipeline-page.component.html',
 })
@@ -67,6 +68,7 @@ export class PipelinePageComponent implements OnInit, OnDestroy {
 	constructor(
 		private pipelineService: PipelineService,
 		private route: ActivatedRoute,
+		private router: Router,
 		private notificationService: NotificationService,
 		private formBuilder: FormBuilder
 	) {}
@@ -84,9 +86,8 @@ export class PipelinePageComponent implements OnInit, OnDestroy {
 
 	loadPipeline() {
 		this.pipelineId = Number(this.route.snapshot.params['id']);
-		this.pipelineService
-			.getPipelineById(this.pipelineId)
-			.subscribe((pipeline: TimelinePipeline) => {
+		this.pipelineService.getPipelineById(this.pipelineId).subscribe({
+			next: (pipeline: TimelinePipeline) => {
 				if (
 					this.pipeline &&
 					pipeline.runs.length !== this.pipeline.runs.length
@@ -97,7 +98,11 @@ export class PipelinePageComponent implements OnInit, OnDestroy {
 					return;
 				}
 				this.setPipeline(pipeline);
-			});
+			},
+			error: () => {
+				this.router.navigate(['/404']).then();
+			},
+		});
 	}
 
 	runPipeline() {
@@ -245,4 +250,25 @@ export class PipelinePageComponent implements OnInit, OnDestroy {
 		}
 		this.mode = to;
 	}
+
+	swapVisibility() {
+		const currentStatus = this.pipeline!.status;
+		console.log(currentStatus);
+		const newStatus =
+			currentStatus === CodeStatus.active
+				? CodeStatus.hidden
+				: CodeStatus.active;
+		this.pipelineService
+			.updatePipelineVisibility(this.pipeline!.id, newStatus)
+			.subscribe({
+				next: () => {
+					this.notificationService.showSuccessToast(
+						$localize`:@@pipeline.visibility.updated:Code visibility updated successfully.`
+					);
+					this.loadPipeline();
+				},
+			});
+	}
+
+	protected readonly CodeStatus = CodeStatus;
 }

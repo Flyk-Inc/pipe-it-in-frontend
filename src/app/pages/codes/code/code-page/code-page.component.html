@@ -19,8 +19,15 @@
 						</div>
 					</label>
 				</button>
-				<span i18n="@@visibility.private">visibilité: privée</span>
-				<span i18n="@@visibility.public">visibilité: privée</span>
+				@if (code.status === CodeStatus.active) {
+					<span class="first-letter:capitalize"
+						><span i18n="@@visibility.public">visibilité: publique</span></span
+					>
+				} @else {
+					<span class="first-letter:capitalize"
+						><span i18n="@@visibility.private">visibilité: privée</span></span
+					>
+				}
 			</div>
 			<p>
 				<a
@@ -85,7 +92,7 @@
 							<app-button
 								(click)="testCode()"
 								class="shrink-0"
-								text="Run Test"
+								[text]="runTestStringTranslated"
 								[disabled]="!!hasInput.value && !fileInput.value"></app-button>
 							@if (hasInput.value) {
 								<div class="w-full grow">

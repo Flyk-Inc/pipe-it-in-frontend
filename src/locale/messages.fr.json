@@ -19,8 +19,6 @@
 		"log.out": "Se déconnecter",
 		"home": "accueil",
 		"groups": "groupes",
-		"codes": "Codes",
-		"pipelines": "pipelines",
 		"followers": "followers",
 		"messages": "messages",
 		"favorites": "favoris",
@@ -66,6 +64,7 @@
 		"post": "poster",
 		"cancel": "annuler",
 		"edit": "éditer",
+		"run.test": "lancer le test",
 		"code.version.title": "titre de la version",
 		"by": "de",
 		"language": "langage",
@@ -83,6 +82,7 @@
 		"pipeline.title": "pipeline's title",
 		"pipeline.description": "pipeline's description",
 		"pipeline.steps": "pipeline steps",
+		"pipeline.visibility.updated": "visibilité de la pipeline mise à jour",
 		"test-results": "Résultats des tests",
 		"pipeline.run.new": "nouveau résultat de pipeline",
 		"firstname": "Prénom",
@@ -102,6 +102,12 @@
 		"account.none": "Vous n'avez pas de compte ?",
 		"sign-up.ask": "Inscrivez-vous",
 		"confirm": "Confirmer",
-		"modify": "Modifier"
+		"modify": "Modifier",
+		"code.personal-only": "Vos Codes Seulement",
+		"pipeline.personal-only": "Vos Pipelines Seulement",
+		"codes": "codes",
+		"pipelines": "pipelines",
+		"code": "code",
+		"pipeline": "pipeline"
 	}
 }

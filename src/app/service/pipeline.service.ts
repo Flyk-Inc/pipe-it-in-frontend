@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { CreatePipelineDTO, TimelinePipeline } from '../models/pipeline.model';
+import { CodeStatus } from '../models/code.model';
 
 @Injectable({
 	providedIn: 'root',
@@ -69,6 +70,14 @@ export class PipelineService {
 		return this.httpClient.patch<TimelinePipeline>(
 			`${this.backendUrl}/pipeline/${pipelineId}`,
 			dto
+		);
+	}
+
+	updatePipelineVisibility(pipelineId: number, newStatus: CodeStatus) {
+		console.log(newStatus);
+		return this.httpClient.patch<TimelinePipeline>(
+			`${this.backendUrl}/pipeline/${pipelineId}`,
+			{ status: newStatus }
 		);
 	}
 }

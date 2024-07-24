@@ -29,7 +29,7 @@ export const routes: Routes = [
 			import('./pages/user-profile/routes').then(m => m.routes),
 	},
 	{
-		path: 'page-not-found',
+		path: '404',
 		canActivate: [AuthGuard],
 		loadComponent: () =>
 			import('./pagenotfound/pagenotfound.component').then(
