@@ -109,7 +109,7 @@
 			</div>
 			<app-button
 				icon="content_copy"
-				text="Code pour lire le fichier d'entrée:"
+				[text]="codeInputHelperText"
 				(click)="
 					copyHelper(createCodeForm.controls.language.value, 'read input')
 				"
@@ -170,7 +170,7 @@
 			</div>
 			<app-button
 				icon="content_copy"
-				text="Code pour écrire le fichier de sortie:"
+				[text]="codeOutputHelperText"
 				(click)="
 					copyHelper(createCodeForm.controls.language.value, 'write output')
 				"

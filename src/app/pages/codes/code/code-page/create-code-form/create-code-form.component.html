@@ -145,7 +145,7 @@
 			</div>
 			<app-button
 				icon="content_copy"
-				text="Code pour lire le fichier d'entrée:"
+				[text]="codeInputHelperText"
 				(click)="copyHelper(code.language, 'read input')"
 				size="small">
 			</app-button>
@@ -204,7 +204,7 @@
 			</div>
 			<app-button
 				icon="content_copy"
-				text="Code pour écrire le fichier de sortie:"
+				[text]="codeOutputHelperText"
 				(click)="copyHelper(code.language, 'write output')"
 				size="small">
 			</app-button>

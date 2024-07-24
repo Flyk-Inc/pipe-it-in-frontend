@@ -61,6 +61,8 @@ export class UserProfileComponent implements OnInit {
 	pinnedPost$!: Observable<TimelinePost | null>;
 	isFollowing$!: Observable<boolean>;
 	followRequestSent = false;
+	followRequestSentText = $localize`:@@follow-request.sent:Follow request sent`;
+	followText = $localize`:@@follow:Follow`;
 
 	constructor(
 		private store: Store,

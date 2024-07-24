@@ -20,7 +20,10 @@
 							<button
 								class="mt-4 px-4 py-2 bg-secondary text-light-bg rounded-lg"
 								(click)="unfollowUser()">
-								<span>Suivi &#10003;</span>
+								<span class="flex flex-none gap-x-2 first-letter:capitalize"
+									><span i18n="@@followed">Suivi</span
+									><span>&#10003;</span></span
+								>
 							</button>
 						</ng-container>
 						<ng-template #notFollowing>
@@ -34,7 +37,7 @@
 								[disabled]="followRequestSent"
 								(click)="followUser()">
 								<span class="flex items-center gap-x-2">
-									{{ followRequestSent ? 'Demande envoyée' : 'Suivre' }}
+									{{ followRequestSent ? followRequestSentText : followText }}
 									<ng-container *ngIf="(consultedUser$ | async)?.isPrivate">
 										<app-icon icon="lock"></app-icon>
 									</ng-container>
@@ -46,19 +49,29 @@
 								<span class="text-xl font-semibold">{{
 									(consultedUser$ | async)?.posts?.length || 0
 								}}</span>
-								<p class="text-gray-400">posts</p>
+								<p class="text-gray-400 first-letter:capitalize" i18n="@@posts">
+									posts
+								</p>
 							</div>
 							<div class="text-center mb-4 flex-1 mx-2 min-w-[100px]">
 								<span class="text-xl font-semibold">{{
 									(consultedUser$ | async)?.followers?.length || 0
 								}}</span>
-								<p class="text-gray-400">abonnés</p>
+								<p
+									class="text-gray-400 first-letter:capitalize"
+									i18n="@@followers">
+									abonnés
+								</p>
 							</div>
 							<div class="text-center flex-1 mx-2 min-w-[100px]">
 								<span class="text-xl font-semibold">{{
 									(consultedUser$ | async)?.following?.length || 0
 								}}</span>
-								<p class="text-gray-400">abonnements</p>
+								<p
+									class="text-gray-400 first-letter:capitalize"
+									i18n="@@following">
+									abonnemedddnts
+								</p>
 							</div>
 						</div>
 					</div>
@@ -69,7 +82,11 @@
 								(consultedUser$ | async)?.isPrivate === false ||
 								(isFollowing$ | async)
 							">
-							<h2 class="text-2xl font-semibold mb-4">Groups</h2>
+							<h2
+								class="text-2xl font-semibold mb-4 first-letter:capitalize"
+								i18n="@@groups">
+								Groups
+							</h2>
 							<app-profile-groups
 								[userGroups]="userGroups$ | async"></app-profile-groups>
 						</ng-container>
@@ -86,10 +103,21 @@
 						">
 						<div
 							class="text-gray-400 flex flex-col items-center justify-center h-full text-center">
-							<p class="mt-4">
-								Ce profil est privé. Vous devez suivre
-								<b>&commat;{{ (consultedUser$ | async)?.username }}</b> pour
-								voir ses posts.
+							<p class="mt-4 flex flex-wrap gap-2">
+								<span
+									class="first-letter:capitalize inline-block"
+									i18n="@@profile.private.message"
+									>Ce profil est privé.</span
+								>
+								<span
+									class="first-letter:capitalize inline-block"
+									i18n="@@profile.follow.need.start"
+									>vous devez suivre</span
+								>
+								<b>&commat;{{ (consultedUser$ | async)?.username }}</b>
+								<span i18n="@@profile.follow.need.end"
+									>pour voir ses posts.</span
+								>
 							</p>
 							<img
 								src="assets/images/cadenas.svg"
