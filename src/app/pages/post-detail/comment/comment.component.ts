@@ -2,24 +2,18 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CreateCommentDTO, PostComment } from '../../../models/post.model';
 import { Store } from '@ngrx/store';
 import {
-	dislikeComment,
-	likeComment,
-	replyToComment,
-	undislikeComment,
-	unlikeComment,
-	updateCommentReaction,
+  dislikeComment,
+  likeComment,
+  replyToComment,
+  undislikeComment,
+  unlikeComment,
+  updateCommentReaction,
 } from '../../../store/post/post.actions';
 import { RouterLink } from '@angular/router';
 import { DatePipe, NgClass, NgForOf, NgIf } from '@angular/common';
 import { IconComponent } from '../../../component/typography/icon/icon.component';
 import { environment } from '../../../../environments/environment';
-import {
-	FormBuilder,
-	FormControl,
-	FormsModule,
-	ReactiveFormsModule,
-	Validators,
-} from '@angular/forms';
+import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonComponent } from '../../../component/layout/button/button.component';
 import { RepliesComponent } from './replies/replies.component';
 
@@ -46,6 +40,8 @@ export class CommentComponent implements OnInit {
 	@Input() comment!: PostComment;
 	isReplying = false;
 	isExpanded: boolean = false;
+	isLiked: boolean = false;
+	isDisliked: boolean = false;
 	likeCount: number = 0;
 	dislikeCount: number = 0;
 	textControl = new FormControl('', {
@@ -71,6 +67,15 @@ export class CommentComponent implements OnInit {
 			this.dislikeCount = this.comment.reactions.filter(
 				reaction => !reaction.isLike
 			).length;
+
+			const userId = this.comment.user.id;
+
+			this.isLiked = this.comment.reactions.some(
+				r => r.user.id == userId && r.isLike
+			);
+			this.isDisliked = this.comment.reactions.some(
+				r => r.user.id == userId && !r.isLike
+			);
 		}
 	}
 

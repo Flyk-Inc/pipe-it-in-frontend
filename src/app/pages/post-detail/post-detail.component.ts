@@ -1,23 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import {
-	CreateCommentDTO,
-	PostComment,
-	TimelinePost,
-} from '../../models/post.model';
-import {
-	createComment,
-	dislikeComment,
-	likeComment,
-	likePost,
-	loadPost,
-	loadPostComments,
-} from '../../store/post/post.actions';
-import {
-	selectPost,
-	selectPostComments,
-} from '../../store/post/post.selectors';
+import { CreateCommentDTO, PostComment, TimelinePost } from '../../models/post.model';
+import { createComment, likePost, loadPost, loadPostComments } from '../../store/post/post.actions';
+import { selectPost, selectPostComments } from '../../store/post/post.selectors';
 import { PopularGroupsComponent } from '../home/popular-groups/popular-groups.component';
 import { SidenavComponent } from '../../component/nav/sidenav/sidenav.component';
 import { TimelineComponent } from '../home/timeline/timeline.component';
@@ -25,15 +11,11 @@ import { environment } from '../../../environments/environment';
 import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { IconComponent } from '../../component/typography/icon/icon.component';
-import { VersionMinifiedLinkComponent } from '../../component/social/code-minified-link/version-minified-link.component';
-import { ButtonComponent } from '../../component/layout/button/button.component';
 import {
-	FormBuilder,
-	FormControl,
-	FormsModule,
-	ReactiveFormsModule,
-	Validators,
-} from '@angular/forms';
+  VersionMinifiedLinkComponent,
+} from '../../component/social/code-minified-link/version-minified-link.component';
+import { ButtonComponent } from '../../component/layout/button/button.component';
+import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { VersionSelectorComponent } from '../../component/code/version-selector/version-selector.component';
 import { SocialService } from '../../service/social.service';
 import { HighlightLineNumbers } from 'ngx-highlightjs/line-numbers';
