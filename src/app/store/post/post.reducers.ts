@@ -1,19 +1,22 @@
 import { createReducer, on } from '@ngrx/store';
 import { initialState, PostState } from './post.state';
 import {
-	loadPost,
-	loadPostSuccess,
-	loadPostFailure,
-	loadPostCommentsSuccess,
-	loadPostCommentsFailure,
-	createCommentSuccess,
-	createCommentFailure,
-	likeCommentSuccess,
-	dislikeCommentSuccess,
-	unlikeCommentSuccess,
-	undislikeCommentSuccess,
-	updateCommentReactionSuccess,
 	commentReactionFailure,
+	createCommentFailure,
+	createCommentSuccess,
+	dislikeCommentSuccess,
+	likeCommentSuccess,
+	likePostSuccess,
+	loadPost,
+	loadPostCommentsFailure,
+	loadPostCommentsSuccess,
+	loadPostFailure,
+	loadPostSuccess,
+	postReactionFailure,
+	undislikeCommentSuccess,
+	unlikeCommentSuccess,
+	unlikePostSuccess,
+	updateCommentReactionSuccess,
 } from './post.actions';
 import { PostComment } from '../../models/post.model';
 
@@ -60,29 +63,38 @@ export const postReducer = createReducer(
 			error,
 		})
 	),
-	on(createCommentSuccess, (state, { comment }): PostState => ({
-		...state,
-		comments: [...state.comments, comment],
-		error: null,
-	})),
-	on(createCommentFailure, (state, { error }): PostState => ({
-		...state,
-		error,
-	})),
-	on(likeCommentSuccess, (state, { commentId }): PostState => ({
-		...state,
-		comments: state.comments.map(comment =>
-			comment.id === commentId
-				? {
-						...comment,
-						reactions: [
-							...comment.reactions,
-							{ user: { id: state.currentUserId }, isLike: true },
-						],
-					}
-				: comment
-		) as PostComment[],
-	})),
+	on(
+		createCommentSuccess,
+		(state, { comment }): PostState => ({
+			...state,
+			comments: [...state.comments, comment],
+			error: null,
+		})
+	),
+	on(
+		createCommentFailure,
+		(state, { error }): PostState => ({
+			...state,
+			error,
+		})
+	),
+	on(
+		likeCommentSuccess,
+		(state, { commentId }): PostState => ({
+			...state,
+			comments: state.comments.map(comment =>
+				comment.id === commentId
+					? {
+							...comment,
+							reactions: [
+								...comment.reactions,
+								{ user: { id: state.currentUserId }, isLike: true },
+							],
+						}
+					: comment
+			) as PostComment[],
+		})
+	),
 	on(dislikeCommentSuccess, (state, { commentId }) => ({
 		...state,
 		comments: state.comments.map(comment =>
@@ -140,8 +152,49 @@ export const postReducer = createReducer(
 				: comment
 		),
 	})),
-	on(commentReactionFailure, (state, { error }): PostState => ({
-		...state,
-		error,
-	}))
+	on(
+		commentReactionFailure,
+		(state, { error }): PostState => ({
+			...state,
+			error,
+		})
+	),
+	on(
+		likePostSuccess,
+		(state, { postId }): PostState => ({
+			...state,
+			selectedPost:
+				state.selectedPost && state.selectedPost.id === postId
+					? {
+							...state.selectedPost,
+							likes: [
+								...state.selectedPost.likes,
+								{ user: { id: state.currentUserId! } },
+							],
+						}
+					: state.selectedPost,
+		})
+	),
+	on(
+		unlikePostSuccess,
+		(state, { postId }): PostState => ({
+			...state,
+			selectedPost:
+				state.selectedPost && state.selectedPost.id === postId
+					? {
+							...state.selectedPost,
+							likes: state.selectedPost.likes.filter(
+								like => like.user.id !== state.currentUserId
+							),
+						}
+					: state.selectedPost,
+		})
+	),
+	on(
+		postReactionFailure,
+		(state, { error }): PostState => ({
+			...state,
+			error,
+		})
+	)
 );

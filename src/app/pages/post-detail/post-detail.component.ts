@@ -1,9 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { CreateCommentDTO, PostComment, TimelinePost } from '../../models/post.model';
-import { createComment, likePost, loadPost, loadPostComments } from '../../store/post/post.actions';
-import { selectPost, selectPostComments } from '../../store/post/post.selectors';
+import {
+	CreateCommentDTO,
+	PostComment,
+	TimelinePost,
+} from '../../models/post.model';
+import {
+	createComment,
+	likePost,
+	loadPost,
+	loadPostComments,
+	unlikePost,
+} from '../../store/post/post.actions';
+import {
+	selectPost,
+	selectPostComments,
+} from '../../store/post/post.selectors';
 import { PopularGroupsComponent } from '../home/popular-groups/popular-groups.component';
 import { SidenavComponent } from '../../component/nav/sidenav/sidenav.component';
 import { TimelineComponent } from '../home/timeline/timeline.component';
@@ -11,11 +24,15 @@ import { environment } from '../../../environments/environment';
 import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { IconComponent } from '../../component/typography/icon/icon.component';
-import {
-  VersionMinifiedLinkComponent,
-} from '../../component/social/code-minified-link/version-minified-link.component';
+import { VersionMinifiedLinkComponent } from '../../component/social/code-minified-link/version-minified-link.component';
 import { ButtonComponent } from '../../component/layout/button/button.component';
-import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+	FormBuilder,
+	FormControl,
+	FormsModule,
+	ReactiveFormsModule,
+	Validators,
+} from '@angular/forms';
 import { VersionSelectorComponent } from '../../component/code/version-selector/version-selector.component';
 import { SocialService } from '../../service/social.service';
 import { HighlightLineNumbers } from 'ngx-highlightjs/line-numbers';
@@ -49,7 +66,10 @@ import { CommentComponent } from './comment/comment.component';
 export class PostDetailComponent implements OnInit {
 	postId: number = 0;
 	post$!: Observable<TimelinePost | null>;
+	currentPost: TimelinePost | null = null;
 	comments$!: Observable<PostComment[]>;
+	likeCount: number = 0;
+	isLiked: boolean = false;
 	textControl = new FormControl('', {
 		nonNullable: true,
 		validators: [Validators.required],
@@ -77,6 +97,15 @@ export class PostDetailComponent implements OnInit {
 		this.post$ = this.store.select(selectPost);
 		this.comments$ = this.store.select(selectPostComments);
 
+		this.post$.subscribe(post => {
+			this.currentPost = post;
+			if (post) {
+				const userId = post.user.id;
+				this.likeCount = post.likes.length;
+				this.isLiked = post.likes.some(like => like.user.id === userId);
+			}
+		});
+
 		this.socialService.newPostAdded.subscribe(() => {
 			this.commentForm.controls['text'].setValue('');
 			this.commentForm.reset();
@@ -96,7 +125,11 @@ export class PostDetailComponent implements OnInit {
 	}
 
 	onLikePost(postId: number): void {
-		this.store.dispatch(likePost({ postId }));
+		if (this.isLiked) {
+			this.store.dispatch(unlikePost({ postId }));
+		} else {
+			this.store.dispatch(likePost({ postId }));
+		}
 	}
 
 	protected readonly environment = environment;

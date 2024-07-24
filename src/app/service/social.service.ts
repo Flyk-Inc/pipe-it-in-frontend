@@ -333,4 +333,14 @@ export class SocialService {
 			{ isLike }
 		);
 	}
+
+	reactToPost(postId: number, isLike: boolean) {
+		const url = `${this.backendUrl}/posts/${postId}/like`;
+		return this.httpClient.post(url, { isLike });
+	}
+
+	removeReactionFromPost(postId: number) {
+		const url = `${this.backendUrl}/posts/${postId}/like`;
+		return this.httpClient.delete(url);
+	}
 }

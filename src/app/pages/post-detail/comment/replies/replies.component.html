@@ -31,13 +31,17 @@
 		<div class="flex space-x-4">
 			<span
 				class="flex items-center gap-x-1 cursor-pointer"
-				(click)="onLikeComment(comment.id)">
+				(click)="onLikeComment(comment.id)"
+				(keyup.enter)="onLikeComment(comment.id)"
+				tabindex="0">
 				<app-icon [icon]="'thumb_up'" [filled]="isLiked"></app-icon>
 				<span>{{ likeCount || 0 }}</span>
 			</span>
 			<span
 				class="flex items-center gap-x-1 cursor-pointer"
-				(click)="onDislikeComment(comment.id)">
+				(click)="onDislikeComment(comment.id)"
+				(keyup.enter)="onDislikeComment(comment.id)"
+				tabindex="0">
 				<app-icon [icon]="'thumb_down'" [filled]="isDisliked"></app-icon>
 				<span>{{ dislikeCount || 0 }}</span>
 			</span>

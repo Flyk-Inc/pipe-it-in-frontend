@@ -37,10 +37,12 @@
 						}
 						<div class="flex justify-end gap-x-3">
 							<span
-								class="flex items-center gap-x-1"
-								(click)="onLikePost(post.id)">
-								<app-icon icon="thumb_up"></app-icon>
-								<span>{{ post.likes }}</span>
+								class="flex items-center gap-x-1 cursor-pointer"
+								(click)="onLikePost(post.id)"
+								(keyup.enter)="onLikePost(post.id)"
+								tabindex="0">
+								<app-icon [icon]="'thumb_up'" [filled]="isLiked"></app-icon>
+								<span>{{ likeCount }}</span>
 							</span>
 							<span class="flex items-center gap-x-1">
 								<app-icon icon="comment"></app-icon>

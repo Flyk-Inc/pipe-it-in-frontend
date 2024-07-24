@@ -147,6 +147,30 @@ export class PostEffects {
 		);
 	});
 
+	likePost$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(PostActions.likePost),
+			mergeMap(action =>
+				this.socialService.reactToPost(action.postId, true).pipe(
+					map(() => PostActions.likePostSuccess({ postId: action.postId })),
+					catchError(error => of(PostActions.postReactionFailure({ error })))
+				)
+			)
+		);
+	});
+
+	unlikePost$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(PostActions.unlikePost),
+			mergeMap(action =>
+				this.socialService.removeReactionFromPost(action.postId).pipe(
+					map(() => PostActions.unlikePostSuccess({ postId: action.postId })),
+					catchError(error => of(PostActions.postReactionFailure({ error })))
+				)
+			)
+		);
+	});
+
 	constructor(
 		private actions$: Actions,
 		private socialService: SocialService

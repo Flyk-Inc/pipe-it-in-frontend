@@ -35,6 +35,27 @@ export const likePost = createAction(
 	'[Post] Like Post',
 	props<{ postId: number }>()
 );
+
+export const unlikePost = createAction(
+	'[Post] Unlike Post',
+	props<{ postId: number }>()
+);
+
+export const likePostSuccess = createAction(
+	'[Post] Like Post Success',
+	props<{ postId: number }>()
+);
+
+export const unlikePostSuccess = createAction(
+	'[Post] Unlike Post Success',
+	props<{ postId: number }>()
+);
+
+export const postReactionFailure = createAction(
+	'[Post] Post Reaction Failure',
+	props<{ error: string }>()
+);
+
 export const likeComment = createAction(
 	'[Comment] Like Comment',
 	props<{ commentId: number }>()

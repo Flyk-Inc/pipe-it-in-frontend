@@ -13,8 +13,14 @@ export interface TimelinePost {
 		profilePicture?: { id: string };
 	};
 	comments: PostComment[];
-	likes: number;
+	likes: Like[];
 	version?: Version;
+}
+
+export interface Like {
+	user: {
+		id: number;
+	};
 }
 
 export interface CreatePostDto {
