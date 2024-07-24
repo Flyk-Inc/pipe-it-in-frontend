@@ -1,5 +1,11 @@
-import { Component, Input } from '@angular/core';
-import { replyToComment } from '../../../../store/post/post.actions';
+import { Component, Input, OnInit } from '@angular/core';
+import {
+	dislikeComment,
+	likeComment,
+	undislikeComment,
+	unlikeComment,
+	updateCommentReaction,
+} from '../../../../store/post/post.actions';
 import {
 	FormControl,
 	FormGroup,
@@ -7,7 +13,7 @@ import {
 	Validators,
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { CreateCommentDTO, PostComment } from '../../../../models/post.model';
+import { PostComment } from '../../../../models/post.model';
 import { RouterLink } from '@angular/router';
 import { environment } from '../../../../../environments/environment';
 import { DatePipe, NgIf } from '@angular/common';
@@ -28,9 +34,11 @@ import { ButtonComponent } from '../../../../component/layout/button/button.comp
 	templateUrl: './replies.component.html',
 	styleUrl: './replies.component.scss',
 })
-export class RepliesComponent {
+export class RepliesComponent implements OnInit {
 	@Input() comment!: PostComment;
 	@Input() postId!: number;
+	likeCount: number = 0;
+	dislikeCount: number = 0;
 	replyForm: FormGroup;
 	textControl = new FormControl('', [Validators.required]);
 
@@ -40,12 +48,35 @@ export class RepliesComponent {
 		});
 	}
 
-	onLikeComment(commentId: number) {
-		// Implémentez la logique de like
+	ngOnInit() {
+		if (this.comment.reactions) {
+			this.likeCount = this.comment.reactions.filter(
+				reaction => reaction.isLike
+			).length;
+			this.dislikeCount = this.comment.reactions.filter(
+				reaction => !reaction.isLike
+			).length;
+		}
 	}
 
-	onDislikeComment(commentId: number) {
-		// Implémentez la logique de dislike
+	onLikeComment(commentId: number): void {
+		if (this.comment.reactions?.some(r => r.isLike)) {
+			this.store.dispatch(unlikeComment({ commentId }));
+		} else if (this.comment.reactions?.some(r => !r.isLike)) {
+			this.store.dispatch(updateCommentReaction({ commentId, isLike: true }));
+		} else {
+			this.store.dispatch(likeComment({ commentId }));
+		}
+	}
+
+	onDislikeComment(commentId: number): void {
+		if (this.comment.reactions?.some(r => !r.isLike)) {
+			this.store.dispatch(undislikeComment({ commentId }));
+		} else if (this.comment.reactions?.some(r => r.isLike)) {
+			this.store.dispatch(updateCommentReaction({ commentId, isLike: false }));
+		} else {
+			this.store.dispatch(dislikeComment({ commentId }));
+		}
 	}
 
 	protected readonly environment = environment;

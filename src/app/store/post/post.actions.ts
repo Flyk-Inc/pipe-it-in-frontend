@@ -36,12 +36,50 @@ export const likePost = createAction(
 	props<{ postId: number }>()
 );
 export const likeComment = createAction(
-	'[Post] Like Comment',
+	'[Comment] Like Comment',
 	props<{ commentId: number }>()
 );
 export const dislikeComment = createAction(
-	'[Post] Dislike Comment',
+	'[Comment] Dislike Comment',
 	props<{ commentId: number }>()
+);
+export const unlikeComment = createAction(
+	'[Comment] Unlike Comment',
+	props<{ commentId: number }>()
+);
+export const undislikeComment = createAction(
+	'[Comment] Undislike Comment',
+	props<{ commentId: number }>()
+);
+export const updateCommentReaction = createAction(
+	'[Comment] Update Comment Reaction',
+	props<{ commentId: number; isLike: boolean }>()
+);
+
+export const likeCommentSuccess = createAction(
+	'[Comment] Like Comment Success',
+	props<{ commentId: number }>()
+);
+export const dislikeCommentSuccess = createAction(
+	'[Comment] Dislike Comment Success',
+	props<{ commentId: number }>()
+);
+export const unlikeCommentSuccess = createAction(
+	'[Comment] Unlike Comment Success',
+	props<{ commentId: number }>()
+);
+export const undislikeCommentSuccess = createAction(
+	'[Comment] Undislike Comment Success',
+	props<{ commentId: number }>()
+);
+export const updateCommentReactionSuccess = createAction(
+	'[Comment] Update Comment Reaction Success',
+	props<{ commentId: number; isLike: boolean }>()
+);
+
+export const commentReactionFailure = createAction(
+	'[Comment] Comment Reaction Failure',
+	props<{ error: string }>()
 );
 
 export const createComment = createAction(

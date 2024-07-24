@@ -10,5 +10,6 @@ export const selectPost = createSelector(
 
 export const selectPostComments = createSelector(
 	selectPostState,
-	(state: PostState) => state.comments
+	(state: PostState) =>
+		state.comments.filter(comment => comment.parent === null)
 );

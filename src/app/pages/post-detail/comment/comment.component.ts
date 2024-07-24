@@ -1,10 +1,13 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CreateCommentDTO, PostComment } from '../../../models/post.model';
 import { Store } from '@ngrx/store';
 import {
 	dislikeComment,
 	likeComment,
 	replyToComment,
+	undislikeComment,
+	unlikeComment,
+	updateCommentReaction,
 } from '../../../store/post/post.actions';
 import { RouterLink } from '@angular/router';
 import { DatePipe, NgClass, NgForOf, NgIf } from '@angular/common';
@@ -38,11 +41,13 @@ import { RepliesComponent } from './replies/replies.component';
 	templateUrl: './comment.component.html',
 	styleUrl: './comment.component.scss',
 })
-export class CommentComponent {
+export class CommentComponent implements OnInit {
 	@Input() postId!: number;
 	@Input() comment!: PostComment;
 	isReplying = false;
 	isExpanded: boolean = false;
+	likeCount: number = 0;
+	dislikeCount: number = 0;
 	textControl = new FormControl('', {
 		nonNullable: true,
 		validators: [Validators.required],
@@ -58,12 +63,35 @@ export class CommentComponent {
 		private formBuilder: FormBuilder
 	) {}
 
+	ngOnInit() {
+		if (this.comment.reactions) {
+			this.likeCount = this.comment.reactions.filter(
+				reaction => reaction.isLike
+			).length;
+			this.dislikeCount = this.comment.reactions.filter(
+				reaction => !reaction.isLike
+			).length;
+		}
+	}
+
 	onLikeComment(commentId: number): void {
-		this.store.dispatch(likeComment({ commentId }));
+		if (this.comment.reactions?.some(r => r.isLike)) {
+			this.store.dispatch(unlikeComment({ commentId }));
+		} else if (this.comment.reactions?.some(r => !r.isLike)) {
+			this.store.dispatch(updateCommentReaction({ commentId, isLike: true }));
+		} else {
+			this.store.dispatch(likeComment({ commentId }));
+		}
 	}
 
 	onDislikeComment(commentId: number): void {
-		this.store.dispatch(dislikeComment({ commentId }));
+		if (this.comment.reactions?.some(r => !r.isLike)) {
+			this.store.dispatch(undislikeComment({ commentId }));
+		} else if (this.comment.reactions?.some(r => r.isLike)) {
+			this.store.dispatch(updateCommentReaction({ commentId, isLike: false }));
+		} else {
+			this.store.dispatch(dislikeComment({ commentId }));
+		}
 	}
 
 	toggleReplying() {

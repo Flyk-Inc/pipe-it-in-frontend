@@ -33,13 +33,13 @@
 				class="flex items-center gap-x-1 cursor-pointer"
 				(click)="onLikeComment(comment.id)">
 				<app-icon icon="thumb_up"></app-icon>
-				<span>{{ (comment.reactions && comment.reactions.length) || 0 }}</span>
+				<span>{{ likeCount || 0 }}</span>
 			</span>
 			<span
 				class="flex items-center gap-x-1 cursor-pointer"
 				(click)="onDislikeComment(comment.id)">
 				<app-icon icon="thumb_down"></app-icon>
-				<span>{{ (comment.reactions && comment.reactions.length) || 0 }}</span>
+				<span>{{ dislikeCount || 0 }}</span>
 			</span>
 		</div>
 	</div>

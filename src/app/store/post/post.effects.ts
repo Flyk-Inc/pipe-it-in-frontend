@@ -70,6 +70,83 @@ export class PostEffects {
 		);
 	});
 
+	likeComment$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(PostActions.likeComment),
+			mergeMap(action =>
+				this.socialService.reactToComment(action.commentId, true).pipe(
+					map(() =>
+						PostActions.likeCommentSuccess({ commentId: action.commentId })
+					),
+					catchError(error => of(PostActions.commentReactionFailure({ error })))
+				)
+			)
+		);
+	});
+
+	dislikeComment$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(PostActions.dislikeComment),
+			mergeMap(action =>
+				this.socialService.reactToComment(action.commentId, false).pipe(
+					map(() =>
+						PostActions.dislikeCommentSuccess({ commentId: action.commentId })
+					),
+					catchError(error => of(PostActions.commentReactionFailure({ error })))
+				)
+			)
+		);
+	});
+
+	unlikeComment$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(PostActions.unlikeComment),
+			mergeMap(action =>
+				this.socialService.removeReactionFromComment(action.commentId).pipe(
+					map(() =>
+						PostActions.unlikeCommentSuccess({ commentId: action.commentId })
+					),
+					catchError(error => of(PostActions.commentReactionFailure({ error })))
+				)
+			)
+		);
+	});
+
+	undislikeComment$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(PostActions.undislikeComment),
+			mergeMap(action =>
+				this.socialService.removeReactionFromComment(action.commentId).pipe(
+					map(() =>
+						PostActions.undislikeCommentSuccess({ commentId: action.commentId })
+					),
+					catchError(error => of(PostActions.commentReactionFailure({ error })))
+				)
+			)
+		);
+	});
+
+	updateCommentReaction$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(PostActions.updateCommentReaction),
+			mergeMap(action =>
+				this.socialService
+					.updateReactionOnComment(action.commentId, action.isLike)
+					.pipe(
+						map(() =>
+							PostActions.updateCommentReactionSuccess({
+								commentId: action.commentId,
+								isLike: action.isLike,
+							})
+						),
+						catchError(error =>
+							of(PostActions.commentReactionFailure({ error }))
+						)
+					)
+			)
+		);
+	});
+
 	constructor(
 		private actions$: Actions,
 		private socialService: SocialService

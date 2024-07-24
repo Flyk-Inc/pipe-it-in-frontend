@@ -310,4 +310,27 @@ export class SocialService {
 				})
 			);
 	}
+
+	reactToComment(commentId: number, isLike: boolean): Observable<void> {
+		return this.httpClient.post<void>(
+			`${this.backendUrl}/comments/${commentId}/react`,
+			{ isLike }
+		);
+	}
+
+	removeReactionFromComment(commentId: number): Observable<void> {
+		return this.httpClient.delete<void>(
+			`${this.backendUrl}/comments/${commentId}/react`
+		);
+	}
+
+	updateReactionOnComment(
+		commentId: number,
+		isLike: boolean
+	): Observable<void> {
+		return this.httpClient.patch<void>(
+			`${this.backendUrl}/comments/${commentId}/react`,
+			{ isLike }
+		);
+	}
 }
