@@ -27,6 +27,20 @@ export class PipelineService {
 			);
 	}
 
+	getAllTimeLinePipelines() {
+		return this.httpClient
+			.get<TimelinePipeline[]>(`${this.backendUrl}/pipeline/timeline`)
+			.pipe(
+				map(response => response), // Ensure this maps to an array of TimelinePost
+				catchError(error => {
+					console.error('Error fetching all pipelines for timeline', error);
+					return throwError(
+						() => new Error(error.message || 'An error occurred')
+					);
+				})
+			);
+	}
+
 	getPipelineById(id: number) {
 		return this.httpClient.get<TimelinePipeline>(
 			`${this.backendUrl}/pipeline/${id}`
