@@ -14,7 +14,7 @@ export class NotificationService {
 		this.primeMessageService.add({
 			severity: 'success',
 			summary: this.successString,
-			detail: message,
+			detail: this.toUpperCaseFirstLetter(message),
 		});
 	}
 
@@ -22,7 +22,7 @@ export class NotificationService {
 		this.primeMessageService.add({
 			severity: 'info',
 			summary: 'Info',
-			detail: message,
+			detail: this.toUpperCaseFirstLetter(message),
 		});
 	}
 
@@ -30,11 +30,15 @@ export class NotificationService {
 		this.primeMessageService.add({
 			severity: 'error',
 			summary: this.errorString,
-			detail: message,
+			detail: this.toUpperCaseFirstLetter(message),
 		});
 	}
 
 	getErrorMessage(message: string, closable = true): Message[] {
 		return [{ severity: 'error', detail: message, closable: closable }];
+	}
+
+	toUpperCaseFirstLetter(string: string): string {
+		return string.charAt(0).toUpperCase() + string.slice(1);
 	}
 }

@@ -129,4 +129,10 @@ export class AuthenticationService {
 	private removeAuthenticatedUser() {
 		this.currentUserSource.next(null);
 	}
+
+	refreshUser() {
+		return this.http.get<UserDTO>(`${this.backendUrl}/users/profile`, {
+			headers: { Authorization: `Bearer ${this.tokenSource.value}` },
+		});
+	}
 }

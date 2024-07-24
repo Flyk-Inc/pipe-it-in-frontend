@@ -4,6 +4,9 @@ import { TimelinePipeline } from '../../models/pipeline.model';
 export const loadPersonalPipelines = createAction(
 	'[Pipeline Timeline] Load Pipeline'
 );
+export const loadAllTimelinePipelines = createAction(
+	'[Code Timeline] Load All Timeline Pipelines'
+);
 export const loadPipelinesSuccess = createAction(
 	'[Pipeline Timeline] Load Pipelines Success',
 	props<{ pipelines: TimelinePipeline[] }>()

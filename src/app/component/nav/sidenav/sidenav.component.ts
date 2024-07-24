@@ -4,6 +4,8 @@ import { IconComponent } from '../../typography/icon/icon.component';
 import { NgClass, NgForOf, TitleCasePipe } from '@angular/common';
 import { UnderlineComponent } from '../../layout/underline/underline.component';
 import { codeRoutePath } from '../../../pages/codes/routes';
+import { pipelineRoutePath } from '../../../pages/codes/pipelines/routes';
+import { navbarItem } from '../../layout/navbar/navbar.component';
 
 @Component({
 	selector: 'app-sidenav',
@@ -21,7 +23,7 @@ import { codeRoutePath } from '../../../pages/codes/routes';
 	styleUrl: './sidenav.component.scss',
 })
 export class SidenavComponent {
-	navItems = [
+	navItems: navbarItem[] = [
 		{
 			icon: 'home',
 			label: $localize`:@@home:Home`,
@@ -36,6 +38,11 @@ export class SidenavComponent {
 			icon: 'code',
 			label: $localize`:@@codes:Codes`,
 			route: '/' + codeRoutePath,
+		},
+		{
+			icon: 'valve',
+			label: $localize`:@@pipelines:pipelines`,
+			route: `/${codeRoutePath}/${pipelineRoutePath}`,
 		},
 		{
 			icon: 'person',

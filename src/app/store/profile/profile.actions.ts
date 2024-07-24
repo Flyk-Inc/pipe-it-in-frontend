@@ -4,6 +4,7 @@ import { TimelinePost } from '../../models/post.model';
 import { Group } from '../../models/group.model';
 
 export const loadProfile = createAction('[Profile] Load Profile');
+export const refreshProfile = createAction('[Profile] refresh Profile');
 
 export const loadProfileSuccess = createAction(
 	'[Profile] Load Profile Success',

@@ -3,6 +3,32 @@
 		<div
 			class="max-h-full overflow-y-scroll rounded-lg border border-grey-1 dark:border-grey-3 bg-light-card-bg dark:bg-dark-card-bg mt-2 mx-2 p-4 grid grid-cols-1 gap-y-2">
 			<h2 class="header-2 text-primary">{{ code.title }}</h2>
+			<div class="flex flex-nowrap items-center gap-2">
+				<button (click)="swapVisibility()">
+					<!-- eslint-disable-next-line @angular-eslint/template/label-has-associated-control -->
+					<label
+						[ngClass]="{
+							swap: true,
+							'swap-active': code.status === CodeStatus.active
+						}">
+						<div class="swap-on">
+							<app-icon icon="visibility"></app-icon>
+						</div>
+						<div class="swap-off">
+							<app-icon icon="visibility_off"></app-icon>
+						</div>
+					</label>
+				</button>
+				@if (code.status === CodeStatus.active) {
+					<span class="first-letter:capitalize"
+						><span i18n="@@visibility.public">visibilité: publique</span></span
+					>
+				} @else {
+					<span class="first-letter:capitalize"
+						><span i18n="@@visibility.private">visibilité: privée</span></span
+					>
+				}
+			</div>
 			<p>
 				<a
 					routerLink="/user/{{ code.author.id }}"
@@ -66,7 +92,7 @@
 							<app-button
 								(click)="testCode()"
 								class="shrink-0"
-								text="Run Test"
+								[text]="runTestStringTranslated"
 								[disabled]="!!hasInput.value && !fileInput.value"></app-button>
 							@if (hasInput.value) {
 								<div class="w-full grow">

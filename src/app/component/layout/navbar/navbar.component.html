@@ -1,0 +1,36 @@
+<div
+	[ngClass]="{
+		'h-20 py-2 border-t border-primary flex flex-nowrap sm:hidden': true,
+		block: loggedInUser,
+		hidden: !loggedInUser
+	}">
+	@for (navItem of navbarItems; track navItem) {
+		<a
+			#rla="routerLinkActive"
+			routerLinkActive="active"
+			[ngClass]="{ 'text-primary': rla.isActive, 'text-grey-1': !rla.isActive }"
+			class="h-full grow flex flex-wrap items-center justify-center"
+			[routerLinkActiveOptions]="{ exact: true }"
+			[routerLink]="navItem.route">
+			@if (navItem.icon !== 'person') {
+				<span
+					[ngClass]="{
+						'material-symbols-outlined w-fit transition-colors ease-in-out': true,
+						filled: rla.isActive
+					}"
+					class=""
+					>{{ navItem.icon }}</span
+				>
+				<p class="w-full shrink-0 text-center header-nav-item capitalize">
+					{{ navItem.label }}
+				</p>
+			} @else {
+				<img
+					alt="Rounded avatar"
+					[ngClass]="{ 'border-2 border-primary': rla.isActive }"
+					class="h-full rounded-full object-cover shrink peer-focus:hidden sm:peer-focus:block"
+					[src]="profilePictureUrl$" />
+			}
+		</a>
+	}
+</div>

@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { codeRoutePath } from '../routes';
 
 export enum CodePipelineRoutes {
 	Page = 'page',
@@ -20,5 +21,9 @@ export const routes: Routes = [
 			import('./new-pipeline/new-pipeline.component').then(
 				m => m.NewPipelineComponent
 			),
+	},
+	{
+		path: '**',
+		redirectTo: `/${codeRoutePath}`,
 	},
 ];

@@ -27,6 +27,25 @@ export class PipelineTimelineEffects {
 			)
 		);
 	});
+	loadAllUserRelatedPipelines$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(PipelineTimelineActions.loadAllTimelinePipelines),
+			mergeMap(() =>
+				this.pipelineService.getAllTimeLinePipelines().pipe(
+					map(pipelines => {
+						return PipelineTimelineActions.loadPipelinesSuccess({ pipelines });
+					}),
+					catchError(error =>
+						of(
+							PipelineTimelineActions.loadPipelinesFailure({
+								error: error.message,
+							})
+						)
+					)
+				)
+			)
+		);
+	});
 	// createPipeline$ = createEffect(() => {
 	// 	return this.actions$.pipe(
 	// 		ofType(PipelineTimelineActions.createPipeline),

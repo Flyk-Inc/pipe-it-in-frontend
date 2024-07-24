@@ -7,7 +7,8 @@
 			[ngClass]="{ 'text-primary': rla.isActive, 'text-grey-1': !rla.isActive }"
 			class="group w-fit block min-w-36"
 			routerLink="{{ item.route }}"
-			routerLinkActive="active">
+			routerLinkActive="active"
+			[routerLinkActiveOptions]="{ exact: true }">
 			<div class="flex items-center gap-x-2.5">
 				<app-icon [filled]="rla.isActive" icon="{{ item.icon }}"></app-icon>
 				<span

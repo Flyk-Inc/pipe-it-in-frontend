@@ -53,6 +53,9 @@ export class NewCodeComponent implements OnInit, AfterViewChecked {
 	editorOptions = {
 		theme: 'vs-dark',
 		language: this.createCodeForm.controls.language.value,
+		lineNumbers: function (lineNumber: string) {
+			return `<span style="padding-right:4px">${lineNumber}</span>`;
+		},
 	};
 
 	saveStringTranslated = 'Save';

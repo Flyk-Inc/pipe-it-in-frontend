@@ -8,7 +8,7 @@ import {
 	ViewChild,
 } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { DatePipe, NgOptimizedImage } from '@angular/common';
+import { DatePipe, NgClass, NgOptimizedImage } from '@angular/common';
 import { HighlightAuto } from 'ngx-highlightjs';
 import { HighlightLineNumbers } from 'ngx-highlightjs/line-numbers';
 import { PanelModule } from 'primeng/panel';
@@ -26,12 +26,14 @@ import { CodeReportHistoryComponent } from '../../../../component/code/report-hi
 import {
 	CodeDetail,
 	CodeLanguages,
+	CodeStatus,
 	RunTestCodeDTO,
 	TestRun,
 } from '../../../../models/code.model';
 import { CodeService } from '../../../../service/code.service';
 import { NotificationService } from '../../../../service/notification.service';
 import { interval, Subscription } from 'rxjs';
+import { IconComponent } from '../../../../component/typography/icon/icon.component';
 
 @Component({
 	selector: 'app-code-home-page',
@@ -49,6 +51,8 @@ import { interval, Subscription } from 'rxjs';
 		CreateCodeFormComponent,
 		CodeReportComponent,
 		CodeReportHistoryComponent,
+		IconComponent,
+		NgClass,
 	],
 	templateUrl: './code-page.component.html',
 	styleUrl: './code-page.component.scss',
@@ -88,6 +92,7 @@ export class CodePageComponent implements OnInit, AfterViewChecked, OnDestroy {
 	postStringTranslated = 'post';
 	cancelStringTranslated = 'cancel';
 	editStringTranslated = 'edit';
+	runTestStringTranslated = 'run test';
 
 	constructor(
 		private route: ActivatedRoute,
@@ -103,6 +108,7 @@ export class CodePageComponent implements OnInit, AfterViewChecked, OnDestroy {
 		this.postStringTranslated = $localize`:@@post:post`;
 		this.cancelStringTranslated = $localize`:@@cancel:cancel`;
 		this.editStringTranslated = $localize`:@@edit:edit`;
+		this.runTestStringTranslated = $localize`:@@run.test:run test`;
 		this.loadCode();
 		this.setupPeriodicTestRunRefresh();
 	}
@@ -274,7 +280,7 @@ export class CodePageComponent implements OnInit, AfterViewChecked, OnDestroy {
 	}
 
 	private redirectIfCodeIsNotLoaded() {
-		this.router.navigate(['/page-not-found']).then();
+		this.router.navigate(['/404']).then();
 	}
 
 	private resetFileInput() {
@@ -292,4 +298,22 @@ export class CodePageComponent implements OnInit, AfterViewChecked, OnDestroy {
 			this.loadTestRuns();
 		});
 	}
+
+	swapVisibility() {
+		const currentStatus = this.code!.status;
+		const newStatus =
+			currentStatus === CodeStatus.active
+				? CodeStatus.hidden
+				: CodeStatus.active;
+		this.codeService.updateCodeVisibility(this.code!.id, newStatus).subscribe({
+			next: () => {
+				this.notificationService.showSuccessToast(
+					$localize`:@@code.visibility.updated:Code visibility updated successfully.`
+				);
+				this.loadCode();
+			},
+		});
+	}
+
+	protected readonly CodeStatus = CodeStatus;
 }

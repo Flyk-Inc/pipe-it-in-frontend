@@ -11,5 +11,5 @@ import { NgClass } from '@angular/common';
 export class IconComponent {
 	@Input() icon!: string;
 	@Input() filled: boolean = false;
-	@Input() size: 'normal' | 'small' = 'normal';
+	@Input() size: 'normal' | 'small' | 'xl' = 'normal';
 }

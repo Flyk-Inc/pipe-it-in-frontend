@@ -9,8 +9,8 @@ import { pipelineTimelineReducer } from '../../store/pipeline/pipeline.reducers'
 import { PipelineTimelineEffects } from '../../store/pipeline/pipeline.effects';
 
 export enum CodeRoutes {
-	PersonalCodes = 'personal-codes',
-	PersonalPipelines = 'personal-pipelines',
+	Codes = 'list',
+	Pipelines = 'pipelines',
 	New = 'new',
 	Page = 'page',
 }
@@ -28,7 +28,7 @@ export const routes: Routes = [
 					import('./code-home.component').then(m => m.CodeHomeComponent),
 				children: [
 					{
-						path: CodeRoutes.PersonalCodes,
+						path: CodeRoutes.Codes,
 						loadComponent: () =>
 							import(
 								'./personal-codes-list/personal-codes-list.component'
@@ -43,7 +43,7 @@ export const routes: Routes = [
 						],
 					},
 					{
-						path: CodeRoutes.PersonalPipelines,
+						path: CodeRoutes.Pipelines,
 						loadComponent: () =>
 							import(
 								'././pipelines/personal-pipelines-list/personal-pipelines-list.component'
@@ -59,7 +59,7 @@ export const routes: Routes = [
 					},
 					{
 						path: '',
-						redirectTo: CodeRoutes.PersonalCodes,
+						redirectTo: CodeRoutes.Codes,
 						pathMatch: 'full',
 					},
 				],
@@ -84,7 +84,7 @@ export const routes: Routes = [
 			},
 			{
 				path: '',
-				redirectTo: CodeRoutes.PersonalCodes,
+				redirectTo: CodeRoutes.Codes,
 				pathMatch: 'full',
 			},
 		],

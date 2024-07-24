@@ -1,9 +1,10 @@
 @if ((authService.authLoadingSource | async) === false) {
-	<div class="md:container md:mx-auto h-screen flex flex-col pb-2">
+	<div class="md:container md:mx-auto h-screen flex flex-col">
 		<app-header class="flex-none"></app-header>
 		<div class="grow overflow-y-auto">
 			<router-outlet></router-outlet>
 		</div>
+		<app-navbar class="shrink-0 mt-2"></app-navbar>
 	</div>
 	<p-toast></p-toast>
 }

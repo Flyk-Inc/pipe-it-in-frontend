@@ -1,7 +1,12 @@
 import { createAction, props } from '@ngrx/store';
 import { CreateCodeDTO, TimelineCode } from '../../models/code.model';
 
-export const loadPersonalCodes = createAction('[Code Timeline] Load Code');
+export const loadPersonalCodes = createAction(
+	'[Code Timeline] Load Personal Codes'
+);
+export const loadAllTimelineCodes = createAction(
+	'[Code Timeline] Load All Timeline Codes'
+);
 export const loadCodesSuccess = createAction(
 	'[Code Timeline] Load Codes Success',
 	props<{ codes: TimelineCode[] }>()

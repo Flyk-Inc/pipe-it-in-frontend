@@ -61,7 +61,6 @@ export class NewPipelineComponent {
 	}
 
 	handleStepsCHange($event: Version[]) {
-		console.log($event);
 		this.createPipelineForm.controls.pipelineCodes.setValue($event);
 	}
 
