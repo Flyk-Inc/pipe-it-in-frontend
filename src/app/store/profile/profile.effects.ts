@@ -5,7 +5,7 @@ import { catchError, map, mergeMap } from 'rxjs/operators';
 import * as ProfileActions from './profile.actions';
 import {
 	acceptFollowRequest,
-	loadProfile,
+	refreshProfile,
 	rejectFollowRequest,
 	removeFollower,
 	uploadProfilePicture,
@@ -32,6 +32,18 @@ export class ProfileEffects {
 							});
 						}
 					}),
+					catchError(error => of(ProfileActions.loadProfileFailure({ error })))
+				)
+			)
+		);
+	});
+
+	refreshProfile$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(ProfileActions.refreshProfile),
+			mergeMap(() =>
+				this.authService.refreshUser().pipe(
+					map(user => ProfileActions.loadProfileSuccess({ user })),
 					catchError(error => of(ProfileActions.loadProfileFailure({ error })))
 				)
 			)
@@ -135,7 +147,7 @@ export class ProfileEffects {
 			ofType(acceptFollowRequest),
 			mergeMap(action =>
 				this.socialService.acceptFollowRequest(action.userId).pipe(
-					map(() => loadProfile()),
+					map(() => refreshProfile()),
 					catchError(error =>
 						of({ type: '[Profile] Accept Follow Request Failure', error })
 					)
@@ -149,7 +161,7 @@ export class ProfileEffects {
 			ofType(rejectFollowRequest),
 			mergeMap(action =>
 				this.socialService.rejectFollowRequest(action.userId).pipe(
-					map(() => loadProfile()),
+					map(() => refreshProfile()),
 					catchError(error =>
 						of({ type: '[Profile] Reject Follow Request Failure', error })
 					)
@@ -163,7 +175,7 @@ export class ProfileEffects {
 			ofType(removeFollower),
 			mergeMap(action =>
 				this.socialService.removeFollower(action.userId).pipe(
-					map(() => loadProfile()),
+					map(() => refreshProfile()),
 					catchError(error =>
 						of({ type: '[Profile] Remove Follower Failure', error })
 					)
