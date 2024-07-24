@@ -28,6 +28,7 @@
 		"home": "Home",
 		"groups": "Groupes",
 		"followers": "Followers",
+		"profile": "profile",
 		"messages": "Messages",
 		"favorites": "Favoris",
 		"resource.not-found": "Resource not found",
@@ -106,6 +107,9 @@
 		"codes": "Codes",
 		"pipelines": "Pipelines",
 		"code": "Code",
-		"pipeline": "Pipeline"
+		"pipeline": "Pipeline",
+		"following": "following",
+		"follow": "follow",
+		"unfollow": "unfollow"
 	}
 }

@@ -27,13 +27,13 @@ export class CodeHomeComponent {
 	tabs: TabData[] = [
 		{
 			title: $localize`:@@codes:your codes`,
-			id: CodeRoutes.PersonalCodes,
-			link: `/${codeRoutePath}/${CodeRoutes.PersonalCodes}`,
+			id: CodeRoutes.Codes,
+			link: `/${codeRoutePath}/${CodeRoutes.Codes}`,
 		},
 		{
 			title: $localize`:@@pipelines:your pipelines`,
-			id: CodeRoutes.PersonalPipelines,
-			link: `/${codeRoutePath}/${CodeRoutes.PersonalPipelines}`,
+			id: CodeRoutes.Pipelines,
+			link: `/${codeRoutePath}/${CodeRoutes.Pipelines}`,
 		},
 	];
 }

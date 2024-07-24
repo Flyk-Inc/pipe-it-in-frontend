@@ -106,7 +106,6 @@ export class PipelinePageComponent implements OnInit, OnDestroy {
 	}
 
 	runPipeline() {
-		console.log(this.fileInput.value);
 		this.pipelineService
 			.runPipeline(this.pipelineId, this.fileInput.value ?? undefined)
 			.subscribe({
@@ -253,7 +252,6 @@ export class PipelinePageComponent implements OnInit, OnDestroy {
 
 	swapVisibility() {
 		const currentStatus = this.pipeline!.status;
-		console.log(currentStatus);
 		const newStatus =
 			currentStatus === CodeStatus.active
 				? CodeStatus.hidden

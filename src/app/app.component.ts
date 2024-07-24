@@ -7,6 +7,7 @@ import { AuthenticationService } from './auth/authentication.service';
 import { AsyncPipe } from '@angular/common';
 import { MessagesModule } from 'primeng/messages';
 import 'highlight.js/styles/androidstudio.min.css';
+import { NavbarComponent } from './component/layout/navbar/navbar.component';
 
 @Component({
 	selector: 'app-root',
@@ -18,6 +19,7 @@ import 'highlight.js/styles/androidstudio.min.css';
 		ToastModule,
 		AsyncPipe,
 		MessagesModule,
+		NavbarComponent,
 	],
 	templateUrl: './app.component.html',
 	styleUrl: './app.component.scss',

@@ -20,6 +20,7 @@
 		"home": "accueil",
 		"groups": "groupes",
 		"followers": "followers",
+		"profile": "profil",
 		"messages": "messages",
 		"favorites": "favoris",
 		"resource.not-found": "Ressource introuvable",

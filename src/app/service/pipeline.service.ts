@@ -74,7 +74,6 @@ export class PipelineService {
 	}
 
 	updatePipelineVisibility(pipelineId: number, newStatus: CodeStatus) {
-		console.log(newStatus);
 		return this.httpClient.patch<TimelinePipeline>(
 			`${this.backendUrl}/pipeline/${pipelineId}`,
 			{ status: newStatus }
