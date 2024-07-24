@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --configuration fr",
+    "start:en": "ng serve --configuration development --port 4401",
     "start:home": "ng serve --host 0.0.0.0 --configuration development",
     "start:backend": "cd ../pipe-it-in-backend && npm run start",
     "build": "ng build",
