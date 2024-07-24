@@ -6,11 +6,18 @@ import { CodePipelineRoutes, pipelineRoutePath } from '../pipelines/routes';
 import { TimelinePipeline } from '../../../models/pipeline.model';
 import { RouterLink } from '@angular/router';
 import { fileUrl } from '../../../models/utils';
+import { UserLinkComponent } from '../../../component/social/user-link/user-link.component';
 
 @Component({
 	selector: 'app-personal-pipelines-item',
 	standalone: true,
-	imports: [IconComponent, NgIf, RouterLink, NgOptimizedImage],
+	imports: [
+		IconComponent,
+		NgIf,
+		RouterLink,
+		NgOptimizedImage,
+		UserLinkComponent,
+	],
 	templateUrl: './personal-pipelines-item.component.html',
 })
 export class PersonalPipelinesItemComponent {

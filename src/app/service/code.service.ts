@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import {
 	CodeDetail,
+	CodeStatus,
 	CreateCodeDTO,
 	CreateVersionDTO,
 	RunTestCodeDTO,
@@ -20,16 +21,20 @@ export class CodeService {
 
 	constructor(private httpClient: HttpClient) {}
 
-	getTimeLineCodes() {
-		return this.httpClient.get<TimelineCode[]>(`${this.backendUrl}/codes`).pipe(
-			map(response => response), // Ensure this maps to an array of TimelinePost
-			catchError(error => {
-				console.error('Error fetching personal code-home list', error);
-				return throwError(
-					() => new Error(error.message || 'An error occurred')
-				);
-			})
-		);
+	getTimeLineCodes(userCodeOnly: boolean = false): Observable<TimelineCode[]> {
+		return this.httpClient
+			.get<
+				TimelineCode[]
+			>(`${this.backendUrl}/codes${userCodeOnly ? '' : '/timeline'}`)
+			.pipe(
+				map(response => response), // Ensure this maps to an array of TimelinePost
+				catchError(error => {
+					console.error('Error fetching personal code-home list', error);
+					return throwError(
+						() => new Error(error.message || 'An error occurred')
+					);
+				})
+			);
 	}
 
 	getCodeDetailById(codeId: number): Observable<CodeDetail> {
@@ -57,6 +62,13 @@ export class CodeService {
 		return this.httpClient.patch<TimelineCode>(
 			`${this.backendUrl}/codes/${codeId}`,
 			updateCodeDTO
+		);
+	}
+
+	updateCodeVisibility(codeId: number, status: CodeStatus) {
+		return this.httpClient.patch<TimelineCode>(
+			`${this.backendUrl}/codes/${codeId}`,
+			{ status: status }
 		);
 	}
 
