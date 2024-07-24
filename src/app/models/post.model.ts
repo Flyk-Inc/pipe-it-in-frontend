@@ -40,6 +40,12 @@ export interface PostComment {
 	reactions: Reaction[];
 }
 
+export interface CreateCommentDTO {
+	content: string;
+	postId: number;
+	parentId?: number;
+}
+
 export interface Reaction {
 	user: {
 		id: number;

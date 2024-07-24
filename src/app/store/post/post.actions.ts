@@ -1,5 +1,9 @@
 import { createAction, props } from '@ngrx/store';
-import { PostComment, TimelinePost } from '../../models/post.model';
+import {
+	CreateCommentDTO,
+	PostComment,
+	TimelinePost,
+} from '../../models/post.model';
 
 export const loadPost = createAction(
 	'[Post] Load Post',
@@ -38,4 +42,22 @@ export const likeComment = createAction(
 export const dislikeComment = createAction(
 	'[Post] Dislike Comment',
 	props<{ commentId: number }>()
+);
+
+export const createComment = createAction(
+	'[Post] Create Comment',
+	props<{ createCommentDTO: CreateCommentDTO }>()
+);
+export const createCommentSuccess = createAction(
+	'[Post] Create Comment Success',
+	props<{ comment: PostComment }>()
+);
+export const createCommentFailure = createAction(
+	'[Post] Create Comment Failure',
+	props<{ error: string }>()
+);
+
+export const replyToComment = createAction(
+	'[Comment] Reply to Comment',
+	props<{ createCommentDTO: CreateCommentDTO }>()
 );

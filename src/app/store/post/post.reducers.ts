@@ -6,6 +6,8 @@ import {
 	loadPostFailure,
 	loadPostCommentsSuccess,
 	loadPostCommentsFailure,
+	createCommentSuccess,
+	createCommentFailure,
 } from './post.actions';
 
 export const postReducer = createReducer(
@@ -49,5 +51,14 @@ export const postReducer = createReducer(
 			comments: [],
 			error,
 		})
-	)
+	),
+	on(createCommentSuccess, (state, { comment }) => ({
+		...state,
+		comments: [...state.comments, comment],
+		error: null,
+	})),
+	on(createCommentFailure, (state, { error }) => ({
+		...state,
+		error,
+	}))
 );

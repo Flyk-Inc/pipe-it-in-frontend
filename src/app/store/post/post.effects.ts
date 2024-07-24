@@ -35,6 +35,41 @@ export class PostEffects {
 		);
 	});
 
+	createComment$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(PostActions.createComment),
+			mergeMap(action =>
+				this.socialService.createComment(action.createCommentDTO).pipe(
+					map(comment => PostActions.createCommentSuccess({ comment })),
+					catchError(error =>
+						of(PostActions.createCommentFailure({ error: error.message }))
+					)
+				)
+			)
+		);
+	});
+
+	replyToComment$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(PostActions.replyToComment),
+			mergeMap(action =>
+				this.socialService.replyToComment(action.createCommentDTO).pipe(
+					map(() => {
+						return PostActions.loadPostComments({
+							postId: action.createCommentDTO.postId,
+						});
+					}),
+					catchError(error =>
+						of({
+							type: '[Comment] Reply to Comment Failure',
+							error,
+						})
+					)
+				)
+			)
+		);
+	});
+
 	constructor(
 		private actions$: Actions,
 		private socialService: SocialService

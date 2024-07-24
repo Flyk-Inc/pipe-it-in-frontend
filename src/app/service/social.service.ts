@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { CreatePostDto, TimelinePost, PostComment } from '../models/post.model';
+import {
+	CreatePostDto,
+	TimelinePost,
+	PostComment,
+	CreateCommentDTO,
+} from '../models/post.model';
 import { CursoredRessource } from '../models/utils';
 import { map, Observable, Subject, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -256,7 +261,7 @@ export class SocialService {
 			.get<TimelinePost>(`${this.backendUrl}/posts/details/${postId}`)
 			.pipe(
 				catchError(error => {
-					console.error('Error fetching post comments', error);
+					console.error('Error fetching post details', error);
 					return throwError(
 						() => new Error(error.message || 'An error occurred')
 					);
@@ -270,6 +275,35 @@ export class SocialService {
 			.pipe(
 				catchError(error => {
 					console.error('Error fetching post comments', error);
+					return throwError(
+						() => new Error(error.message || 'An error occurred')
+					);
+				})
+			);
+	}
+
+	createComment(createCommentDTO: CreateCommentDTO): Observable<PostComment> {
+		return this.httpClient
+			.post<PostComment>(`${this.backendUrl}/comments`, createCommentDTO)
+			.pipe(
+				catchError(error => {
+					console.error('Error creating comment', error);
+					return throwError(
+						() => new Error(error.message || 'An error occurred')
+					);
+				})
+			);
+	}
+
+	replyToComment(createCommentDTO: CreateCommentDTO): Observable<PostComment> {
+		return this.httpClient
+			.post<PostComment>(
+				`${this.backendUrl}/comments/${createCommentDTO.parentId}/reply`,
+				createCommentDTO
+			)
+			.pipe(
+				catchError(error => {
+					console.error('Error creating comment', error);
 					return throwError(
 						() => new Error(error.message || 'An error occurred')
 					);
