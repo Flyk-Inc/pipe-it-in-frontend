@@ -62,6 +62,11 @@ export const routes: Routes = [
 		loadChildren: () => import('./pages/groups/routes').then(m => m.routes),
 	},
 	{
+		path: 'search',
+		loadChildren: () =>
+			import('./pages/search-home/routes').then(m => m.routes),
+	},
+	{
 		path: 'group/:groupId',
 		loadChildren: () =>
 			import('./pages/groups/group-profile/routes').then(m => m.routes),

@@ -15,11 +15,14 @@
 	</a>
 
 	@if (loggedInUser) {
-		<input
-			class="ps-2 h-10 w-[500px] rounded-xl outline-none border focus:border-primary bg-grey-bg border-grey-2 dark:bg-grey-bg-dark dark:border-grey-3 peer placeholder:text-sm"
-			type="text"
-			placeholder="Search Post or Pipeline"
-			i18n-placeholder="@@search_post_or_pipelien" />
+		<form class="h-fit w-[500px]" (submit)="searchResources()">
+			<input
+				[formControl]="searchField"
+				class="ps-2 h-10 w-full rounded-xl outline-none border focus:border-primary bg-grey-bg border-grey-2 dark:bg-grey-bg-dark dark:border-grey-3 peer placeholder:text-sm"
+				type="text"
+				placeholder="Search Post or Pipeline"
+				i18n-placeholder="@@search_post_or_pipelien" />
+		</form>
 	}
 	@if (!loggedInUser) {
 		<a routerLink="/auth">

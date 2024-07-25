@@ -3,7 +3,7 @@ import { PopularGroupsComponent } from '../home/popular-groups/popular-groups.co
 import { SidenavComponent } from '../../component/nav/sidenav/sidenav.component';
 import { ButtonComponent } from '../../component/layout/button/button.component';
 import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Group } from '../../models/group.model';
 import { Store } from '@ngrx/store';
 import { createGroup, loadGroups } from '../../store/group/group.actions';
@@ -31,9 +31,10 @@ import {
 		NgIf,
 	],
 	templateUrl: './groups.component.html',
-	styleUrl: './groups.component.scss',
+	styleUrls: ['./groups.component.scss'],
 })
 export class GroupsComponent implements OnInit, OnDestroy {
+	private subscriptions: Subscription = new Subscription();
 	loggedInUserSubscription$ = this.authenticationService.currentUserSource;
 	groups$!: Observable<Group[]>;
 	userId: number | null = null;
@@ -56,11 +57,14 @@ export class GroupsComponent implements OnInit, OnDestroy {
 	ngOnInit(): void {
 		this.store.dispatch(loadGroups());
 		this.groups$ = this.store.select(selectUserGroups);
-		this.loggedInUserSubscription$.subscribe(user => {
-			if (user) {
-				this.userId = user.id;
-			}
-		});
+
+		this.subscriptions.add(
+			this.loggedInUserSubscription$.subscribe(user => {
+				if (user) {
+					this.userId = user.id;
+				}
+			})
+		);
 	}
 
 	onCreateGroup(): void {
@@ -73,7 +77,7 @@ export class GroupsComponent implements OnInit, OnDestroy {
 		this.showCreateGroup = false;
 	}
 
-	ngOnDestroy() {
-		this.loggedInUserSubscription$.unsubscribe();
+	ngOnDestroy(): void {
+		this.subscriptions.unsubscribe();
 	}
 }
