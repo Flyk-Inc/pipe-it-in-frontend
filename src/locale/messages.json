@@ -61,7 +61,7 @@
 		"save.draft": "save draft",
 		"post": "post",
 		"posts": "posts",
-		"cancel": "cancel",
+		"cancel": "Cancel",
 		"edit": "edit",
 		"run.test": "run test",
 		"file.size.exceeded": "The file size exceeds the maximum allowed size of 2MB",
@@ -132,6 +132,14 @@
 		"visibility": "visibility",
 		"public": "public",
 		"private": "private",
-		"groups.follow-these": "follow these groups"
+		"groups.follow-these": "follow these groups",
+    "group.myGroups": "My groups",
+    "group.create": "Create a group",
+    "group.members": "Member(s):",
+    "group.createdAd": "Creation date:",
+    "group.joinedAt": "Joined date:",
+    "group.name": "Group name",
+    "group.private": "Private group",
+    "create": "Create"
 	}
 }

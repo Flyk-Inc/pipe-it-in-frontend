@@ -64,7 +64,7 @@
 		"save.draft": "sauvegarder le brouillon",
 		"post": "poster",
 		"posts": "posts",
-		"cancel": "annuler",
+		"cancel": "Annuler",
 		"edit": "éditer",
 		"run.test": "lancer le test",
 		"code.version.title": "titre de la version",
@@ -134,6 +134,14 @@
 		"visibility": "visibilité",
 		"public": "publique",
 		"private": "privée",
-		"groups.follow-these": "suivez ces groupes"
+		"groups.follow-these": "suivez ces groupes",
+    "group.myGroups": "Mes groupes",
+    "group.create": "Créer un groupe",
+    "group.members": "Membre(s):",
+    "group.createdAd": "Créé le :",
+    "group.joinedAt": "Rejoint le :",
+    "group.name": "Nom du groupe",
+    "group.private": "Groupe privé",
+    "create": "Créer"
 	}
 }
