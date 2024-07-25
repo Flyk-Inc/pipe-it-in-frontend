@@ -49,15 +49,15 @@ export class SidenavComponent {
 			label: $localize`:@@followers:Followers`,
 			route: '/followers',
 		},
-		{
-			icon: 'mail',
-			label: $localize`:@@messages:Messages`,
-			route: '/messages',
-		},
-		{
-			icon: 'star',
-			label: $localize`:@@favorites:Favoris`,
-			route: '/favorites',
-		},
+		// {
+		// 	icon: 'mail',
+		// 	label: $localize`:@@messages:Messages`,
+		// 	route: '/messages',
+		// },
+		// {
+		// 	icon: 'star',
+		// 	label: $localize`:@@favorites:Favoris`,
+		// 	route: '/favorites',
+		// },
 	];
 }
