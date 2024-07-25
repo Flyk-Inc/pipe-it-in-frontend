@@ -8,17 +8,12 @@ import { SidenavComponent } from '../../../component/nav/sidenav/sidenav.compone
 import { environment } from '../../../../environments/environment';
 import { AsyncPipe, DatePipe, NgForOf, NgIf } from '@angular/common';
 import { PostListComponent } from '../../profile/post-list/post-list.component';
+import { selectGroup, selectGroupError, selectGroupPosts } from '../../../store/group-profile/group-profile.selectors';
 import {
-	selectGroup,
-	selectGroupError,
-	selectGroupLoading,
-	selectGroupPosts,
-} from '../../../store/group-profile/group-profile.selectors';
-import {
-	joinGroup,
-	loadGroup,
-	loadGroupPosts,
-	requestGroupAccess,
+  joinGroup,
+  loadGroup,
+  loadGroupPosts,
+  requestGroupAccess,
 } from '../../../store/group-profile/group-profile.actions';
 
 @Component({
@@ -38,7 +33,6 @@ import {
 export class GroupProfileComponent implements OnInit {
 	group$: Observable<Group | null>;
 	posts$: Observable<TimelinePost[]>;
-	loading$: Observable<boolean>;
 	error$: Observable<string | null>;
 	groupId!: number;
 
@@ -48,7 +42,6 @@ export class GroupProfileComponent implements OnInit {
 	) {
 		this.group$ = this.store.select(selectGroup);
 		this.posts$ = this.store.select(selectGroupPosts);
-		this.loading$ = this.store.select(selectGroupLoading);
 		this.error$ = this.store.select(selectGroupError);
 	}
 

@@ -14,11 +14,6 @@ export const selectGroupPosts = createSelector(
 	(state: GroupProfileState) => state.posts
 );
 
-export const selectGroupLoading = createSelector(
-	selectGroupProfileState,
-	(state: GroupProfileState) => state.loading
-);
-
 export const selectGroupError = createSelector(
 	selectGroupProfileState,
 	(state: GroupProfileState) => state.error
