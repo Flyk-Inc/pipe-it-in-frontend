@@ -1,6 +1,8 @@
 import { createReducer, on } from '@ngrx/store';
 import { GroupState, initialState } from './group.state';
 import {
+	createGroupFailure,
+	createGroupSuccess,
 	loadGroups,
 	loadGroupsFailure,
 	loadGroupsSuccess,
@@ -29,5 +31,14 @@ export const groupReducer = createReducer(
 			...state,
 			error,
 		})
-	)
+	),
+	on(createGroupSuccess, (state, { group }) => ({
+		...state,
+		groups: [...state.groups, group],
+		error: null,
+	})),
+	on(createGroupFailure, (state, { error }) => ({
+		...state,
+		error,
+	}))
 );

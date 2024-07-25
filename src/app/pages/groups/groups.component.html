@@ -4,11 +4,100 @@
 	<div class="grow p-4 space-y-8">
 		<div class="flex justify-between items-center">
 			<h2 class="text-xl font-semibold">Mes groupes</h2>
-			<app-button (click)="createGroup()" text="Créer un groupe"></app-button>
+			<button
+				class="bg-primary text-white px-4 py-2 rounded-lg"
+				(click)="showCreateGroup = true">
+				Créer un groupe
+			</button>
 		</div>
 
-		<div *ngFor="let group of groups$ | async">
+		<div *ngFor="let group of groups$ | async" class="mt-2">
 			<app-group [group]="group" [currentUserId]="userId!"></app-group>
+		</div>
+
+		<div *ngIf="showCreateGroup" class="fixed z-10 inset-0 overflow-y-auto">
+			<div
+				class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+				<div class="fixed inset-0 transition-opacity" aria-hidden="true">
+					<div
+						class="absolute inset-0 bg-gray-500 dark:bg-gray-800 opacity-75"></div>
+				</div>
+				<span
+					class="hidden sm:inline-block sm:align-middle sm:h-screen"
+					aria-hidden="true"
+					>&#8203;</span
+				>
+				<div
+					class="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+					<div class="sm:flex sm:items-start">
+						<div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+							<h3
+								class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-200"
+								id="modal-title">
+								Créer un groupe
+							</h3>
+							<div class="mt-4">
+								<form
+									(ngSubmit)="onCreateGroup()"
+									[formGroup]="groupForm"
+									class="flex flex-wrap gap-y-6">
+									<div class="w-full">
+										<label
+											for="name"
+											class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+											>Nom du groupe</label
+										>
+										<input
+											type="text"
+											formControlName="name"
+											id="name"
+											class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+											required />
+									</div>
+									<div class="w-full">
+										<label
+											for="description"
+											class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+											>Description</label
+										>
+										<textarea
+											formControlName="description"
+											id="description"
+											class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+											required></textarea>
+									</div>
+									<div class="w-full flex items-center mt-4">
+										<span
+											class="block text-sm font-medium text-gray-900 dark:text-white mr-3"
+											>Groupe Privé</span
+										>
+										<label class="switch">
+											<input
+												type="checkbox"
+												formControlName="isPrivate"
+												id="isPrivate" />
+											<span class="slider round"></span>
+										</label>
+									</div>
+									<div class="w-full flex justify-end gap-x-3">
+										<button
+											type="button"
+											class="mt-4 px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:text-sm"
+											(click)="showCreateGroup = false">
+											Annuler
+										</button>
+										<button
+											type="submit"
+											class="mt-4 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:text-sm">
+											Créer
+										</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 

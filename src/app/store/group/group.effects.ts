@@ -21,6 +21,20 @@ export class GroupEffects {
 		);
 	});
 
+	createGroup$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(GroupActions.createGroup),
+			mergeMap(action =>
+				this.socialService.createGroup(action.group).pipe(
+					map(group => GroupActions.createGroupSuccess({ group })),
+					catchError(error =>
+						of(GroupActions.createGroupFailure({ error: error.message }))
+					)
+				)
+			)
+		);
+	});
+
 	constructor(
 		private actions$: Actions,
 		private socialService: SocialService

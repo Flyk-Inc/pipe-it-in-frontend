@@ -5,7 +5,7 @@ import { CreatePostDto, TimelinePost } from '../models/post.model';
 import { CursoredRessource } from '../models/utils';
 import { map, Observable, Subject, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Group } from '../models/group.model';
+import { CreateGroupDTO, Group } from '../models/group.model';
 import { UserDTO } from '../auth/DTO/user.dto';
 
 @Injectable({
@@ -259,6 +259,14 @@ export class SocialService {
 					() => new Error(error.message || 'An error occurred')
 				);
 			})
+		);
+	}
+
+	createGroup(group: CreateGroupDTO): Observable<Group> {
+		console.log(group);
+		return this.httpClient.post<Group>(
+			`${environment.backendUrl}/groups`,
+			group
 		);
 	}
 }
