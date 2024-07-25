@@ -10,7 +10,7 @@ import {
 import { CursoredRessource } from '../models/utils';
 import { map, Observable, Subject, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Group } from '../models/group.model';
+import { CreateGroupDTO, Group } from '../models/group.model';
 import { UserDTO } from '../auth/DTO/user.dto';
 
 @Injectable({
@@ -342,5 +342,30 @@ export class SocialService {
 	removeReactionFromPost(postId: number) {
 		const url = `${this.backendUrl}/posts/${postId}/like`;
 		return this.httpClient.delete(url);
+	}
+
+	getGroups(): Observable<Group[]> {
+		return this.httpClient.get<Group[]>(`${this.backendUrl}/groups`, {}).pipe(
+			catchError(error => {
+				console.error('Error fetching groups', error);
+				return throwError(
+					() => new Error(error.message || 'An error occurred')
+				);
+			})
+		);
+	}
+
+	createGroup(group: CreateGroupDTO): Observable<Group> {
+		console.log(group);
+		return this.httpClient.post<Group>(
+			`${environment.backendUrl}/groups`,
+			group
+		);
+	}
+
+	leaveGroup(groupId: number): Observable<void> {
+		return this.httpClient.delete<void>(
+			`${environment.backendUrl}/groups/${groupId}/leave`
+		);
 	}
 }

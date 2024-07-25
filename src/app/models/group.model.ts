@@ -17,6 +17,12 @@ export interface Group {
 	updatedAt: Date;
 }
 
+export interface CreateGroupDTO {
+	name: string;
+	description?: string;
+	isPrivate?: boolean;
+}
+
 export interface GroupMember {
 	id: number;
 	userId: number;
@@ -26,6 +32,7 @@ export interface GroupMember {
 		firstName: string;
 		lastName: string;
 	};
-	createdAt: Date;
-	updatedAt: Date;
+	isAdmin: boolean;
+	isBanned: boolean;
+	joinedAt: Date;
 }
