@@ -1,0 +1,18 @@
+<div class="w-full flex flex-nowrap h-full">
+	<app-sidenav class="hidden sm:block w-1/5"></app-sidenav>
+
+	<div class="grow p-4 space-y-8">
+		<div class="flex justify-between items-center">
+			<h2 class="text-xl font-semibold">Mes groupes</h2>
+			<app-button (click)="createGroup()" text="Créer un groupe"></app-button>
+		</div>
+
+		<div *ngFor="let group of groups$ | async">
+			<app-group [group]="group" [currentUserId]="userId!"></app-group>
+		</div>
+	</div>
+
+	<div class="border-s border-secondary hidden sm:block w-1/5">
+		<app-popular-groups></app-popular-groups>
+	</div>
+</div>

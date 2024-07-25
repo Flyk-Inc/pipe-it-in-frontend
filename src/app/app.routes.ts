@@ -53,6 +53,10 @@ export const routes: Routes = [
 		],
 	},
 	{
+		path: 'groups',
+		loadChildren: () => import('./pages/groups/routes').then(m => m.routes),
+	},
+	{
 		path: '**',
 		redirectTo: 'home',
 	},

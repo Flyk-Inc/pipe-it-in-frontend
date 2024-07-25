@@ -250,4 +250,15 @@ export class SocialService {
 				})
 			);
 	}
+
+	getGroups(): Observable<Group[]> {
+		return this.httpClient.get<Group[]>(`${this.backendUrl}/groups`, {}).pipe(
+			catchError(error => {
+				console.error('Error fetching groups', error);
+				return throwError(
+					() => new Error(error.message || 'An error occurred')
+				);
+			})
+		);
+	}
 }

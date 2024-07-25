@@ -26,6 +26,7 @@ export interface GroupMember {
 		firstName: string;
 		lastName: string;
 	};
-	createdAt: Date;
-	updatedAt: Date;
+	isAdmin: boolean;
+	isBanned: boolean;
+	joinedAt: Date;
 }
