@@ -14,7 +14,7 @@
 								alt="User Profile Picture"
 								class="w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 rounded-full mx-auto mb-4 object-cover" />
 							<div
-								class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 mx-auto mb-4">
+								class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full mx-auto opacity-0 group-hover:opacity-100 transition-opacity mb-4">
 								<button (click)="triggerFileInput()">
 									<app-icon icon="upload"></app-icon>
 								</button>
@@ -42,25 +42,39 @@
 								<span class="text-xl font-semibold">{{
 									(loggedInUser$ | async)?.posts?.length || 0
 								}}</span>
-								<p class="text-gray-400">posts</p>
+								<p class="text-gray-400 first-letter:capitalize" i18n="@@posts">
+									posts
+								</p>
 							</div>
 							<div class="text-center mb-4 flex-1 mx-2 min-w-[100px]">
 								<span class="text-xl font-semibold">{{
 									(loggedInUser$ | async)?.followers?.length || 0
 								}}</span>
-								<p class="text-gray-400">abonnés</p>
+								<p
+									class="text-gray-400 first-letter:capitalize"
+									i18n="@@followers">
+									abonnés
+								</p>
 							</div>
 							<div class="text-center flex-1 mx-2 min-w-[100px]">
 								<span class="text-xl font-semibold">{{
 									(loggedInUser$ | async)?.following?.length || 0
 								}}</span>
-								<p class="text-gray-400">abonnements</p>
+								<p
+									class="text-gray-400 first-letter:capitalize"
+									i18n="@@following">
+									abonnements
+								</p>
 							</div>
 						</div>
 					</div>
 					<!-- Public Groups -->
 					<div class="mt-10 flex flex-col items-center">
-						<h2 class="text-2xl font-semibold mb-4">Groups</h2>
+						<h2
+							class="text-2xl font-semibold mb-4 first-letter:capitalize"
+							i18n="@@groups">
+							Groups
+						</h2>
 						<app-profile-groups
 							[userGroups]="userGroups$ | async"></app-profile-groups>
 					</div>

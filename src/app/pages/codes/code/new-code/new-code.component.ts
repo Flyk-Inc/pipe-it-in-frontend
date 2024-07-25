@@ -59,6 +59,8 @@ export class NewCodeComponent implements OnInit, AfterViewChecked {
 	};
 
 	saveStringTranslated = 'Save';
+	codeInputHelperText = '';
+	codeOutputHelperText = '';
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -69,6 +71,8 @@ export class NewCodeComponent implements OnInit, AfterViewChecked {
 
 	ngOnInit() {
 		this.saveStringTranslated = $localize`:@@save.draft:save draft`;
+		this.codeInputHelperText = $localize`:@@code.input.helper:Input file type and description are optional`;
+		this.codeOutputHelperText = $localize`:@@code.output.helper:Output file type and description are optional`;
 		this.createCodeForm.controls.language.valueChanges.subscribe(language => {
 			this.editorOptions = { ...this.editorOptions, language };
 		});

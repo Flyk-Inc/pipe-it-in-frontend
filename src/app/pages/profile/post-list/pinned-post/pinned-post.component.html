@@ -3,7 +3,7 @@
 	<div class="flex justify-between items-center">
 		<div class="text-primary font-semibold flex items-center">
 			<app-icon icon="push_pin"></app-icon>
-			<span class="ml-2">Epinglé</span>
+			<span i18n="@@pinned" class="ml-2 first-letter:capitalize">Epinglé</span>
 		</div>
 		<div
 			*ngIf="isOwnProfile"
@@ -29,7 +29,8 @@
 							(click)="unpinPost()"
 							(keydown.enter)="unpinPost()"
 							tabindex="0"
-							class="block w-full text-left px-4 py-2 text-sm text-grey-3 dark:text-grey-2 hover:bg-grey-1 dark:hover:bg-grey-3">
+							i18n="@@post.unpin"
+							class="block w-full text-left px-4 py-2 text-sm text-grey-3 dark:text-grey-2 hover:bg-grey-1 dark:hover:bg-grey-3 first-letter:capitalize">
 							Désépingler le post
 						</button>
 						<button
@@ -37,7 +38,8 @@
 							(click)="deletePost(post.id)"
 							(keydown.enter)="deletePost(post.id)"
 							tabindex="0"
-							class="block w-full text-left px-4 py-2 text-sm text-grey-3 dark:text-grey-2 hover:bg-grey-1 dark:hover:bg-grey-3">
+							class="block w-full text-left px-4 py-2 text-sm text-grey-3 dark:text-grey-2 hover:bg-grey-1 dark:hover:bg-grey-3 first-letter:capitalize"
+							i18n="@@post.delete">
 							Supprimer le post
 						</button>
 					</ul>

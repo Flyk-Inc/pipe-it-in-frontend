@@ -86,6 +86,8 @@ export class CreateCodeFormComponent implements OnInit {
 	cancelStringTranslated = 'cancel';
 	editStringTranslated = 'edit';
 	private codeVersionAlreadyExistsString = 'alreadyexists';
+	codeInputHelperText = '';
+	codeOutputHelperText = '';
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -314,6 +316,8 @@ export class CreateCodeFormComponent implements OnInit {
 		this.editStringTranslated = $localize`:@@edit:edit`;
 		this.saveStringTranslated = $localize`:@@save.draft:save draft`;
 		this.codeVersionAlreadyExistsString = $localize`:@@code.version.already.exists:Code version already exists`;
+		this.codeInputHelperText = $localize`:@@code.input.helper:Input file type and description are optional`;
+		this.codeOutputHelperText = $localize`:@@code.output.helper:Output file type and description are optional`;
 	}
 
 	private setupForms() {

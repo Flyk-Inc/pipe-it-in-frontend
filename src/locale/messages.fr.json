@@ -63,6 +63,7 @@
 		"code.version.already.exists": "Une version de code avec ce titre de version existe déjà",
 		"save.draft": "sauvegarder le brouillon",
 		"post": "poster",
+		"posts": "posts",
 		"cancel": "annuler",
 		"edit": "éditer",
 		"run.test": "lancer le test",
@@ -114,5 +115,25 @@
 		"reply": "répondre",
 		"replies.hide": "masquer les réponses",
 		"replies": "réponses"
+		"followed": "suivi",
+		"following": "abonnements",
+		"follow": "suivre",
+		"unfollow": "ne plus suivre",
+		"follow-request.sent": "demande de suivi envoyée",
+		"profile.private.message": "ce profil est privé.",
+		"profile.follow.need.start": "vous devez suivre ce profil",
+		"profile.follow.need.end": "pour voir son contenu",
+		"post.write": "Écrire un post",
+		"pinned": "épinglé",
+		"groups.not-joined": "Vous n'avez pas encore rejoint de groupe",
+		"post.pin": "épingler le post",
+		"post.unpin": "désépingler le post",
+		"post.delete": "supprimer le post",
+		"code.input.helper": "code pour lire le fichier d'entrée",
+		"code.output.helper": "code pour lire le fichier de sortie",
+		"visibility": "visibilité",
+		"public": "publique",
+		"private": "privée",
+		"groups.follow-these": "suivez ces groupes"
 	}
 }
