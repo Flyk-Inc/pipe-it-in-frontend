@@ -46,6 +46,15 @@ export class SignupPageComponent {
 			Validators.required,
 		]);
 		this.signUpForm.updateValueAndValidity();
+		if (
+			this.signUpForm.controls.password.value !==
+			this.signUpForm.controls.confirmPassword.value
+		) {
+			this.notificationService.showErrorToast(
+				$localize`:@@passwords.dont.match:Passwords don't match`
+			);
+			return;
+		}
 		if (this.signUpForm.valid) {
 			const email = this.signUpForm.controls['email'].value;
 			const password = this.signUpForm.controls.password.value;

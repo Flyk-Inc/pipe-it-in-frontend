@@ -23,7 +23,7 @@ export interface navbarItem {
 	styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent implements OnInit, OnDestroy {
-	profilePictureUrl$ = '';
+	profilePictureUrl$ = 'https://picsum.photos/400';
 	loggedInUserSubscription$ = this.authenticationService.currentUserSource;
 	loggedInUser: UserDTO | null = null;
 
@@ -58,7 +58,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		this.loggedInUserSubscription$.subscribe(user => {
 			this.loggedInUser = user;
-			this.profilePictureUrl$ = fileUrl + this.loggedInUser?.profilePicture?.id;
+			if (this.loggedInUser?.profilePicture?.id) {
+				this.profilePictureUrl$ =
+					fileUrl + this.loggedInUser?.profilePicture?.id;
+				return;
+			}
 		});
 	}
 

@@ -55,6 +55,7 @@ export class PipelinePageComponent implements OnInit, OnDestroy {
 	confirmString = $localize`:@@confirm:Confirm`;
 	modifyString = $localize`:@@modify:Modify`;
 	cancelString = $localize`:@@cancel:Cancel`;
+	pipelineRunningString = $localize`:@@pipeline.running:Pipeline is running`;
 
 	createPipelineForm = this.formBuilder.nonNullable.group({
 		title: ['', Validators.required],
@@ -110,7 +111,7 @@ export class PipelinePageComponent implements OnInit, OnDestroy {
 			.runPipeline(this.pipelineId, this.fileInput.value ?? undefined)
 			.subscribe({
 				next: () => {
-					this.notificationService.showSuccessToast('Pipeline is running');
+					this.notificationService.showSuccessToast(this.pipelineRunningString);
 					this.resetFileInput();
 				},
 				error: error => {
