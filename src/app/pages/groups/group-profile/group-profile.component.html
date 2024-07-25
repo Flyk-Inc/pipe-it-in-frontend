@@ -1,87 +1,101 @@
-<app-basic-layout>
-  <ng-container *ngIf="group$ | async as group">
-    <div class="grid grow grid-cols-1 md:grid-cols-3 gap-4">
-      <div class="col-span-1 md:col-span-1 rounded-lg p-4">
-        <div class="text-center relative group">
-          <div class="relative inline-block">
-            <img
-              [src]="
-									group.profilePicture
-										? environment.backendUrl + '/files/' + group.profilePicture
-										: 'https://cdn-icons-png.freepik.com/512/10017/10017806.png'
-								"
-              alt="Group Profile Picture"
-              class="w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 rounded-full mx-auto mb-4 object-cover" />
+<div class="container mx-auto p-4">
+  <div class="flex flex-nowrap h-full">
+    <app-sidenav class="hidden sm:block w-1/5"></app-sidenav>
+    <div class="grow p-2">
+      <ng-container *ngIf="group$ | async as group">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="col-span-1 md:col-span-1 rounded-lg p-4">
+            <div class="text-center relative group">
+              <div class="relative inline-block">
+                <img
+                  [src]="
+										group.profilePicture
+											? environment.backendUrl +
+												'/files/' +
+												group.profilePicture
+											: 'https://cdn-icons-png.freepik.com/512/10017/10017806.png'
+									"
+                  alt="Group Profile Picture"
+                  class="w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 rounded-full mx-auto mb-4 object-cover" />
+              </div>
+              <h1 class="text-xl font-semibold mb-3">{{ group.name }}</h1>
+              <p class="text-gray-400 mb-2">{{ group.description }}</p>
+              <button
+                *ngIf="group.isPrivate && !isMember"
+                (click)="requestGroupAccess()"
+                class="mt-4 px-4 py-2 bg-primary text-white rounded-lg">
+                Demander à Rejoindre
+              </button>
+              <button
+                *ngIf="!group.isPrivate && !isMember"
+                (click)="joinGroup()"
+                class="mt-4 px-4 py-2 bg-primary rounded-lg">
+                Suivre
+              </button>
+              <button
+                *ngIf="isMember"
+                class="mt-4 px-4 py-2 bg-secondary text-white rounded-lg">
+                Rejoint ✓
+              </button>
+              <div class="flex flex-wrap justify-between mt-8 w-full">
+                <div class="text-center mb-4 flex-1 mx-2 min-w-[100px]">
+									<span class="text-xl font-semibold">{{
+                      group.memberCount
+                    }}</span>
+                  <p class="text-gray-400">membres</p>
+                </div>
+                <div class="text-center mb-4 flex-1 mx-2 min-w-[100px]">
+									<span class="text-xl font-semibold">{{
+                      group.postCount
+                    }}</span>
+                  <p class="text-gray-400">posts</p>
+                </div>
+                <div class="text-center flex-1 mx-2 min-w-[100px]">
+									<span class="text-xl font-semibold">{{
+                      group.createdAt | date: 'dd/MM/yyyy'
+                    }}</span>
+                  <p class="text-gray-400">créé le</p>
+                </div>
+              </div>
+            </div>
           </div>
-          <h1 class="text-xl font-semibold mb-3">{{ group.name }}</h1>
-          <p class="text-gray-400 mb-2">{{ group.description }}</p>
-          <button
-            *ngIf="group.isPrivate"
-            (click)="requestGroupAccess()"
-            class="mt-4 px-4 py-2 bg-primary text-white rounded-lg"
-          i18n="@@group.ask_join">
-            Demander à Rejoindre
-          </button>
-          <button
-            *ngIf="!group.isPrivate"
-            (click)="joinGroup()"
-            class="mt-4 px-4 py-2 bg-primary text-white rounded-lg"
-          i18n="@@join">
-            Rejoindre
-          </button>
-          <div class="flex flex-wrap justify-between mt-8 w-full">
-            <div class="text-center mb-4 flex-1 mx-2 min-w-[100px]">
-								<span class="text-xl font-semibold">{{
-                    group.memberCount
-                  }}</span>
-              <p class="text-gray-400" i18n="@@group.members">membres</p>
-            </div>
-            <div class="text-center mb-4 flex-1 mx-2 min-w-[100px]">
-              <span class="text-xl font-semibold">{{ group.postCount }}</span>
-              <p class="text-gray-400" i18n="@@posts">posts</p>
-            </div>
-            <div class="text-center flex-1 mx-2 min-w-[100px]">
-								<span class="text-xl font-semibold">{{
-                    group.createdAt | date: 'dd/MM/yyyy'
-                  }}</span>
-              <p class="text-gray-400" i18n="@@group.createdAd">créé le</p>
-            </div>
+          <div class="col-span-1 md:col-span-2 rounded-lg p-4">
+            <form [formGroup]="postForm">
+							<textarea
+                class="w-full resize-none rounded-lg outline-none border border-grey-1 dark:border-grey-3 bg-grey-bg dark:bg-grey-bg-dark p-4 placeholder:text-grey-2"
+                [formControl]="textControl"
+                rows="3"
+                i18n-placeholder="@@post.write"
+                placeholder="Écrire un post"></textarea>
+              <div class="flex justify-end gap-x-2 mt-2">
+                <app-button
+                  *ngIf="textControl.value.length"
+                  [disabled]="postForm.invalid"
+                  class="self-end"
+                  [text]="linkACode"
+                  (click)="
+										toggleCodeSelector(!displayCodeSelector)
+									"></app-button>
+                <app-button
+                  (click)="createPost()"
+                  [disabled]="postForm.invalid"
+                  class="self-end"
+                  [text]="publishText"
+                  type="submit"></app-button>
+              </div>
+            </form>
+            <app-version-selector
+              *ngIf="displayCodeSelector"
+              (versionSelected)="attachVersion($event)"
+              (close)="
+								toggleCodeSelector(!displayCodeSelector)
+							"></app-version-selector>
+            <app-group-profile-post-list
+              [posts]="posts$ | async"
+              [isAdmin]="isAdmin"></app-group-profile-post-list>
           </div>
         </div>
-      </div>
-      <div class="col-span-1 md:col-span-2 rounded-lg p-4">
-        <form [formGroup]="postForm">
-						<textarea
-              class="w-full resize-none rounded-lg outline-none border border-grey-1 dark:border-grey-3 bg-grey-bg dark:bg-grey-bg-dark p-4 placeholder:text-grey-2"
-              [formControl]="textControl"
-              rows="3"
-              i18n-placeholder="@@post.write"
-              placeholder="Écrire un post"></textarea>
-          <div class="flex justify-end gap-x-2 mt-2">
-            <app-button
-              *ngIf="textControl.value.length"
-              [disabled]="postForm.invalid"
-              class="self-end"
-              [text]="linkACode"
-              (click)="toggleCodeSelector(!displayCodeSelector)"></app-button>
-            <app-button
-              (click)="createPost()"
-              [disabled]="postForm.invalid"
-              class="self-end"
-              [text]="publishText"
-              type="submit"></app-button>
-          </div>
-        </form>
-        <app-version-selector
-          *ngIf="displayCodeSelector"
-          (versionSelected)="attachVersion($event)"
-          (close)="
-							toggleCodeSelector(!displayCodeSelector)
-						"></app-version-selector>
-        <app-group-profile-post-list
-          [posts]="posts$ | async"
-          [isAdmin]="isAdmin"></app-group-profile-post-list>
-      </div>
+      </ng-container>
     </div>
-  </ng-container>
-</app-basic-layout>
+  </div>
+</div>
