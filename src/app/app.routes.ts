@@ -53,6 +53,11 @@ export const routes: Routes = [
 		],
 	},
 	{
+		path: 'post/:postId',
+		loadChildren: () =>
+			import('./pages/post-detail/routes').then(m => m.routes),
+	},
+	{
 		path: '**',
 		redirectTo: 'home',
 	},

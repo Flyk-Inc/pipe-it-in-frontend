@@ -111,6 +111,10 @@
 		"pipelines": "pipelines",
 		"code": "code",
 		"pipeline": "pipeline",
+		"on": "le",
+		"reply": "répondre",
+		"replies.hide": "masquer les réponses",
+		"replies": "réponses"
 		"followed": "suivi",
 		"following": "abonnements",
 		"follow": "suivre",

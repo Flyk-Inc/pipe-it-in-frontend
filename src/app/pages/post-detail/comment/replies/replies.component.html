@@ -1,0 +1,52 @@
+<div
+	class="mb-1 rounded-lg border border-grey-1 dark:border-none p-4 bg-light-card-bg dark:bg-dark-card-bg max-w-full">
+	<div class="flex justify-between items-center space-x-4">
+		<div class="flex items-center space-x-4">
+			<a class="h-fit" [routerLink]="['/profile', comment.user.id]">
+				<img
+					class="w-8 h-8 rounded-full object-cover"
+					[src]="
+						comment.user.profilePicture
+							? environment.backendUrl +
+								'/files/' +
+								comment.user.profilePicture.id
+							: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png'
+					"
+					alt="User avatar" />
+			</a>
+			<div>
+				<a class="h-fit" [routerLink]="['/profile', comment.user.id]">
+					<p class="font-semibold">
+						{{ comment.user.firstName + ' ' + comment.user.lastName }}
+					</p>
+					<p class="text-gray-500">&#64;{{ comment.user.username }}</p>
+				</a>
+			</div>
+		</div>
+		<p class="text-gray-500 flex gap-2">
+			<span i18n="@@on">on</span>{{ comment.createdAt | date: 'medium' }}
+		</p>
+	</div>
+	<p class="mt-2 break-words">{{ comment.content }}</p>
+	<div class="flex justify-between mt-2">
+		<div class="space-x-2"></div>
+		<div class="flex space-x-4">
+			<span
+				class="flex items-center gap-x-1 cursor-pointer"
+				(click)="onLikeComment(comment.id)"
+				(keyup.enter)="onLikeComment(comment.id)"
+				tabindex="0">
+				<app-icon [icon]="'thumb_up'" [filled]="isLiked"></app-icon>
+				<span>{{ likeCount || 0 }}</span>
+			</span>
+			<span
+				class="flex items-center gap-x-1 cursor-pointer"
+				(click)="onDislikeComment(comment.id)"
+				(keyup.enter)="onDislikeComment(comment.id)"
+				tabindex="0">
+				<app-icon [icon]="'thumb_down'" [filled]="isDisliked"></app-icon>
+				<span>{{ dislikeCount || 0 }}</span>
+			</span>
+		</div>
+	</div>
+</div>

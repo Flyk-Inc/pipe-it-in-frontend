@@ -1,0 +1,81 @@
+<div class="w-full flex flex-nowrap h-full">
+	<app-sidenav class="hidden sm:block w-1/5"></app-sidenav>
+	<div class="w-full grow p-4 space-y-8">
+		<ng-container *ngIf="post$ | async as post">
+			<div
+				class="w-full rounded-lg border border-grey-1 dark:border-none p-4 bg-light-card-bg dark:bg-dark-card-bg">
+				<div class="w-full flex flex-nowrap gap-x-2">
+					<a class="h-fit" [routerLink]="['/profile', post.user.id]">
+						<img
+							alt="Rounded avatar"
+							class="w-12 h-12 rounded-full shrink"
+							height="12"
+							[src]="
+								post.user.profilePicture
+									? environment.backendUrl +
+										'/files/' +
+										post.user.profilePicture.id
+									: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png'
+							"
+							width="12" />
+					</a>
+					<div class="w-full grow space-y-2">
+						<a class="h-fit" [routerLink]="['/profile', post.user.id]">
+							<p class="post-mini-name text-secondary">
+								{{ post.user.firstName + ' ' + post.user.lastName }}
+							</p>
+							<p class="post-mini-pseudo text-grey-3 dark:text-grey-2">
+								&#64;{{ post.user.username }}
+							</p>
+						</a>
+						<p>{{ post.text }}</p>
+						@if (post.version) {
+							<pre
+								class="w-full"><code class="text-xs w-full" [highlightAuto]="post.version.codeContent"
+                                        lineNumbers></code></pre>
+						}
+						<div class="flex justify-end gap-x-3">
+							<span
+								class="flex items-center gap-x-1 cursor-pointer"
+								(click)="onLikePost(post.id)"
+								(keyup.enter)="onLikePost(post.id)"
+								tabindex="0">
+								<app-icon [icon]="'thumb_up'" [filled]="isLiked"></app-icon>
+								<span>{{ likeCount }}</span>
+							</span>
+							<span class="flex items-center gap-x-1">
+								<app-icon icon="comment"></app-icon>
+								<span>{{ post.comments.length }}</span>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</ng-container>
+
+		<div class="space-y-4">
+			<form [formGroup]="commentForm">
+				<textarea
+					class="w-full resize-none rounded-lg outline-none border border-grey-1 dark:border-grey-3 bg-grey-bg dark:bg-grey-bg-dark p-4 placeholder:text-grey-2"
+					[formControl]="textControl"
+					rows="3"
+					placeholder="Commenter..."></textarea>
+				<div class="flex justify-end gap-x-2">
+					<app-button
+						(click)="createComment()"
+						[disabled]="commentForm.invalid"
+						class="self-end"
+						[text]="publishText"
+						type="submit"></app-button>
+				</div>
+			</form>
+			<app-comment
+				*ngFor="let comment of comments$ | async"
+				[postId]="postId"
+				[comment]="comment"></app-comment>
+		</div>
+	</div>
+	<div class="border-s border-secondary hidden sm:block w-1/5">
+		<app-popular-groups></app-popular-groups>
+	</div>
+</div>

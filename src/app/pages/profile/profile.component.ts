@@ -13,9 +13,9 @@ import {
 	selectProfileUser,
 } from '../../store/profile/profile.selectors';
 import {
-	loadProfile,
 	loadProfileGroups,
 	loadProfilePosts,
+	refreshProfile,
 	setProfilePictureUrl,
 	updateProfile,
 	uploadProfilePicture,
@@ -59,7 +59,7 @@ export class ProfileComponent implements OnInit {
 	constructor(private store: Store) {}
 
 	ngOnInit(): void {
-		this.store.dispatch(loadProfile());
+		this.store.dispatch(refreshProfile());
 
 		this.loggedInUser$ = this.store.select(selectProfileUser);
 		this.profilePictureUrl$ = this.store.select(selectProfilePictureUrl);
