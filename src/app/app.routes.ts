@@ -62,6 +62,11 @@ export const routes: Routes = [
 		loadChildren: () => import('./pages/groups/routes').then(m => m.routes),
 	},
 	{
+		path: 'search',
+		loadChildren: () =>
+			import('./pages/search-home/routes').then(m => m.routes),
+	},
+	{
 		path: '**',
 		redirectTo: 'home',
 	},

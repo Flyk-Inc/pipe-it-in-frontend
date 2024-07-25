@@ -11,6 +11,7 @@ import { Store } from '@ngrx/store';
 import { selectProfilePictureUrl } from '../../../store/profile/profile.selectors';
 import { setProfilePictureUrl } from '../../../store/profile/profile.actions';
 import { environment } from '../../../../environments/environment';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
 	selector: 'app-header',
@@ -21,6 +22,7 @@ import { environment } from '../../../../environments/environment';
 		NgOptimizedImage,
 		IconComponent,
 		UnderlineComponent,
+		ReactiveFormsModule,
 	],
 	templateUrl: './header.component.html',
 	styleUrl: './header.component.scss',
@@ -33,6 +35,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 	isDarkMode: boolean = false;
 	private themeSubscription!: Subscription;
 	profilePictureUrl$!: Observable<string | null>;
+	searchField = new FormControl('', { nonNullable: true });
 
 	constructor(
 		protected authenticationService: AuthenticationService,
@@ -74,5 +77,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
 		if (this.themeSubscription) {
 			this.themeSubscription.unsubscribe();
 		}
+	}
+
+	searchResources() {
+		if (!this.searchField.value) {
+			return;
+		}
+		this.router
+			.navigate(['/search'], { queryParams: { page: this.searchField.value } })
+			.then(success => {
+				if (!success) {
+					console.error('Navigation has failed!');
+				}
+			})
+			.catch(err => {
+				console.error('Navigation error:', err);
+			});
 	}
 }

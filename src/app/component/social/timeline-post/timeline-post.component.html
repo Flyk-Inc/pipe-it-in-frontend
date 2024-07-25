@@ -1,5 +1,4 @@
-<a
-	routerLink="/post/{{ post.id }}"
+<div
 	class="rounded-lg border border-grey-1 dark:border-none p-4 bg-light-card-bg dark:bg-dark-card-bg grid-cols-1 grid gap-y-2">
 	<div class="flex flex-nowrap gap-x-2">
 		<a class="h-fit z-10" routerLink="/profile/{{ post.user.id }}">
@@ -8,9 +7,9 @@
 				class="w-12 h-12 rounded-full shrink"
 				height="12"
 				[ngSrc]="
-					post.user.profilePicture
+					post.user.profilePicture && post.user.profilePicture.id
 						? environment.backendUrl + '/files/' + post.user.profilePicture.id
-						: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png'
+						: 'https://picsum.photos/200'
 				"
 				width="12" />
 		</a>
@@ -44,4 +43,4 @@
 		<app-version-minified-link
 			[version]="post.version"></app-version-minified-link>
 	}
-</a>
+</div>

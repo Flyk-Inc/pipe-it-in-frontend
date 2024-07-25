@@ -38,6 +38,7 @@ import { SocialService } from '../../service/social.service';
 import { HighlightLineNumbers } from 'ngx-highlightjs/line-numbers';
 import { HighlightAuto } from 'ngx-highlightjs';
 import { CommentComponent } from './comment/comment.component';
+import { BasicLayoutComponent } from '../../component/layout/basic-layout/basic-layout.component';
 
 @Component({
 	selector: 'app-post-detail',
@@ -59,6 +60,7 @@ import { CommentComponent } from './comment/comment.component';
 		HighlightLineNumbers,
 		HighlightAuto,
 		CommentComponent,
+		BasicLayoutComponent,
 	],
 	templateUrl: './post-detail.component.html',
 	styleUrl: './post-detail.component.scss',
