@@ -1,0 +1,109 @@
+<div
+	class="mb-1 rounded-lg border border-grey-1 dark:border-none p-4 bg-light-card-bg dark:bg-dark-card-bg max-w-full">
+	<div class="flex justify-between items-center space-x-4">
+		<div class="flex items-center space-x-4">
+			<a class="h-fit" [routerLink]="['/profile', comment.user.id]">
+				<img
+					class="w-8 h-8 rounded-full object-cover"
+					[src]="
+						comment.user.profilePicture
+							? environment.backendUrl +
+								'/files/' +
+								comment.user.profilePicture.id
+							: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png'
+					"
+					alt="User avatar" />
+			</a>
+			<div>
+				<a class="h-fit" [routerLink]="['/profile', comment.user.id]">
+					<p class="font-semibold">
+						{{ comment.user.firstName + ' ' + comment.user.lastName }}
+					</p>
+					<p class="text-gray-500">&#64;{{ comment.user.username }}</p>
+				</a>
+			</div>
+		</div>
+		<p class="text-gray-500 flex gap-2">
+			<span i18n="@@on">on</span>{{ comment.createdAt | date: 'medium' }}
+		</p>
+	</div>
+	<p class="mt-2 break-words">{{ comment.content }}</p>
+	<div class="flex justify-between mt-2">
+		<div class="space-x-2">
+			<button
+				class="bg-primary text-white px-3 py-1 rounded first-letter:capitalize"
+				(click)="toggleReplying()"
+				i18n="@@reply">
+				Répondre
+			</button>
+		</div>
+		<div class="flex space-x-2">
+			<span
+				class="flex items-center gap-x-1 cursor-pointer"
+				(click)="onLikeComment(comment.id)"
+				(keyup.enter)="onLikeComment(comment.id)"
+				tabindex="0">
+				<app-icon [icon]="'thumb_up'" [filled]="isLiked"></app-icon>
+				<span>{{ likeCount || 0 }}</span>
+			</span>
+			<span
+				class="flex items-center gap-x-1 cursor-pointer"
+				(click)="onDislikeComment(comment.id)"
+				(keyup.enter)="onDislikeComment(comment.id)"
+				tabindex="0">
+				<app-icon [icon]="'thumb_down'" [filled]="isDisliked"></app-icon>
+				<span>{{ dislikeCount || 0 }}</span>
+			</span>
+		</div>
+	</div>
+	<div *ngIf="isReplying" class="mt-2">
+		<textarea
+			class="w-full resize-none rounded-lg outline-none border border-grey-1 dark:border-grey-3 bg-grey-bg dark:bg-grey-bg-dark p-4 placeholder:text-grey-2"
+			[formControl]="textControl"
+			rows="1"
+			placeholder="Votre réponse..."></textarea>
+		<div class="flex justify-end gap-x-2 mt-2">
+			<app-button
+				(click)="onSubmitReply()"
+				[disabled]="replyForm.invalid"
+				class="self-end"
+				size="small"
+				[text]="publishText"
+				type="submit"></app-button>
+		</div>
+	</div>
+	<div
+		*ngIf="comment.replies && comment.replies.length > 0"
+		class="flex justify-start mt-2 space-x-2">
+		<button
+			class="flex items-center px-3 py-1 rounded"
+			(click)="toggleReplies()">
+			<span
+				[ngClass]="{ 'rotate-90': isExpanded, 'rotate-0': !isExpanded }"
+				class="transform transition-transform duration-200">
+				<app-icon icon="chevron_right"></app-icon>
+			</span>
+			<span class="flex gap-2">
+				@if (isExpanded) {
+					<span
+						class="first-letter:capitalize inline-block"
+						i18n="@@replies.hide"
+						>lalala</span
+					>
+				} @else {
+					<span class="first-letter:capitalize inline-block" i18n="@@replies"
+						>Réponses</span
+					>
+				}
+				<span>({{ comment.replies.length }})</span></span
+			>
+		</button>
+	</div>
+	<div *ngIf="isExpanded">
+		<app-replies
+			*ngFor="let reply of comment.replies"
+			[comment]="reply"
+			[postId]="postId"
+			class="mt-2"></app-replies>
+	</div>
+</div>

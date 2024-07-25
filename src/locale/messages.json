@@ -113,6 +113,10 @@
 		"following": "following",
 		"follow": "follow",
 		"unfollow": "unfollow",
+		"on": "on",
+		"reply": "reply",
+		"replies.hide": "hide replies",
+		"replies": "replies"
 		"follow-request.sent": "follow request sent",
 		"profile.private.message": "this profile is private.",
 		"profile.follow.need.start": "you need to follow",
