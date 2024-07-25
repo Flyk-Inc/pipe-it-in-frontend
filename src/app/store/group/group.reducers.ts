@@ -3,6 +3,8 @@ import { GroupState, initialState } from './group.state';
 import {
 	createGroupFailure,
 	createGroupSuccess,
+	leaveGroupFailure,
+	leaveGroupSuccess,
 	loadGroups,
 	loadGroupsFailure,
 	loadGroupsSuccess,
@@ -32,12 +34,21 @@ export const groupReducer = createReducer(
 			error,
 		})
 	),
-	on(createGroupSuccess, (state, { group }) => ({
+	on(createGroupSuccess, (state, { group }): GroupState => ({
 		...state,
 		groups: [...state.groups, group],
 		error: null,
 	})),
-	on(createGroupFailure, (state, { error }) => ({
+	on(createGroupFailure, (state, { error }): GroupState => ({
+		...state,
+		error,
+	})),
+	on(leaveGroupSuccess, (state, { groupId }): GroupState => ({
+		...state,
+		groups: state.groups.filter(group => group.id !== groupId),
+		error: null,
+	})),
+	on(leaveGroupFailure, (state, { error }): GroupState => ({
 		...state,
 		error,
 	}))

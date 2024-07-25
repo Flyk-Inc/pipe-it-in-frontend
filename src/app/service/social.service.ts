@@ -269,4 +269,10 @@ export class SocialService {
 			group
 		);
 	}
+
+	leaveGroup(groupId: number): Observable<void> {
+		return this.httpClient.delete<void>(
+			`${environment.backendUrl}/groups/${groupId}/leave`
+		);
+	}
 }

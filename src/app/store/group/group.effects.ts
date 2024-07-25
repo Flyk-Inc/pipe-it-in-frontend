@@ -35,6 +35,22 @@ export class GroupEffects {
 		);
 	});
 
+	leaveGroup$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(GroupActions.leaveGroup),
+			mergeMap(action =>
+				this.socialService.leaveGroup(action.groupId).pipe(
+					map(() =>
+						GroupActions.leaveGroupSuccess({ groupId: action.groupId })
+					),
+					catchError(error =>
+						of(GroupActions.leaveGroupFailure({ error: error.message }))
+					)
+				)
+			)
+		);
+	});
+
 	constructor(
 		private actions$: Actions,
 		private socialService: SocialService
