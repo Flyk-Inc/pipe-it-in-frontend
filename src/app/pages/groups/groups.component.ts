@@ -16,6 +16,7 @@ import {
 	ReactiveFormsModule,
 	Validators,
 } from '@angular/forms';
+import { BasicLayoutComponent } from '../../component/layout/basic-layout/basic-layout.component';
 
 @Component({
 	selector: 'app-groups',
@@ -29,6 +30,7 @@ import {
 		NgForOf,
 		ReactiveFormsModule,
 		NgIf,
+		BasicLayoutComponent,
 	],
 	templateUrl: './groups.component.html',
 	styleUrls: ['./groups.component.scss'],

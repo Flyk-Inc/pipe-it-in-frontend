@@ -137,7 +137,7 @@
 		"private": "privée",
 		"groups.follow-these": "suivez ces groupes",
 		"invalid-credentials": "informations de connexions invalides",
-		"passwords.dont.match": "les mots de passe ne correspondent pas"
+		"passwords.dont.match": "les mots de passe ne correspondent pas",
     "group.myGroups": "Mes groupes",
     "group.create": "Créer un groupe",
     "group.members": "Membre(s):",
@@ -145,6 +145,9 @@
     "group.joinedAt": "Rejoint le :",
     "group.name": "Nom du groupe",
     "group.private": "Groupe privé",
-    "create": "Créer"
+    "create": "Créer",
+    "post.none.available": "Aucun post disponible",
+    "group.ask_join": "Demander à rejoindre",
+    "join": "Rejoindre"
 	}
 }

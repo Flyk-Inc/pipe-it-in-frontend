@@ -135,7 +135,7 @@
 		"private": "private",
 		"groups.follow-these": "follow these groups",
 		"invalid-credentials": "invalid credentials",
-		"passwords.dont.match": "passwords don't match"
+		"passwords.dont.match": "passwords don't match",
     "group.myGroups": "My groups",
     "group.create": "Create a group",
     "group.members": "Member(s):",
@@ -143,6 +143,9 @@
     "group.joinedAt": "Joined date:",
     "group.name": "Group name",
     "group.private": "Private group",
-    "create": "Create"
-	}
+    "create": "Create",
+    "post.none.available": "No posts available",
+    "group.ask_join": "Join this group",
+    "join": "Join"
+  }
 }

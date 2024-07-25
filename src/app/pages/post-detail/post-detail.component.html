@@ -1,7 +1,7 @@
 <app-basic-layout>
 	<ng-container *ngIf="post$ | async as post">
 		<div
-			class="w-full rounded-lg border border-grey-1 dark:border-none p-4 bg-light-card-bg dark:bg-dark-card-bg">
+			class="w-full grow rounded-lg border border-grey-1 dark:border-none p-4 bg-light-card-bg dark:bg-dark-card-bg">
 			<div class="w-full flex flex-nowrap gap-x-2">
 				<a class="h-fit" [routerLink]="['/profile', post.user.id]">
 					<img

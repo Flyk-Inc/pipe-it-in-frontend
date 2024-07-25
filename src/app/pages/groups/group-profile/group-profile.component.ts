@@ -30,6 +30,7 @@ import {
 } from '@angular/forms';
 import { VersionSelectorComponent } from '../../../component/code/version-selector/version-selector.component';
 import { Version } from '../../../models/code.model';
+import { BasicLayoutComponent } from '../../../component/layout/basic-layout/basic-layout.component';
 
 @Component({
 	selector: 'app-group-profile',
@@ -44,6 +45,7 @@ import { Version } from '../../../models/code.model';
 		ButtonComponent,
 		ReactiveFormsModule,
 		VersionSelectorComponent,
+		BasicLayoutComponent,
 	],
 	templateUrl: './group-profile.component.html',
 	styleUrls: ['./group-profile.component.scss'],
