@@ -78,6 +78,11 @@ export class LoginPageComponent implements OnInit {
 			case 'user.not.activated':
 				this.notificationService.showErrorToast(this.userNotActivatedString);
 				break;
+			case 'invalid-credentials':
+				this.notificationService.showErrorToast(
+					$localize`:@@invalid-credentials:Invalid credentials`
+				);
+				break;
 			default:
 				this.notificationService.showErrorToast(errorMessage);
 				break;

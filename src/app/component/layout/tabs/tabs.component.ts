@@ -36,7 +36,7 @@ export class TabsComponent implements OnInit {
 		const currentRoute = this.router.url;
 		if (!currentRoute) return;
 		const activeTab = this.tabs.find(tab => {
-			return currentRoute.includes(tab.link ?? '');
+			return currentRoute == tab.link;
 		});
 		if (activeTab) this.activeTabId = activeTab.id;
 	}

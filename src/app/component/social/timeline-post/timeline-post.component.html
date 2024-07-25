@@ -1,7 +1,7 @@
 <div
 	class="rounded-lg border border-grey-1 dark:border-none p-4 bg-light-card-bg dark:bg-dark-card-bg grid-cols-1 grid gap-y-2">
 	<div class="flex flex-nowrap gap-x-2">
-		<a class="h-fit z-10" routerLink="/profile/{{ post.user.id }}">
+		<a class="h-12 shrink-0 w-12 z-10" routerLink="/profile/{{ post.user.id }}">
 			<img
 				alt="Rounded avatar"
 				class="w-12 h-12 rounded-full shrink"
@@ -9,7 +9,7 @@
 				[ngSrc]="
 					post.user.profilePicture && post.user.profilePicture.id
 						? environment.backendUrl + '/files/' + post.user.profilePicture.id
-						: 'https://picsum.photos/200'
+						: 'https://picsum.photos/400'
 				"
 				width="12" />
 		</a>

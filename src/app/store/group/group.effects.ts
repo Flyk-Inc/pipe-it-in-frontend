@@ -26,7 +26,7 @@ export class GroupEffects {
 			ofType(GroupActions.createGroup),
 			mergeMap(action =>
 				this.socialService.createGroup(action.group).pipe(
-					map(group => GroupActions.createGroupSuccess({ group })),
+					map(() => GroupActions.loadGroups()),
 					catchError(error =>
 						of(GroupActions.createGroupFailure({ error: error.message }))
 					)

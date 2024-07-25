@@ -79,6 +79,7 @@
 		"code.create": "Créer un code",
 		"code.yours-only": "Vos codes seulement",
 		"pipeline.create": "Créer une pipeline",
+		"pipeline.running": "Pipeline lancée correctement",
 		"step": "étape",
 		"steps": "étapes",
 		"pipeline.title": "pipeline's title",
@@ -134,6 +135,8 @@
 		"visibility": "visibilité",
 		"public": "publique",
 		"private": "privée",
-		"groups.follow-these": "suivez ces groupes"
+		"groups.follow-these": "suivez ces groupes",
+		"invalid-credentials": "informations de connexions invalides",
+		"passwords.dont.match": "les mots de passe ne correspondent pas"
 	}
 }
