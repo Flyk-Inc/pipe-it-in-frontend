@@ -23,7 +23,9 @@
 				</a>
 			</div>
 		</div>
-		<p class="text-gray-500">{{ comment.createdAt | date: 'le dd/MM/yyyy' }}</p>
+		<p class="text-gray-500 flex gap-2">
+			<span i18n="@@on">on</span>{{ comment.createdAt | date: 'medium' }}
+		</p>
 	</div>
 	<p class="mt-2 break-words">{{ comment.content }}</p>
 	<div class="flex justify-between mt-2">

@@ -1,13 +1,10 @@
 <div class="w-full flex flex-nowrap h-full">
 	<app-sidenav class="hidden sm:block w-1/5"></app-sidenav>
-	<div class="grow p-4 space-y-8">
+	<div class="w-full grow p-4 space-y-8">
 		<ng-container *ngIf="post$ | async as post">
-			<h2 class="text-xl font-semibold">
-				Post de &#64;{{ post.user.username }}
-			</h2>
 			<div
-				class="rounded-lg border border-grey-1 dark:border-none p-4 bg-light-card-bg dark:bg-dark-card-bg">
-				<div class="flex flex-nowrap gap-x-2">
+				class="w-full rounded-lg border border-grey-1 dark:border-none p-4 bg-light-card-bg dark:bg-dark-card-bg">
+				<div class="w-full flex flex-nowrap gap-x-2">
 					<a class="h-fit" [routerLink]="['/profile', post.user.id]">
 						<img
 							alt="Rounded avatar"
@@ -22,7 +19,7 @@
 							"
 							width="12" />
 					</a>
-					<div class="grow space-y-2">
+					<div class="w-full grow space-y-2">
 						<a class="h-fit" [routerLink]="['/profile', post.user.id]">
 							<p class="post-mini-name text-secondary">
 								{{ post.user.firstName + ' ' + post.user.lastName }}
@@ -33,7 +30,9 @@
 						</a>
 						<p>{{ post.text }}</p>
 						@if (post.version) {
-							<pre><code class="text-xs" [highlightAuto]="post.version.codeContent" lineNumbers></code></pre>
+							<pre
+								class="w-full"><code class="text-xs w-full" [highlightAuto]="post.version.codeContent"
+                                        lineNumbers></code></pre>
 						}
 						<div class="flex justify-end gap-x-3">
 							<span

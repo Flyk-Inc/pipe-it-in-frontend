@@ -109,6 +109,10 @@
 		"codes": "codes",
 		"pipelines": "pipelines",
 		"code": "code",
-		"pipeline": "pipeline"
+		"pipeline": "pipeline",
+		"on": "le",
+		"reply": "répondre",
+		"replies.hide": "masquer les réponses",
+		"replies": "réponses"
 	}
 }

@@ -23,14 +23,17 @@
 				</a>
 			</div>
 		</div>
-		<p class="text-gray-500">{{ comment.createdAt | date: 'le dd/MM/yyyy' }}</p>
+		<p class="text-gray-500 flex gap-2">
+			<span i18n="@@on">on</span>{{ comment.createdAt | date: 'medium' }}
+		</p>
 	</div>
 	<p class="mt-2 break-words">{{ comment.content }}</p>
 	<div class="flex justify-between mt-2">
 		<div class="space-x-2">
 			<button
-				class="bg-secondary text-white px-3 py-1 rounded"
-				(click)="toggleReplying()">
+				class="bg-primary text-white px-3 py-1 rounded first-letter:capitalize"
+				(click)="toggleReplying()"
+				i18n="@@reply">
 				Répondre
 			</button>
 		</div>
@@ -80,9 +83,20 @@
 				class="transform transition-transform duration-200">
 				<app-icon icon="chevron_right"></app-icon>
 			</span>
-			{{ isExpanded ? 'Masquer les réponses' : 'Réponses' }} ({{
-				comment.replies.length
-			}})
+			<span class="flex gap-2">
+				@if (isExpanded) {
+					<span
+						class="first-letter:capitalize inline-block"
+						i18n="@@replies.hide"
+						>lalala</span
+					>
+				} @else {
+					<span class="first-letter:capitalize inline-block" i18n="@@replies"
+						>Réponses</span
+					>
+				}
+				<span>({{ comment.replies.length }})</span></span
+			>
 		</button>
 	</div>
 	<div *ngIf="isExpanded">

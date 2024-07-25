@@ -45,7 +45,7 @@ export class CommentComponent implements OnInit {
 	@Input() postId!: number;
 	@Input() comment!: PostComment;
 	isReplying = false;
-	isExpanded: boolean = false;
+	isExpanded: boolean = true;
 	isLiked: boolean = false;
 	isDisliked: boolean = false;
 	likeCount: number = 0;
@@ -59,6 +59,8 @@ export class CommentComponent implements OnInit {
 	});
 
 	publishText = $localize`:@@publish:Publish`;
+	repliesText = $localize`:@@replies:Replies`;
+	repliesHideText = $localize`:@@replies.hide:Hide replies`;
 
 	constructor(
 		private store: Store,

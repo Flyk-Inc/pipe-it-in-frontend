@@ -110,6 +110,10 @@
 		"pipeline": "Pipeline",
 		"following": "following",
 		"follow": "follow",
-		"unfollow": "unfollow"
+		"unfollow": "unfollow",
+		"on": "on",
+		"reply": "reply",
+		"replies.hide": "hide replies",
+		"replies": "replies"
 	}
 }

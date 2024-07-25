@@ -311,8 +311,8 @@ export class SocialService {
 			);
 	}
 
-	reactToComment(commentId: number, isLike: boolean): Observable<void> {
-		return this.httpClient.post<void>(
+	reactToComment(commentId: number, isLike: boolean) {
+		return this.httpClient.post<{ message: string; comment: PostComment }>(
 			`${this.backendUrl}/comments/${commentId}/react`,
 			{ isLike }
 		);

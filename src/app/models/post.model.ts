@@ -38,6 +38,7 @@ export interface PostComment {
 		username: string;
 		profilePicture?: { id: string };
 	};
+	post: TimelinePost;
 	parent: PostComment;
 	content: string;
 	createdAt: Date;

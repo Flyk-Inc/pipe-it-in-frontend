@@ -6,19 +6,19 @@ import { TimelinePost } from '../../models/post.model';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import {
-  selectPinnedPost,
-  selectProfileGroups,
-  selectProfilePictureUrl,
-  selectProfilePosts,
-  selectProfileUser,
+	selectPinnedPost,
+	selectProfileGroups,
+	selectProfilePictureUrl,
+	selectProfilePosts,
+	selectProfileUser,
 } from '../../store/profile/profile.selectors';
 import {
-  loadProfileGroups,
-  loadProfilePosts,
-  refreshProfile,
-  setProfilePictureUrl,
-  updateProfile,
-  uploadProfilePicture,
+	loadProfileGroups,
+	loadProfilePosts,
+	refreshProfile,
+	setProfilePictureUrl,
+	updateProfile,
+	uploadProfilePicture,
 } from '../../store/profile/profile.actions';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { PostListComponent } from './post-list/post-list.component';

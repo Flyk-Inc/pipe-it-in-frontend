@@ -67,7 +67,7 @@ export const postReducer = createReducer(
 		createCommentSuccess,
 		(state, { comment }): PostState => ({
 			...state,
-			comments: [...state.comments, comment],
+			comments: [comment, ...state.comments],
 			error: null,
 		})
 	),
