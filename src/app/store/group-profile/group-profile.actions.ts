@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { Group, GroupRequest } from '../../models/group.model';
-import { TimelinePost } from '../../models/post.model';
+import { CreatePostDto, TimelinePost } from '../../models/post.model';
 
 // Load Group
 export const loadGroup = createAction(
@@ -63,5 +63,20 @@ export const loadGroupPostsSuccess = createAction(
 
 export const loadGroupPostsFailure = createAction(
 	'[Group] Load Group Posts Failure',
+	props<{ error: string }>()
+);
+
+export const createPost = createAction(
+	'[Group] Create Post',
+	props<{ createPostDTO: CreatePostDto; groupId: number }>()
+);
+
+export const createPostSuccess = createAction(
+	'[Group] Create Post Success',
+	props<{ post: TimelinePost }>()
+);
+
+export const createPostFailure = createAction(
+	'[Group] Create Post Failure',
 	props<{ error: string }>()
 );

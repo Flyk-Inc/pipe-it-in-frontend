@@ -55,7 +55,39 @@
 						</div>
 					</div>
 					<div class="col-span-1 md:col-span-2 rounded-lg p-4">
-						<app-post-list [posts]="posts$ | async"></app-post-list>
+						<form [formGroup]="postForm">
+							<textarea
+								class="w-full resize-none rounded-lg outline-none border border-grey-1 dark:border-grey-3 bg-grey-bg dark:bg-grey-bg-dark p-4 placeholder:text-grey-2"
+								[formControl]="textControl"
+								rows="3"
+								i18n-placeholder="@@post.write"
+								placeholder="Écrire un post"></textarea>
+							<div class="flex justify-end gap-x-2 mt-2">
+								<app-button
+									*ngIf="textControl.value.length"
+									[disabled]="postForm.invalid"
+									class="self-end"
+									[text]="linkACode"
+									(click)="
+										toggleCodeSelector(!displayCodeSelector)
+									"></app-button>
+								<app-button
+									(click)="createPost()"
+									[disabled]="postForm.invalid"
+									class="self-end"
+									[text]="publishText"
+									type="submit"></app-button>
+							</div>
+						</form>
+						<app-version-selector
+							*ngIf="displayCodeSelector"
+							(versionSelected)="attachVersion($event)"
+							(close)="
+								toggleCodeSelector(!displayCodeSelector)
+							"></app-version-selector>
+						<app-group-profile-post-list
+							[posts]="posts$ | async"
+							[isAdmin]="isAdmin"></app-group-profile-post-list>
 					</div>
 				</div>
 			</ng-container>

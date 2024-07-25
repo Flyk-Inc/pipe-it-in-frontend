@@ -78,6 +78,20 @@ export class GroupProfileEffects {
 		);
 	});
 
+	createPost$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(GroupProfileActions.createPost),
+			mergeMap(action =>
+				this.socialService.createPost(action.createPostDTO).pipe(
+					map(post => GroupProfileActions.createPostSuccess({ post })),
+					catchError(error =>
+						of(GroupProfileActions.createPostFailure({ error: error.message }))
+					)
+				)
+			)
+		);
+	});
+
 	constructor(
 		private actions$: Actions,
 		private socialService: SocialService

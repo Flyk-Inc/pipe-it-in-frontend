@@ -5,7 +5,9 @@ export interface Group {
 	name: string;
 	description?: string;
 	isPrivate: boolean;
-	profilePicture?: number;
+	profilePicture?: {
+		id: string;
+	};
 	pinnedPost?: number;
 	creatorId: number;
 	creator: {

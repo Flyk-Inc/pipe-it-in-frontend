@@ -390,8 +390,18 @@ export class SocialService {
 	}
 
 	getGroupPosts(groupId: number): Observable<TimelinePost[]> {
-		return this.httpClient.get<TimelinePost[]>(
-			`${environment.backendUrl}/posts/group/${groupId}`
-		);
+		return this.httpClient
+			.get<
+				CursoredRessource<TimelinePost>
+			>(`${this.backendUrl}/posts/group/${groupId}`)
+			.pipe(
+				map(response => response.data), // Ensure this maps to an array of TimelinePost
+				catchError(error => {
+					console.error('Error fetching group profile posts', error);
+					return throwError(
+						() => new Error(error.message || 'An error occurred')
+					);
+				})
+			);
 	}
 }
