@@ -2,15 +2,15 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import {
-	CreatePostDto,
-	TimelinePost,
-	PostComment,
 	CreateCommentDTO,
+	CreatePostDto,
+	PostComment,
+	TimelinePost,
 } from '../models/post.model';
 import { CursoredRessource } from '../models/utils';
 import { map, Observable, Subject, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { CreateGroupDTO, Group } from '../models/group.model';
+import { CreateGroupDTO, Group, GroupRequest } from '../models/group.model';
 import { UserDTO } from '../auth/DTO/user.dto';
 
 @Injectable({
@@ -366,6 +366,32 @@ export class SocialService {
 	leaveGroup(groupId: number): Observable<void> {
 		return this.httpClient.delete<void>(
 			`${environment.backendUrl}/groups/${groupId}/leave`
+		);
+	}
+
+	getGroup(groupId: number): Observable<Group> {
+		return this.httpClient.get<Group>(
+			`${environment.backendUrl}/groups/${groupId}`
+		);
+	}
+
+	joinGroup(groupId: number): Observable<void> {
+		return this.httpClient.post<void>(
+			`${environment.backendUrl}/groups/${groupId}/join`,
+			{}
+		);
+	}
+
+	requestGroupAccess(groupId: number): Observable<GroupRequest> {
+		return this.httpClient.post<GroupRequest>(
+			`${environment.backendUrl}/groups/${groupId}/request-access`,
+			{}
+		);
+	}
+
+	getGroupPosts(groupId: number): Observable<TimelinePost[]> {
+		return this.httpClient.get<TimelinePost[]>(
+			`${environment.backendUrl}/posts/group/${groupId}`
 		);
 	}
 }

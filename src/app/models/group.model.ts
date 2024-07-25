@@ -1,3 +1,5 @@
+import { UserDTO } from '../auth/DTO/user.dto';
+
 export interface Group {
 	id: number;
 	name: string;
@@ -13,8 +15,16 @@ export interface Group {
 	};
 	members: GroupMember[];
 	memberCount: number;
+	postCount: number;
+	receivedGroupRequests: GroupRequest[];
 	createdAt: Date;
 	updatedAt: Date;
+}
+
+export interface GroupRequest {
+	requester: UserDTO;
+	group: Group;
+	isAccepted: boolean;
 }
 
 export interface CreateGroupDTO {
