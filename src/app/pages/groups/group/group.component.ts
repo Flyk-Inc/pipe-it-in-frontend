@@ -5,11 +5,12 @@ import { Group, GroupMember } from '../../../models/group.model';
 import { DatePipe, NgIf } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { leaveGroup } from '../../../store/group/group.actions';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
 	selector: 'app-group',
 	standalone: true,
-	imports: [IconComponent, DatePipe, NgIf],
+	imports: [IconComponent, DatePipe, NgIf, RouterLink],
 	templateUrl: './group.component.html',
 	styleUrl: './group.component.scss',
 })
@@ -18,7 +19,10 @@ export class GroupComponent implements OnInit {
 	@Input() currentUserId!: number;
 	groupMember!: GroupMember | undefined;
 
-	constructor(private store: Store) {}
+	constructor(
+		private store: Store,
+		private router: Router
+	) {}
 
 	ngOnInit() {
 		this.groupMember = this.group.members.find(
@@ -34,12 +38,9 @@ export class GroupComponent implements OnInit {
 		return this.groupMember ? this.groupMember.joinedAt : undefined;
 	}
 
-	onLeaveGroup(): void {
-		if (
-			confirm(`Are you sure you want to leave the group "${this.group.name}"?`)
-		) {
-			this.store.dispatch(leaveGroup({ groupId: this.group.id }));
-		}
+	onLeaveGroup(event: Event): void {
+		event.stopPropagation();
+		this.store.dispatch(leaveGroup({ groupId: this.group.id }));
 	}
 
 	protected readonly environment = environment;

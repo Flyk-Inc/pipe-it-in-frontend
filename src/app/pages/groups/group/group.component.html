@@ -1,5 +1,6 @@
 <div
-	class="flex items-center space-x-4 p-4 bg-white dark:bg-dark-card-bg rounded-lg border border-grey-1 dark:border-none">
+	class="flex items-center space-x-4 p-4 bg-white dark:bg-dark-card-bg rounded-lg border border-grey-1 dark:border-none cursor-pointer"
+	[routerLink]="['/group', group.id]">
 	<img
 		class="w-12 h-12 rounded-full object-cover"
 		[src]="
@@ -29,7 +30,7 @@
 				</p>
 			</div>
 			<div class="flex justify-end">
-				<button class="text-primary" (click)="onLeaveGroup()">✖</button>
+				<button class="text-primary" (click)="onLeaveGroup($event)">✖</button>
 			</div>
 		</div>
 	</div>
